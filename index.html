@@ -401,6 +401,35 @@
             background-color: var(--teal-light);
             color: var(--teal-primary);
         }
+
+        /* Footer SEO Box Styling */
+        .site-footer {
+            width: calc(100% - 32px);
+            max-width: 408px;
+            margin-top: 14px;
+            padding: 12px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .footer-text {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        .footer-text a {
+            color: var(--teal-primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -493,7 +522,7 @@
             </div>
             <p class="sub-desc" id="descNote">Write or paste your notes, codes, or credentials and download them instantly.</p>
             
-            <!-- Toolbar inside notepad (Character count, Paste, Clear) -->
+            <!-- Toolbar inside notepad -->
             <div class="notepad-toolbar">
                 <span id="wordCount" class="char-count">0 Characters</span>
                 <div class="note-actions">
@@ -526,6 +555,13 @@
             </button>
         </div>
 
+    </div>
+
+    <!-- Footer SEO Information Box -->
+    <div class="site-footer">
+        <p class="footer-text" id="footerText">
+            Use <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a> online two-factor authentication (2FA) tools to enhance account security. For more information on two-factor authentication, visit authoritative resources or search "fastmailshop.com 2FA tools".
+        </p>
     </div>
 
 <script>
@@ -580,6 +616,7 @@
             document.getElementById('formatLabel').innerText = 'ফরম্যাট সিলেক্ট করুন:';
             document.getElementById('btnDownload').innerText = 'ফাইল ডাউনলোড করুন';
             document.getElementById('noteArea').placeholder = 'এখানে আপনার লেখা বা নোট লিখুন বা পেস্ট করুন...';
+            document.getElementById('footerText').innerHTML = 'অ্যাকাউন্টের নিরাপত্তা বাড়াতে <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a>-এর অনলাইন টু-ফ্যাক্টর অথেন্টিকেশন (2FA) টুলস ব্যবহার করুন। দ্বিমুখী প্রমাণীকরণ সম্পর্কে আরও জানতে বিশ্বস্ত সোর্স বা "fastmailshop.com 2FA tools" লিখে সার্চ করুন।';
         } else {
             document.getElementById('tabText2fa').innerText = '2FA Key';
             document.getElementById('tabTextNote').innerText = 'Note';
@@ -593,6 +630,7 @@
             document.getElementById('formatLabel').innerText = 'Select Format:';
             document.getElementById('btnDownload').innerText = 'Download File';
             document.getElementById('noteArea').placeholder = 'Type or paste your text here...';
+            document.getElementById('footerText').innerHTML = 'Use <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a> online two-factor authentication (2FA) tools to enhance account security. For more information on two-factor authentication, visit authoritative resources or search "fastmailshop.com 2FA tools".';
         }
     }
 
@@ -697,7 +735,7 @@
         const fileName = `Note_${new Date().toISOString().slice(0,10)}`;
 
         if (format === 'txt') {
-            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' };
             triggerDownload(URL.createObjectURL(blob), `${fileName}.txt`);
         } 
         else if (format === 'pdf') {
