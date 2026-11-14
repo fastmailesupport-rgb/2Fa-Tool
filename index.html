@@ -1076,6 +1076,8 @@
         const secNote = document.getElementById('sectionNote');
         const secFake = document.getElementById('sectionFake');
 
+        if (!btn2fa || !btnNote || !btnFake || !sec2fa || !secNote || !secFake) return;
+
         btn2fa.classList.remove('active');
         btnNote.classList.remove('active');
         btnFake.classList.remove('active');
@@ -1100,6 +1102,7 @@
         document.body.classList.toggle('dark-mode');
         const isDark = document.body.classList.contains('dark-mode');
         const moonIcon = document.getElementById('moonIcon');
+        if (!moonIcon) return;
         
         if (isDark) {
             moonIcon.innerHTML = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 0 0 0-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>';
@@ -1112,74 +1115,88 @@
 
     // Language Switcher (EN <-> BN)
     function changeLanguage() {
-        const lang = document.getElementById('langSelect').value;
+        const langSelect = document.getElementById('langSelect');
+        if (!langSelect) return;
+        const lang = langSelect.value;
+        
+        const setTxt = (id, text) => { const el = document.getElementById(id); if(el) el.innerText = text; };
+        const setHtml = (id, html) => { const el = document.getElementById(id); if(el) el.innerHTML = html; };
+
         if (lang === 'bn') {
-            document.getElementById('tabText2fa').innerText = '২এফএ কি';
-            document.getElementById('tabTextNote').innerText = 'নোটপ্যাড';
-            document.getElementById('tabTextFake').innerText = 'ফেক নেম';
-            document.getElementById('title2fa').innerText = 'সিক্রেট কি';
-            document.getElementById('desc2fa').innerText = 'সিক্রেট কি দিয়ে গেট কোড বাটনে ক্লিক করলে লাইভ 2FA কোড দেখতে পাবেন।';
-            document.getElementById('btn2fa').innerText = 'গেট কোড';
-            document.getElementById('btnClear').innerText = 'ক্লিয়ার';
-            document.getElementById('activeTokenText').innerText = 'অ্যাক্টিভ টোকেন';
-            document.getElementById('copyText').innerText = 'কোড কপি করুন';
-            document.getElementById('titleNote').innerText = 'স্মার্ট নোটপ্যাড';
-            document.getElementById('descNote').innerText = 'আপনার নোট বা টেক্সট এখানে লিখে সরাসরি ফাইল ডাউনলোড করুন।';
-            document.getElementById('formatLabel').innerText = 'ফরম্যাট সিলেক্ট করুন:';
-            document.getElementById('btnDownload').innerText = 'ডাউনলোড';
-            document.getElementById('btnClearNote').innerText = 'ক্লিয়ার';
-            document.getElementById('secret').placeholder = 'এখানে আপনার সিক্রেট কি পেস্ট করুন...';
-            document.getElementById('noteArea').placeholder = 'এখানে আপনার নোট পেস্ট বা টাইপ করুন...';
+            setTxt('tabText2fa', '২এফএ কি');
+            setTxt('tabTextNote', 'নোটপ্যাড');
+            setTxt('tabTextFake', 'ফেক নেম');
+            setTxt('title2fa', 'সিক্রেট কি');
+            setTxt('desc2fa', 'সিক্রেট কি দিয়ে গেট কোড বাটনে ক্লিক করলে লাইভ 2FA কোড দেখতে পাবেন।');
+            setTxt('btn2fa', 'গেট কোড');
+            setTxt('btnClear', 'ক্লিয়ার');
+            setTxt('activeTokenText', 'অ্যাক্টিভ টোকেন');
+            setTxt('copyText', 'কোড কপি করুন');
+            setTxt('titleNote', 'স্মার্ট নোটপ্যাড');
+            setTxt('descNote', 'আপনার নোট বা টেক্সট এখানে লিখে সরাসরি ফাইল ডাউনলোড করুন।');
+            setTxt('formatLabel', 'ফরম্যাট সিলেক্ট করুন:');
+            setTxt('btnDownload', 'ডাউনলোড');
+            setTxt('btnClearNote', 'ক্লিয়ার');
             
-            document.getElementById('titleFake').innerText = 'ফেক আইডি জেনারেটর';
-            document.getElementById('descFake').innerText = 'খুব সহজেই রেন্ডম নাম, জন্মতারিখ এবং ঠিকানা জেনারেট করুন।';
-            document.getElementById('labelGender').innerText = 'লিঙ্গ';
-            document.getElementById('labelNameSet').innerText = 'সেট';
-            document.getElementById('labelCountry').innerText = 'দেশ';
-            document.getElementById('btnGenerateFake').innerText = 'আইডেন্টিটি জেনারেট করুন';
-            document.getElementById('resIdentityTitle').innerText = 'আপনার রেন্ডমলি জেনারেটেড আইডি';
-            document.getElementById('resLabelName').innerText = 'পূর্ণ নাম';
-            document.getElementById('resLabelDob').innerText = 'জন্মতারিখ';
-            document.getElementById('resLabelAddress').innerText = 'ঠিকানা';
-            document.getElementById('footerText').innerHTML = 'অ্যাকাউন্টের নিরাপত্তা বাড়াতে <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a>-এর অনলাইন টুলস ব্যবহার করুন।';
+            const secretEl = document.getElementById('secret');
+            if(secretEl) secretEl.placeholder = 'এখানে আপনার সিক্রেট কি পেস্ট করুন...';
+            const noteEl = document.getElementById('noteArea');
+            if(noteEl) noteEl.placeholder = 'এখানে আপনার নোট পেস্ট বা টাইপ করুন...';
+            
+            setTxt('titleFake', 'ফেক আইডি জেনারেটর');
+            setTxt('descFake', 'খুব সহজেই রেন্ডম নাম, জন্মতারিখ এবং ঠিকানা জেনারেট করুন।');
+            setTxt('labelGender', 'লিঙ্গ');
+            setTxt('labelNameSet', 'সেট');
+            setTxt('labelCountry', 'দেশ');
+            setTxt('btnGenerateFake', 'আইডেন্টিটি জেনারেট করুন');
+            setTxt('resIdentityTitle', 'আপনার রেন্ডমলি জেনারেটেড আইডি');
+            setTxt('resLabelName', 'পূর্ণ নাম');
+            setTxt('resLabelDob', 'জন্মতারিখ');
+            setTxt('resLabelAddress', 'ঠিকানা');
+            setHtml('footerText', 'অ্যাকাউন্টের নিরাপত্তা বাড়াতে <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a>-এর অনলাইন টুলস ব্যবহার করুন।');
         } else {
-            document.getElementById('tabText2fa').innerText = '2FA Key';
-            document.getElementById('tabTextNote').innerText = 'Note';
-            document.getElementById('tabTextFake').innerText = 'Fake Name';
-            document.getElementById('title2fa').innerText = 'Secret Key';
-            document.getElementById('desc2fa').innerText = 'Enter your Base32 secret key and click Get Code to generate your 2FA token.';
-            document.getElementById('btn2fa').innerText = 'Get Code';
-            document.getElementById('btnClear').innerText = 'Clear';
-            document.getElementById('activeTokenText').innerText = 'Active Token';
-            document.getElementById('copyText').innerText = 'Copy Code';
-            document.getElementById('titleNote').innerText = 'Smart Notepad';
-            document.getElementById('descNote').innerText = 'Write or paste your notes, codes, or credentials and download them instantly.';
-            document.getElementById('formatLabel').innerText = 'Select Format:';
-            document.getElementById('btnDownload').innerText = 'Download';
-            document.getElementById('btnClearNote').innerText = 'Clear';
-            document.getElementById('secret').placeholder = 'Paste your Secret Key here...';
-            document.getElementById('noteArea').placeholder = 'Paste or type your notes here...';
+            setTxt('tabText2fa', '2FA Key');
+            setTxt('tabTextNote', 'Note');
+            setTxt('tabTextFake', 'Fake Name');
+            setTxt('title2fa', 'Secret Key');
+            setTxt('desc2fa', 'Enter your Base32 secret key and click Get Code to generate your 2FA token.');
+            setTxt('btn2fa', 'Get Code');
+            setTxt('btnClear', 'Clear');
+            setTxt('activeTokenText', 'Active Token');
+            setTxt('copyText', 'Copy Code');
+            setTxt('titleNote', 'Smart Notepad');
+            setTxt('descNote', 'Write or paste your notes, codes, or credentials and download them instantly.');
+            setTxt('formatLabel', 'Select Format:');
+            setTxt('btnDownload', 'Download');
+            setTxt('btnClearNote', 'Clear');
             
-            document.getElementById('titleFake').innerText = 'Fake Identity Generator';
-            document.getElementById('descFake').innerText = 'Generate random names, dates of birth, and addresses instantly.';
-            document.getElementById('labelGender').innerText = 'Gender';
-            document.getElementById('labelNameSet').innerText = 'Name Set';
-            document.getElementById('labelCountry').innerText = 'Country';
-            document.getElementById('btnGenerateFake').innerText = 'Generate Identity';
-            document.getElementById('resIdentityTitle').innerText = 'Your Randomly Generated Identity';
-            document.getElementById('resLabelName').innerText = 'Full Name';
-            document.getElementById('resLabelDob').innerText = 'Date of Birth';
-            document.getElementById('resLabelAddress').innerText = 'Address';
-            document.getElementById('footerText').innerHTML = 'Use <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a> online tools to enhance account security and productivity.';
+            const secretEl = document.getElementById('secret');
+            if(secretEl) secretEl.placeholder = 'Paste your Secret Key here...';
+            const noteEl = document.getElementById('noteArea');
+            if(noteEl) noteEl.placeholder = 'Paste or type your notes here...';
+            
+            setTxt('titleFake', 'Fake Identity Generator');
+            setTxt('descFake', 'Generate random names, dates of birth, and addresses instantly.');
+            setTxt('labelGender', 'Gender');
+            setTxt('labelNameSet', 'Name Set');
+            setTxt('labelCountry', 'Country');
+            setTxt('btnGenerateFake', 'Generate Identity');
+            setTxt('resIdentityTitle', 'Your Randomly Generated Identity');
+            setTxt('resLabelName', 'Full Name');
+            setTxt('resLabelDob', 'Date of Birth');
+            setTxt('resLabelAddress', 'Address');
+            setHtml('footerText', 'Use <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a> online tools to enhance account security and productivity.');
         }
     }
 
     // Live Active Users Counter
     setInterval(() => {
         const userEl = document.getElementById('active-users');
-        let current = parseInt(userEl.innerText);
-        let change = Math.floor(Math.random() * 5) - 2;
-        userEl.innerText = current + change;
+        if (userEl) {
+            let current = parseInt(userEl.innerText);
+            let change = Math.floor(Math.random() * 5) - 2;
+            userEl.innerText = current + change;
+        }
     }, 4000);
 
     // 2FA 15s Countdown & Auto-Refresh Logic
@@ -1187,8 +1204,11 @@
     let currentSecret = "";
 
     function start2FA() {
-        const secretInput = document.getElementById('secret').value.replace(/\s+/g, '');
-        const lang = document.getElementById('langSelect').value;
+        const secretInputEl = document.getElementById('secret');
+        if (!secretInputEl) return;
+        const secretInput = secretInputEl.value.replace(/\s+/g, '');
+        const langSelect = document.getElementById('langSelect');
+        const lang = langSelect ? langSelect.value : 'en';
 
         if (!secretInput) {
             alert(lang === 'bn' ? 'দয়া করে আগে সিক্রেট কি (Secret Key) দিন!' : 'Please enter your Secret Key first!');
@@ -1198,7 +1218,8 @@
         currentSecret = secretInput;
         if (totpInterval) clearInterval(totpInterval);
 
-        document.getElementById('progressContainer').style.display = 'block';
+        const progContainer = document.getElementById('progressContainer');
+        if (progContainer) progContainer.style.display = 'block';
 
         generateAndDisplayCode();
         totpInterval = setInterval(generateAndDisplayCode, 1000);
@@ -1206,18 +1227,24 @@
 
     function clear2FA() {
         if (totpInterval) clearInterval(totpInterval);
-        document.getElementById('secret').value = '';
-        document.getElementById('code-display').innerText = '000000';
-        document.getElementById('timer-display').innerText = '15s';
-        document.getElementById('progressContainer').style.display = 'none';
+        const secretEl = document.getElementById('secret');
+        const codeDisplay = document.getElementById('code-display');
+        const timerDisplay = document.getElementById('timer-display');
+        const progContainer = document.getElementById('progressContainer');
+
+        if (secretEl) secretEl.value = '';
+        if (codeDisplay) codeDisplay.innerText = '000000';
+        if (timerDisplay) timerDisplay.innerText = '15s';
+        if (progContainer) progContainer.style.display = 'none';
         currentSecret = '';
-        document.getElementById('secret').focus();
+        if (secretEl) secretEl.focus();
     }
 
     function generateAndDisplayCode() {
         const display = document.getElementById('code-display');
         const timerDisplay = document.getElementById('timer-display');
         const progressBar = document.getElementById('progressBar');
+        if (!display || !timerDisplay || !progressBar) return;
 
         try {
             let totp = new OTPAuth.TOTP({
@@ -1246,19 +1273,22 @@
     }
 
     function copyCode() {
-        const code = document.getElementById('code-display').innerText;
-        const lang = document.getElementById('langSelect').value;
+        const codeDisplay = document.getElementById('code-display');
+        if (!codeDisplay) return;
+        const code = codeDisplay.innerText;
+        const langSelect = document.getElementById('langSelect');
+        const lang = langSelect ? langSelect.value : 'en';
+
         if(code !== "000000" && code !== "Error") {
             navigator.clipboard.writeText(code);
             const copyText = document.getElementById('copyText');
-            copyText.innerText = lang === 'bn' ? "কপি হয়েছে!" : "Copied!";
+            if (copyText) copyText.innerText = lang === 'bn' ? "কপি হয়েছে!" : "Copied!";
             
-            const disp = document.getElementById('code-display');
-            disp.style.transform = 'scale(1.08)';
-            setTimeout(() => disp.style.transform = 'none', 200);
+            codeDisplay.style.transform = 'scale(1.08)';
+            setTimeout(() => codeDisplay.style.transform = 'none', 200);
 
             setTimeout(() => {
-                copyText.innerText = lang === 'bn' ? "কোড কপি করুন" : "Copy Code";
+                if (copyText) copyText.innerText = lang === 'bn' ? "কোড কপি করুন" : "Copy Code";
             }, 1500);
         }
     }
@@ -1268,21 +1298,27 @@
     const wordCount = document.getElementById('wordCount');
 
     window.addEventListener('DOMContentLoaded', () => {
-        const saved = localStorage.getItem('smart_notepad_data');
-        if (saved) {
-            noteArea.value = saved;
-            updateNoteStats();
+        if (noteArea) {
+            const saved = localStorage.getItem('smart_notepad_data');
+            if (saved) {
+                noteArea.value = saved;
+                updateNoteStats();
+            }
         }
     });
 
     function updateNoteStats() {
+        if (!noteArea || !wordCount) return;
         localStorage.setItem('smart_notepad_data', noteArea.value);
-        const lang = document.getElementById('langSelect').value;
+        const langSelect = document.getElementById('langSelect');
+        const lang = langSelect ? langSelect.value : 'en';
         wordCount.innerText = `${noteArea.value.length} ${lang === 'bn' ? 'অক্ষর' : 'Characters'}`;
     }
 
     function clearNote() {
-        const lang = document.getElementById('langSelect').value;
+        if (!noteArea) return;
+        const langSelect = document.getElementById('langSelect');
+        const lang = langSelect ? langSelect.value : 'en';
         const confirmMsg = lang === 'bn' ? 'সব লেখা মুছে ফেলতে চান?' : 'Are you sure you want to clear all text?';
         if(confirm(confirmMsg)) {
             noteArea.value = '';
@@ -1293,15 +1329,18 @@
     }
 
     function downloadNoteFile() {
+        if (!noteArea) return;
         const text = noteArea.value.trim();
-        const lang = document.getElementById('langSelect').value;
+        const langSelect = document.getElementById('langSelect');
+        const lang = langSelect ? langSelect.value : 'en';
         
         if (!text) {
             alert(lang === 'bn' ? 'ডাউনলোড করার আগে নোটপ্যাডে কিছু লিখুন!' : 'Please write something in the notepad before downloading!');
             return;
         }
 
-        const format = document.querySelector('input[name="fileFormat"]:checked').value;
+        const checkedFormat = document.querySelector('input[name="fileFormat"]:checked');
+        const format = checkedFormat ? checkedFormat.value : 'txt';
         const fileName = `Note_${new Date().toISOString().slice(0,10)}`;
 
         if (format === 'txt') {
@@ -1397,9 +1436,14 @@
     };
 
     function generateFakeIdentity() {
-        const genderSelect = document.getElementById('fakeGender').value;
-        const nameSetSelect = document.getElementById('fakeNameSet').value;
-        const selectedCountry = document.getElementById('fakeCountry').value;
+        const genderEl = document.getElementById('fakeGender');
+        const nameSetEl = document.getElementById('fakeNameSet');
+        const countryEl = document.getElementById('fakeCountry');
+        if (!genderEl || !nameSetEl || !countryEl) return;
+
+        const genderSelect = genderEl.value;
+        const nameSetSelect = nameSetEl.value;
+        const selectedCountry = countryEl.value;
         
         let chosenGender = genderSelect;
         if (chosenGender === 'random') {
@@ -1413,24 +1457,32 @@
         const addressList = addressDatabase[selectedCountry] || ["123 Main Street, Suite 100, City, Country"];
         const randomAddress = addressList[Math.floor(Math.random() * addressList.length)];
 
-        // Generate Random DOB (Age 20 to 40)
         const year = Math.floor(Math.random() * 20) + 1985;
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         const month = months[Math.floor(Math.random() * months.length)];
         const day = Math.floor(Math.random() * 28) + 1;
         const dobStr = `${day} ${month} ${year}`;
 
-        document.getElementById('resName').innerText = randomName;
-        document.getElementById('resDob').innerText = dobStr;
-        document.getElementById('resAddress').innerText = `${randomAddress} (${selectedCountry})`;
-        document.getElementById('fakeAvatarIcon').innerText = (chosenGender === 'male') ? "👨" : "👩";
+        const resName = document.getElementById('resName');
+        const resDob = document.getElementById('resDob');
+        const resAddress = document.getElementById('resAddress');
+        const fakeAvatarIcon = document.getElementById('fakeAvatarIcon');
+        const fakeResultCard = document.getElementById('fakeResultCard');
 
-        document.getElementById('fakeResultCard').style.display = 'block';
+        if (resName) resName.innerText = randomName;
+        if (resDob) resDob.innerText = dobStr;
+        if (resAddress) resAddress.innerText = `${randomAddress} (${selectedCountry})`;
+        if (fakeAvatarIcon) fakeAvatarIcon.innerText = (chosenGender === 'male') ? "👨" : "👩";
+        if (fakeResultCard) fakeResultCard.style.display = 'block';
     }
 
     function copyFakeText(elementId, btnElement) {
-        const text = document.getElementById(elementId).innerText;
-        const lang = document.getElementById('langSelect').value;
+        const targetEl = document.getElementById(elementId);
+        if (!targetEl) return;
+        const text = targetEl.innerText;
+        const langSelect = document.getElementById('langSelect');
+        const lang = langSelect ? langSelect.value : 'en';
+        
         navigator.clipboard.writeText(text);
         
         const originalText = btnElement.innerText;
