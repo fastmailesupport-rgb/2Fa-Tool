@@ -247,11 +247,26 @@
             line-height: 1.4;
         }
 
+        /* Unique Glowing & Pulsing Border Animation for Input Boxes */
+        @keyframes pulseBorder {
+            0% {
+                border-color: var(--teal-primary);
+                box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.4);
+            }
+            70% {
+                border-color: #14b8a6;
+                box-shadow: 0 0 0 6px rgba(13, 148, 136, 0);
+            }
+            100% {
+                border-color: var(--teal-primary);
+                box-shadow: 0 0 0 0 rgba(13, 148, 136, 0);
+            }
+        }
+
         textarea {
             width: 100%;
-            height: 85px;
             background-color: var(--bg-input);
-            border: 1px solid var(--border-color);
+            border: 2px solid var(--teal-primary);
             border-radius: 12px;
             color: var(--text-main);
             padding: 12px;
@@ -259,14 +274,20 @@
             font-family: monospace;
             font-size: 0.88rem;
             margin-bottom: 1rem;
+            animation: pulseBorder 3s infinite;
             transition: all 0.2s;
             line-height: 1.45;
         }
 
+        #secret {
+            height: 70px;
+        }
+
         textarea:focus {
             outline: none;
-            border-color: var(--teal-primary);
-            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+            border-color: #0d9488;
+            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.25);
+            animation: none;
         }
 
         /* Button Row Layout (Get Code & Clear side-by-side) */
@@ -632,7 +653,7 @@
             </div>
             <p class="sub-desc" id="desc2fa">Enter your Base32 secret key and click Get Code to generate your 2FA token.</p>
             
-            <textarea id="secret" placeholder="e.g. GAXG 243E MR2X QZ..." style="height: 70px;"></textarea>
+            <textarea id="secret" placeholder="Paste your Secret Key here..."></textarea>
             
             <!-- Button Row: Get Code & Clear -->
             <div class="btn-row">
@@ -678,7 +699,7 @@
                 <span id="wordCount" class="char-count">0 Characters</span>
             </div>
 
-            <textarea id="noteArea" oninput="updateNoteStats()" placeholder="Type or paste your text here..."></textarea>
+            <textarea id="noteArea" oninput="updateNoteStats()" placeholder="Paste or type your notes here..."></textarea>
 
             <!-- File Format Selector -->
             <div class="format-selector">
@@ -771,7 +792,8 @@
             document.getElementById('formatLabel').innerText = 'ফরম্যাট সিলেক্ট করুন:';
             document.getElementById('btnDownload').innerText = 'ডাউনলোড';
             document.getElementById('btnClearNote').innerText = 'ক্লিয়ার';
-            document.getElementById('noteArea').placeholder = 'এখানে আপনার লেখা বা নোট লিখুন বা পেস্ট করুন...';
+            document.getElementById('secret').placeholder = 'এখানে আপনার সিক্রেট কি পেস্ট করুন...';
+            document.getElementById('noteArea').placeholder = 'এখানে আপনার নোট পেস্ট বা টাইপ করুন...';
             document.getElementById('footerText').innerHTML = 'অ্যাকাউন্টের নিরাপত্তা বাড়াতে <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a>-এর অনলাইন টু-ফ্যাক্টর অথেন্টিকেশন (2FA) টুলস ব্যবহার করুন। দ্বিমুখী প্রমাণীকরণ সম্পর্কে আরও জানতে বিশ্বস্ত সোর্স বা "fastmailshop.com 2FA tools" লিখে সার্চ করুন।';
         } else {
             document.getElementById('tabText2fa').innerText = '2FA Key';
@@ -787,7 +809,8 @@
             document.getElementById('formatLabel').innerText = 'Select Format:';
             document.getElementById('btnDownload').innerText = 'Download';
             document.getElementById('btnClearNote').innerText = 'Clear';
-            document.getElementById('noteArea').placeholder = 'Type or paste your text here...';
+            document.getElementById('secret').placeholder = 'Paste your Secret Key here...';
+            document.getElementById('noteArea').placeholder = 'Paste or type your notes here...';
             document.getElementById('footerText').innerHTML = 'Use <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a> online two-factor authentication (2FA) tools to enhance account security. For more information on two-factor authentication, visit authoritative resources or search "fastmailshop.com 2FA tools".';
         }
     }
