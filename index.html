@@ -457,16 +457,16 @@
         }
 
         .avatar-placeholder {
-            width: 55px;
-            height: 55px;
+            width: 50px;
+            height: 50px;
             background-color: var(--teal-light);
             color: var(--teal-primary);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 8px auto;
-            font-size: 1.4rem;
+            margin: 0 auto 6px auto;
+            font-size: 1.3rem;
         }
 
         .identity-title {
@@ -484,27 +484,26 @@
             justify-content: space-between;
             align-items: center;
             background: var(--bg-card);
-            border: 1.5px solid var(--teal-primary);
-            box-shadow: 0 2px 8px rgba(13, 148, 136, 0.08);
-            padding: 9px 12px;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            font-size: 0.82rem;
+            border: 1.5px solid var(--border-color);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+            padding: 7px 10px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            font-size: 0.8rem;
             text-align: left;
-            transition: transform 0.15s ease;
+            transition: border-color 0.2s;
         }
 
         .field-box:hover {
-            border-color: #0f766e;
-            box-shadow: 0 3px 12px rgba(13, 148, 136, 0.15);
+            border-color: var(--teal-primary);
         }
 
-        /* Special Larger Highlighted Box specifically for Name */
+        /* Special Highlighted Box for Name */
         .field-box.name-highlight-box {
             background: var(--teal-light);
             border: 2px solid var(--teal-primary);
-            padding: 12px 14px;
-            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.12);
+            padding: 9px 12px;
+            box-shadow: 0 3px 10px rgba(13, 148, 136, 0.1);
         }
 
         .field-info span {
@@ -512,7 +511,7 @@
         }
 
         .field-label {
-            font-size: 0.65rem;
+            font-size: 0.63rem;
             color: var(--text-muted);
             font-weight: 600;
         }
@@ -524,10 +523,9 @@
 
         /* Large Prominent Name Styling */
         .field-value.large-name-text {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 800;
             color: var(--teal-primary);
-            letter-spacing: -0.2px;
             margin-top: 2px;
         }
 
@@ -538,11 +536,11 @@
         .copy-sm-btn {
             background: var(--teal-light);
             border: 1px solid var(--teal-primary);
-            padding: 5px 10px;
+            padding: 4px 8px;
             border-radius: 6px;
             cursor: pointer;
             color: var(--teal-primary);
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
             transition: all 0.2s;
             flex-shrink: 0;
@@ -958,7 +956,7 @@
             </div>
         </div>
 
-        <!-- TAB 3: FAKE NAME GENERATOR (Highlighted Boxes & Large Name Card) -->
+        <!-- TAB 3: FAKE NAME & DETAILED ADDRESS GENERATOR -->
         <div id="sectionFake" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -966,7 +964,7 @@
                 </div>
                 <h2 id="titleFake">Fake Identity Generator</h2>
             </div>
-            <p class="sub-desc" id="descFake">Generate random names, dates of birth, and addresses instantly.</p>
+            <p class="sub-desc" id="descFake">Generate random names, dates of birth, and comprehensive international addresses instantly.</p>
             
             <!-- Inline 3-Item Row with Icons -->
             <div class="fake-row-wrapper">
@@ -1053,12 +1051,12 @@
                 <span id="btnGenerateFake">Generate Identity</span>
             </button>
 
-            <!-- Result Box with Prominent Large Name & Highlighted Fields -->
+            <!-- Result Box with Detailed Address Fields -->
             <div class="result-card" id="fakeResultCard">
                 <div class="avatar-placeholder" id="fakeAvatarIcon">👨</div>
                 <div class="identity-title" id="resIdentityTitle">Your Randomly Generated Identity</div>
                 
-                <!-- 1. Full Name (Large Text & Prominent Highlight Box) -->
+                <!-- 1. Full Name (Large & Highlighted) -->
                 <div class="field-box name-highlight-box">
                     <div class="field-info">
                         <span class="field-label" id="resLabelName">Full Name</span>
@@ -1076,13 +1074,76 @@
                     <button class="copy-sm-btn" onclick="copyFakeText('resDob', this)">Copy</button>
                 </div>
 
-                <!-- 3. Address -->
+                <!-- 3. Street -->
                 <div class="field-box">
                     <div class="field-info">
-                        <span class="field-label" id="resLabelAddress">Address</span>
-                        <span class="field-value" id="resAddress">1483 Better Street, Overland Park, KS 66210</span>
+                        <span class="field-label">Street</span>
+                        <span class="field-value" id="resStreet">1483 Better Street</span>
                     </div>
-                    <button class="copy-sm-btn" onclick="copyFakeText('resAddress', this)">Copy</button>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resStreet', this)">Copy</button>
+                </div>
+
+                <!-- 4. City/Town -->
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label">City/Town</span>
+                        <span class="field-value" id="resCity">Overland Park</span>
+                    </div>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resCity', this)">Copy</button>
+                </div>
+
+                <!-- 5. State/Province/Region -->
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label">State/Province/Region</span>
+                        <span class="field-value" id="resState">Kansas (KS)</span>
+                    </div>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resState', this)">Copy</button>
+                </div>
+
+                <!-- 6. Zip/Postal Code -->
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label">Zip/Postal Code</span>
+                        <span class="field-value" id="resZip">66210</span>
+                    </div>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resZip', this)">Copy</button>
+                </div>
+
+                <!-- 7. Phone Number -->
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label">Phone Number</span>
+                        <span class="field-value" id="resPhone">+1 913-555-0148</span>
+                    </div>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resPhone', this)">Copy</button>
+                </div>
+
+                <!-- 8. Country -->
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label">Country</span>
+                        <span class="field-value" id="resCountry">United States</span>
+                    </div>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resCountry', this)">Copy</button>
+                </div>
+
+                <!-- 9. Latitude -->
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label">Latitude</span>
+                        <span class="field-value" id="resLat">38.9822</span>
+                    </div>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resLat', this)">Copy</button>
+                </div>
+
+                <!-- 10. Longitude -->
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label">Longitude</span>
+                        <span class="field-value" id="resLng">-94.6708</span>
+                    </div>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resLng', this)">Copy</button>
                 </div>
             </div>
         </div>
@@ -1174,7 +1235,7 @@
             if(noteEl) noteEl.placeholder = 'এখানে আপনার নোট পেস্ট বা টাইপ করুন...';
             
             setTxt('titleFake', 'ফেক আইডি জেনারেটর');
-            setTxt('descFake', 'খুব সহজেই রেন্ডম নাম, জন্মতারিখ এবং ঠিকানা জেনারেট করুন।');
+            setTxt('descFake', 'খুব সহজেই রেন্ডম নাম, জন্মতারিখ এবং পূর্ণাঙ্গ আন্তর্জাতিক ঠিকানা জেনারেট করুন।');
             setTxt('labelGender', 'লিঙ্গ');
             setTxt('labelNameSet', 'সেট');
             setTxt('labelCountry', 'দেশ');
@@ -1182,7 +1243,6 @@
             setTxt('resIdentityTitle', 'আপনার রেন্ডমলি জেনারেটেড আইডি');
             setTxt('resLabelName', 'পূর্ণ নাম');
             setTxt('resLabelDob', 'জন্মতারিখ');
-            setTxt('resLabelAddress', 'ঠিকানা');
             setHtml('footerText', 'অ্যাকাউন্টের নিরাপত্তা বাড়াতে <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a>-এর অনলাইন টুলস ব্যবহার করুন।');
         } else {
             setTxt('tabText2fa', '2FA Key');
@@ -1206,7 +1266,7 @@
             if(noteEl) noteEl.placeholder = 'Paste or type your notes here...';
             
             setTxt('titleFake', 'Fake Identity Generator');
-            setTxt('descFake', 'Generate random names, dates of birth, and addresses instantly.');
+            setTxt('descFake', 'Generate random names, dates of birth, and comprehensive international addresses instantly.');
             setTxt('labelGender', 'Gender');
             setTxt('labelNameSet', 'Name Set');
             setTxt('labelCountry', 'Country');
@@ -1214,7 +1274,6 @@
             setTxt('resIdentityTitle', 'Your Randomly Generated Identity');
             setTxt('resLabelName', 'Full Name');
             setTxt('resLabelDob', 'Date of Birth');
-            setTxt('resLabelAddress', 'Address');
             setHtml('footerText', 'Use <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a> online tools to enhance account security and productivity.');
         }
     }
@@ -1402,7 +1461,7 @@
         document.body.removeChild(a);
     }
 
-    // Comprehensive International Fake Identity Database (Name Sets & Countries)
+    // Comprehensive International Fake Identity & Address Database
     const nameDatabase = {
         american: {
             male: ["James A. Smith", "Robert J. Johnson", "Michael W. Williams", "David B. Brown", "William R. Jones", "Joseph M. Miller"],
@@ -1442,27 +1501,76 @@
         }
     };
 
-    const addressDatabase = {
-        "United States": ["1483 Better Street, Overland Park, KS 66210", "2789 Pinewood Drive, Atlanta, GA 30303", "4521 Maple Avenue, Dallas, TX 75201"],
-        "United Kingdom": ["12 Baker Street, London, W1U 3BW", "45 Oxford Road, Manchester, M1 5AN", "78 George Street, Edinburgh, EH2 3ES"],
-        "Canada": ["742 Evergreen Terrace, Toronto, ON M4W 1A8", "123 Portage Ave, Winnipeg, MB R3B 2A9", "456 Robson St, Vancouver, BC V6B 2B5"],
-        "Australia": ["15 Collins Street, Melbourne, VIC 3000", "88 George Street, Sydney, NSW 2000", "22 Queen Street, Brisbane, QLD 4000"],
-        "Germany": ["Hauptstraße 45, 10117 Berlin, Germany", "Kaiserstraße 12, 60311 Frankfurt am Main", "Maximilianstraße 8, 80539 München"],
-        "France": ["10 Rue de la Paix, 75002 Paris, France", "25 Avenue des Champs-Élysées, 75008 Paris", "15 Rue Paradis, 13001 Marseille"],
-        "Japan": ["2-11-1 Nagata-cho, Chiyoda-ku, Tokyo 100-0014", "4-1-1 Namba, Chuo-ku, Osaka 542-0076"],
-        "India": ["12 Park Street, Kolkata, 700016, India", "45 MG Road, Bangalore, 560001", "78 Connaught Place, New Delhi, 110001"],
-        "Bangladesh": ["House 12, Road 5, Dhanmondi, Dhaka-1205", "Station Road, Sadar, Sirajganj-6700", "GEC Circle, Nasirabad, Chattogram-4203"],
-        "Brazil": ["Av. Paulista, 1000, São Paulo - SP, 01310-100", "Rua Copacabana, 120, Rio de Janeiro - RJ"],
-        "Italy": ["Via Roma 15, 00100 Roma RM, Italy", "Corso Vittorio Emanuele 42, 20122 Milano MI"],
-        "Spain": ["Calle Gran Vía 28, 28013 Madrid, Spain", "Passeig de Gràcia 45, 08007 Barcelona"],
-        "Netherlands": ["Damrak 48, 1012 JS Amsterdam, Netherlands", "Binnenhof 1, 2513 AA Den Haag"],
-        "Sweden": ["Drottninggatan 22, 111 51 Stockholm, Sweden", "Avenyn 14, 411 36 Göteborg"],
-        "Switzerland": ["Bahnhofstrasse 45, 8001 Zürich, Switzerland", "Rue du Rhône 12, 1204 Genève"],
-        "South Korea": ["123 Teheran-ro, Gangnam-gu, Seoul, South Korea", "45 Sejong-daero, Jung-gu, Seoul"],
-        "China": ["100 Chang'an Ave, Dongcheng District, Beijing", "50 Nanjing Rd E, Huangpu, Shanghai"],
-        "Russia": ["Tverskaya St, 13, Moscow, Russia, 125009", "Nevsky Prospect, 28, St Petersburg, 191186"],
-        "Mexico": ["Paseo de la Reforma 222, Cuauhtémoc, Ciudad de México", "Av. Insurgentes Sur 1602, Benito Juárez, CDMX"],
-        "Argentina": ["Av. Corrientes 1234, C1043 AAF, Buenos Aires", "Av. 9 de Julio 1200, C1043 CAA, Buenos Aires"]
+    const detailedAddressDatabase = {
+        "United States": [
+            { street: "1483 Better Street", city: "Overland Park", state: "Kansas (KS)", zip: "66210", phone: "+1 913-555-0148", lat: "38.9822", lng: "-94.6708" },
+            { street: "2789 Pinewood Drive", city: "Atlanta", state: "Georgia (GA)", zip: "30303", phone: "+1 404-555-0192", lat: "33.7490", lng: "-84.3880" },
+            { street: "4521 Maple Avenue", city: "Dallas", state: "Texas (TX)", zip: "75201", phone: "+1 214-555-0173", lat: "32.7767", lng: "-96.7970" }
+        ],
+        "United Kingdom": [
+            { street: "12 Baker Street", city: "London", state: "Greater London", zip: "W1U 3BW", phone: "+44 20 7946 0912", lat: "51.5223", lng: "-0.1578" },
+            { street: "45 Oxford Road", city: "Manchester", state: "Greater Manchester", zip: "M1 5AN", phone: "+44 161 496 0123", lat: "53.4722", lng: "-2.2386" }
+        ],
+        "Canada": [
+            { street: "742 Evergreen Terrace", city: "Toronto", state: "Ontario", zip: "M4W 1A8", phone: "+1 416-555-0177", lat: "43.6532", lng: "-79.3832" },
+            { street: "123 Portage Ave", city: "Winnipeg", state: "Manitoba", zip: "R3B 2A9", phone: "+1 204-555-0199", lat: "49.8951", lng: "-97.1384" }
+        ],
+        "Australia": [
+            { street: "15 Collins Street", city: "Melbourne", state: "Victoria", zip: "3000", phone: "+61 3 9555 0142", lat: "-37.8136", lng: "144.9631" },
+            { street: "88 George Street", city: "Sydney", state: "New South Wales", zip: "2000", phone: "+61 2 9555 0188", lat: "-33.8688", lng: "151.2093" }
+        ],
+        "Germany": [
+            { street: "Hauptstraße 45", city: "Berlin", state: "Berlin", zip: "10117", phone: "+49 30 123456", lat: "52.5200", lng: "13.4050" },
+            { street: "Kaiserstraße 12", city: "Frankfurt am Main", state: "Hesse", zip: "60311", phone: "+49 69 987654", lat: "50.1109", lng: "8.6821" }
+        ],
+        "France": [
+            { street: "10 Rue de la Paix", city: "Paris", state: "Île-de-France", zip: "75002", phone: "+33 1 40 50 60 70", lat: "48.8688", lng: "2.3314" }
+        ],
+        "Japan": [
+            { street: "2-11-1 Nagata-cho", city: "Tokyo", state: "Chiyoda-ku", zip: "100-0014", phone: "+81 3 5555 0123", lat: "35.6762", lng: "139.6503" }
+        ],
+        "India": [
+            { street: "12 Park Street", city: "Kolkata", state: "West Bengal", zip: "700016", phone: "+91 33 2345 6789", lat: "22.5551", lng: "88.3524" },
+            { street: "45 MG Road", city: "Bangalore", state: "Karnataka", zip: "560001", phone: "+91 80 9876 5432", lat: "12.9716", lng: "77.5946" }
+        ],
+        "Bangladesh": [
+            { street: "House 12, Road 5, Dhanmondi", city: "Dhaka", state: "Dhaka Division", zip: "1205", phone: "+880 1712-345678", lat: "23.7461", lng: "90.3742" },
+            { street: "Station Road, Sadar", city: "Sirajganj", state: "Rajshahi Division", zip: "6700", phone: "+880 1811-987654", lat: "24.4533", lng: "89.7006" },
+            { street: "GEC Circle, Nasirabad", city: "Chattogram", state: "Chattogram Division", zip: "4203", phone: "+880 1919-112233", lat: "22.3569", lng: "91.8388" }
+        ],
+        "Brazil": [
+            { street: "Av. Paulista, 1000", city: "São Paulo", state: "São Paulo", zip: "01310-100", phone: "+55 11 98888-1234", lat: "-23.5505", lng: "-46.6333" }
+        ],
+        "Italy": [
+            { street: "Via Roma 15", city: "Rome", state: "Lazio", zip: "00100", phone: "+39 06 698 38", lat: "41.9028", lng: "12.4964" }
+        ],
+        "Spain": [
+            { street: "Calle Gran Vía 28", city: "Madrid", state: "Community of Madrid", zip: "28013", phone: "+34 91 555 0192", lat: "40.4168", lng: "-3.7038" }
+        ],
+        "Netherlands": [
+            { street: "Damrak 48", city: "Amsterdam", state: "North Holland", zip: "1012 JS", phone: "+31 20 555 0111", lat: "52.3731", lng: "4.8922" }
+        ],
+        "Sweden": [
+            { street: "Drottninggatan 22", city: "Stockholm", state: "Stockholm County", zip: "111 51", phone: "+46 8 555 0144", lat: "59.3293", lng: "18.0686" }
+        ],
+        "Switzerland": [
+            { street: "Bahnhofstrasse 45", city: "Zürich", state: "Zürich", zip: "8001", phone: "+41 44 555 0177", lat: "47.3769", lng: "8.5417" }
+        ],
+        "South Korea": [
+            { street: "123 Teheran-ro", city: "Seoul", state: "Gangnam-gu", zip: "06234", phone: "+82 2 555 0188", lat: "37.5665", lng: "126.9780" }
+        ],
+        "China": [
+            { street: "100 Chang'an Ave", city: "Beijing", state: "Dongcheng District", zip: "100010", phone: "+86 10 555 0199", lat: "39.9042", lng: "116.4074" }
+        ],
+        "Russia": [
+            { street: "Tverskaya St, 13", city: "Moscow", state: "Moscow City", zip: "125009", phone: "+7 495 555 0122", lat: "55.7558", lng: "37.6173" }
+        ],
+        "Mexico": [
+            { street: "Paseo de la Reforma 222", city: "Mexico City", state: "Cuauhtémoc", zip: "06600", phone: "+52 55 555 0133", lat: "19.4326", lng: "-99.1332" }
+        ],
+        "Argentina": [
+            { street: "Av. Corrientes 1234", city: "Buenos Aires", state: "Federal Capital", zip: "C1043", phone: "+54 11 555 0144", lat: "-34.6037", lng: "-58.3816" }
+        ]
     };
 
     function generateFakeIdentity() {
@@ -1484,26 +1592,31 @@
         const namesArray = nameListObj[chosenGender] || nameListObj['male'];
         const randomName = namesArray[Math.floor(Math.random() * namesArray.length)];
 
-        const addressList = addressDatabase[selectedCountry] || ["123 Main Street, Suite 100, City, Country"];
-        const randomAddress = addressList[Math.floor(Math.random() * addressList.length)];
+        // Get matching country address data or fallback to US
+        const addressList = detailedAddressDatabase[selectedCountry] || detailedAddressDatabase["United States"];
+        const randomAddrObj = addressList[Math.floor(Math.random() * addressList.length)];
 
+        // Generate Random DOB (Age 20 to 40)
         const year = Math.floor(Math.random() * 20) + 1985;
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         const month = months[Math.floor(Math.random() * months.length)];
         const day = Math.floor(Math.random() * 28) + 1;
         const dobStr = `${day} ${month} ${year}`;
 
-        const resName = document.getElementById('resName');
-        const resDob = document.getElementById('resDob');
-        const resAddress = document.getElementById('resAddress');
-        const fakeAvatarIcon = document.getElementById('fakeAvatarIcon');
-        const fakeResultCard = document.getElementById('fakeResultCard');
+        // Populate elements
+        document.getElementById('resName').innerText = randomName;
+        document.getElementById('resDob').innerText = dobStr;
+        document.getElementById('resStreet').innerText = randomAddrObj.street;
+        document.getElementById('resCity').innerText = randomAddrObj.city;
+        document.getElementById('resState').innerText = randomAddrObj.state;
+        document.getElementById('resZip').innerText = randomAddrObj.zip;
+        document.getElementById('resPhone').innerText = randomAddrObj.phone;
+        document.getElementById('resCountry').innerText = selectedCountry;
+        document.getElementById('resLat').innerText = randomAddrObj.lat;
+        document.getElementById('resLng').innerText = randomAddrObj.lng;
 
-        if (resName) resName.innerText = randomName;
-        if (resDob) resDob.innerText = dobStr;
-        if (resAddress) resAddress.innerText = `${randomAddress} (${selectedCountry})`;
-        if (fakeAvatarIcon) fakeAvatarIcon.innerText = (chosenGender === 'male') ? "👨" : "👩";
-        if (fakeResultCard) fakeResultCard.style.display = 'block';
+        document.getElementById('fakeAvatarIcon').innerText = (chosenGender === 'male') ? "👨" : "👩";
+        document.getElementById('fakeResultCard').style.display = 'block';
     }
 
     function copyFakeText(elementId, btnElement) {
