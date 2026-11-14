@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2FA Live Code</title>
+    <script src="https://unpkg.com/otpauth/dist/otpauth.umd.min.js"></script>
+    <style>
+        :root {
+            --bg-body: #f3f4f6;
+            --bg-card: #ffffff;
+            --bg-input: #f9fafb;
+            --bg-subcard: #f8fafc;
+            --text-main: #111827;
+            --text-muted: #64748b;
+            --border-color: #e5e7eb;
+            --teal-primary: #0d9488;
+            --teal-hover: #0f766e;
+            --teal-light: #e6f4f1;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark-mode {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --bg-input: #0f172a;
+            --bg-subcard: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --teal-light: rgba(13, 148, 136, 0.15);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+            border-top: 3px solid var(--teal-primary);
+            padding-bottom: 24px;
+        }
+
+        .navbar {
+            width: 100%;
+            max-width: 440px;
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .brand-logo {
+            background: linear-gradient(135deg, #10b981, #0d9488);
+            color: white;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 10px rgba(13, 148, 136, 0.3);
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-pill {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 999px;
+            height: 36px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-pill:hover {
+            border-color: var(--teal-primary);
+        }
+
+        .nav-circle {
+            width: 36px;
+            padding: 0;
+        }
+
+        .icon-teal {
+            color: var(--teal-primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .lang-select {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.85rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .lang-select option {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        .single-tab-wrapper {
+            width: calc(100% - 32px);
+            max-width: 408px;
+            margin-bottom: 14px;
+        }
+
+        .single-tab-btn {
+            width: 100%;
+            background-color: var(--bg-card);
+            border: 1px solid var(--teal-primary);
+            padding: 12px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--teal-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(13, 148, 136, 0.15);
+        }
+
+        .container {
+            background-color: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            width: calc(100% - 32px);
+            max-width: 408px;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.8rem;
+        }
+
+        .header-icon {
+            background-color: var(--teal-light);
+            color: var(--teal-primary);
+            padding: 7px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h2 {
+            font-size: 1rem;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        textarea {
+            width: 100%;
+            height: 75px;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-main);
+            padding: 12px;
+            resize: none;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin-bottom: 1.25rem;
+            transition: all 0.2s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--teal-primary);
+        }
+
+        .action-btn {
+            width: 100%;
+            background-color: var(--teal-primary);
+            color: white;
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 1.25rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 8px rgba(13, 148, 136, 0.25);
+            transition: background-color 0.2s;
+        }
+
+        .action-btn:hover {
+            background-color: var(--teal-hover);
+        }
+
+        .token-card {
+            background-color: var(--bg-subcard);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .token-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        #code-display {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: 4px;
+            margin-bottom: 0.6rem;
+            font-family: monospace;
+        }
+
+        .timer-container {
+            width: 100%;
+            height: 6px;
+            background-color: var(--border-color);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 1.25rem;
+        }
+
+        .timer-bar {
+            height: 100%;
+            background-color: var(--teal-primary);
+            width: 100%;
+            transition: width 1s linear;
+        }
+
+        .copy-btn {
+            background-color: var(--bg-card);
+            color: var(--teal-primary);
+            border: 1px solid var(--teal-primary);
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            width: 100%;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--teal-light);
+        }
+
+        /* Footer Styles */
+        .footer {
+            width: calc(100% - 32px);
+            max-width: 408px;
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            padding: 0 10px;
+        }
+
+        .footer a {
+            color: var(--teal-primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="brand-logo">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10.5V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12.5"/>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                <path d="m16 19 2 2 4-4"/>
+            </svg>
+        </div>
+
+        <div class="nav-controls">
+            <div class="nav-pill" title="Active Users">
+                <span class="icon-teal">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                    </svg>
+                </span>
+                <span id="active-users" style="color: var(--text-muted);">26052</span>
+            </div>
+
+            <div class="nav-pill nav-circle" title="Guide">
+                <span class="icon-teal">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1z"/>
+                    </svg>
+                </span>
+            </div>
+
+            <div class="nav-pill nav-circle" title="Tutorial">
+                <span class="icon-teal">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                    </svg>
+                </span>
+            </div>
+
+            <div class="nav-pill">
+                <select class="lang-select" id="langSelect" onchange="changeLanguage()">
+                    <option value="en">EN</option>
+                    <option value="bn">BN</option>
+                </select>
+            </div>
+
+            <button class="nav-pill nav-circle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+                <svg id="moonIcon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color: var(--text-muted);">
+                    <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="single-tab-wrapper">
+        <button class="single-tab-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+            <span id="tabText2fa">2FA Key</span>
+        </button>
+    </div>
+
+    <div class="container">
+        <div class="header-title">
+            <div class="header-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+            </div>
+            <h2 id="title2fa">Secret Key</h2>
+        </div>
+        
+        <textarea id="secret" placeholder="e.g. GAXG 243E MR2X QZ..."></textarea>
+        
+        <button class="action-btn" onclick="generateNewCode()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            <span id="btn2fa">Get Code</span>
+        </button>
+        
+        <div class="token-card">
+            <div class="token-label" id="activeTokenText">Active Token</div>
+            <div id="code-display">000000</div>
+            <div class="timer-container">
+                <div class="timer-bar" id="timerBar"></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span id="copyText">Copy Code</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer" id="footerText">
+        Use <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a> online two-factor authentication (2FA) tools to enhance account security. For more information on two-factor authentication, visit authoritative resources or search "fastmailshop.com 2FA tools".<br><br>
+        2FA Copyright © 2026 All rights reserved
+    </div>
+
+<script>
+    let timerInterval;
+    let remainingTime = 15;
+
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        const moonIcon = document.getElementById('moonIcon');
+        
+        if (isDark) {
+            moonIcon.innerHTML = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 0 0 0-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>';
+            moonIcon.style.color = '#facc15';
+        } else {
+            moonIcon.innerHTML = '<path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>';
+            moonIcon.style.color = 'var(--text-muted)';
+        }
+    }
+
+    function changeLanguage() {
+        const lang = document.getElementById('langSelect').value;
+        const footerText = document.getElementById('footerText');
+        if (lang === 'bn') {
+            document.getElementById('tabText2fa').innerText = '২এফএ কি (2FA)';
+            document.getElementById('title2fa').innerText = 'সিক্রেট কি (Secret Key)';
+            document.getElementById('btn2fa').innerText = 'গেট কোড';
+            document.getElementById('activeTokenText').innerText = 'অ্যাক্টিভ টোকেন';
+            document.getElementById('copyText').innerText = 'কোড কপি করুন';
+            footerText.innerHTML = 'অ্যাকাউন্টের সুরক্ষা বাড়াতে <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a>-এর অনলাইন টু-ফ্যাক্টর অথেন্টিকেশন (2FA) টুলস ব্যবহার করুন। টু-ফ্যাক্টর অথেন্টিকেশন সম্পর্কে আরও জানতে নির্ভরযোগ্য উৎস বা "fastmailshop.com 2FA tools" লিখে সার্চ করুন।<br><br>2FA কপিরাইট © ২০২৬ সর্বস্বত্ব সংরক্ষিত';
+        } else {
+            document.getElementById('tabText2fa').innerText = '2FA Key';
+            document.getElementById('title2fa').innerText = 'Secret Key';
+            document.getElementById('btn2fa').innerText = 'Get Code';
+            document.getElementById('activeTokenText').innerText = 'Active Token';
+            document.getElementById('copyText').innerText = 'Copy Code';
+            footerText.innerHTML = 'Use <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a> online two-factor authentication (2FA) tools to enhance account security. For more information on two-factor authentication, visit authoritative resources or search "fastmailshop.com 2FA tools".<br><br>2FA Copyright © 2026 All rights reserved';
+        }
+    }
+
+    setInterval(() => {
+        const userEl = document.getElementById('active-users');
+        let current = parseInt(userEl.innerText);
+        let change = Math.floor(Math.random() * 5) - 2;
+        userEl.innerText = current + change;
+    }, 4000);
+
+    function generateCode() {
+        const secretInput = document.getElementById('secret').value.replace(/\s+/g, '');
+        const display = document.getElementById('code-display');
+        
+        if (!secretInput) {
+            display.innerText = "000000";
+            return;
+        }
+        try {
+            let totp = new OTPAuth.TOTP({
+                issuer: "ACME",
+                label: "User",
+                algorithm: "SHA1",
+                digits: 6,
+                period: 15,
+                secret: OTPAuth.Secret.fromBase32(secretInput)
+            });
+            display.innerText = totp.generate();
+        } catch (e) {
+            display.innerText = "Error";
+        }
+    }
+
+    function generateNewCode() {
+        clearInterval(timerInterval);
+        generateCode();
+        if (document.getElementById('secret').value.replace(/\s+/g, '').length > 0) {
+            startTimer();
+        }
+    }
+
+    function startTimer() {
+        remainingTime = 15;
+        updateTimerBar();
+        timerInterval = setInterval(() => {
+            remainingTime--;
+            updateTimerBar();
+            if (remainingTime <= 0) {
+                generateCode();
+                remainingTime = 15;
+            }
+        }, 1000);
+    }
+
+    function updateTimerBar() {
+        const percentage = (remainingTime / 15) * 100;
+        document.getElementById('timerBar').style.width = percentage + "%";
+    }
+
+    function copyCode() {
+        const code = document.getElementById('code-display').innerText;
+        const lang = document.getElementById('langSelect').value;
+        if(code !== "000000" && code !== "Error") {
+            navigator.clipboard.writeText(code);
+            const copyText = document.getElementById('copyText');
+            copyText.innerText = lang === 'bn' ? "কপি হয়েছে!" : "Copied!";
+            setTimeout(() => {
+                copyText.innerText = lang === 'bn' ? "কোড কপি করুন" : "Copy Code";
+            }, 1500);
+        }
+    }
+
+    document.getElementById('secret').addEventListener('input', () => {
+        clearInterval(timerInterval);
+        document.getElementById('code-display').innerText = "000000";
+        document.getElementById('timerBar').style.width = "100%";
+    });
+</script>
+
+</body>
+</html>
