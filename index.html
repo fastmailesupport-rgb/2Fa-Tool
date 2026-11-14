@@ -427,37 +427,6 @@
             font-weight: 600;
         }
 
-        .note-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .note-act-btn {
-            background-color: var(--bg-subcard);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .note-act-btn:hover {
-            border-color: var(--teal-primary);
-            color: var(--teal-primary);
-        }
-
-        .note-act-btn:active {
-            transform: scale(0.94);
-        }
-
-        .note-act-btn.danger:hover {
-            border-color: #ef4444;
-            color: #ef4444;
-        }
-
         #noteArea {
             height: 220px !important;
             font-size: 0.95rem !important;
@@ -510,6 +479,64 @@
             background-color: var(--teal-light);
             color: var(--teal-primary);
             transform: scale(1.02);
+        }
+
+        /* Notepad Bottom Action Buttons (Download & Clear side-by-side) */
+        .notepad-btn-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .notepad-download-btn {
+            flex: 2;
+            background-color: var(--teal-primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 8px rgba(13, 148, 136, 0.25);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .notepad-download-btn:hover {
+            background-color: var(--teal-hover);
+        }
+
+        .notepad-download-btn:active {
+            transform: scale(0.97);
+        }
+
+        .notepad-clear-btn {
+            flex: 1;
+            background-color: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .notepad-clear-btn:hover {
+            background-color: #fca5a5;
+            color: #991b1b;
+        }
+
+        .notepad-clear-btn:active {
+            transform: scale(0.97);
         }
 
         /* Footer SEO Box Styling */
@@ -646,13 +673,9 @@
             </div>
             <p class="sub-desc" id="descNote">Write or paste your notes, codes, or credentials and download them instantly.</p>
             
-            <!-- Toolbar inside notepad -->
+            <!-- Toolbar inside notepad (Only Character Count) -->
             <div class="notepad-toolbar">
                 <span id="wordCount" class="char-count">0 Characters</span>
-                <div class="note-actions">
-                    <button class="note-act-btn" onclick="pasteToNote()">📋 Paste</button>
-                    <button class="note-act-btn danger" onclick="clearNote()">🗑️ Clear</button>
-                </div>
             </div>
 
             <textarea id="noteArea" oninput="updateNoteStats()" placeholder="Type or paste your text here..."></textarea>
@@ -673,10 +696,17 @@
                 </div>
             </div>
 
-            <button class="action-btn" style="width: 100%;" onclick="downloadNoteFile()">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                <span id="btnDownload">Download File</span>
-            </button>
+            <!-- Bottom Action Row: Download & Clear side-by-side -->
+            <div class="notepad-btn-row">
+                <button class="notepad-download-btn" onclick="downloadNoteFile()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span id="btnDownload">Download</span>
+                </button>
+                <button class="notepad-clear-btn" onclick="clearNote()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    <span id="btnClearNote">Clear</span>
+                </button>
+            </div>
         </div>
 
     </div>
@@ -739,7 +769,8 @@
             document.getElementById('titleNote').innerText = 'স্মার্ট নোটপ্যাড';
             document.getElementById('descNote').innerText = 'আপনার নোট বা টেক্সট এখানে লিখে সরাসরি ফাইল ডাউনলোড করুন।';
             document.getElementById('formatLabel').innerText = 'ফরম্যাট সিলেক্ট করুন:';
-            document.getElementById('btnDownload').innerText = 'ফাইল ডাউনলোড করুন';
+            document.getElementById('btnDownload').innerText = 'ডাউনলোড';
+            document.getElementById('btnClearNote').innerText = 'ক্লিয়ার';
             document.getElementById('noteArea').placeholder = 'এখানে আপনার লেখা বা নোট লিখুন বা পেস্ট করুন...';
             document.getElementById('footerText').innerHTML = 'অ্যাকাউন্টের নিরাপত্তা বাড়াতে <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a>-এর অনলাইন টু-ফ্যাক্টর অথেন্টিকেশন (2FA) টুলস ব্যবহার করুন। দ্বিমুখী প্রমাণীকরণ সম্পর্কে আরও জানতে বিশ্বস্ত সোর্স বা "fastmailshop.com 2FA tools" লিখে সার্চ করুন।';
         } else {
@@ -754,7 +785,8 @@
             document.getElementById('titleNote').innerText = 'Smart Notepad';
             document.getElementById('descNote').innerText = 'Write or paste your notes, codes, or credentials and download them instantly.';
             document.getElementById('formatLabel').innerText = 'Select Format:';
-            document.getElementById('btnDownload').innerText = 'Download File';
+            document.getElementById('btnDownload').innerText = 'Download';
+            document.getElementById('btnClearNote').innerText = 'Clear';
             document.getElementById('noteArea').placeholder = 'Type or paste your text here...';
             document.getElementById('footerText').innerHTML = 'Use <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a> online two-factor authentication (2FA) tools to enhance account security. For more information on two-factor authentication, visit authoritative resources or search "fastmailshop.com 2FA tools".';
         }
@@ -876,17 +908,6 @@
             localStorage.removeItem('smart_notepad_data');
             updateNoteStats();
             noteArea.focus();
-        }
-    }
-
-    async function pasteToNote() {
-        try {
-            const text = await navigator.clipboard.readText();
-            noteArea.value += (noteArea.value ? '\n' : '') + text;
-            updateNoteStats();
-        } catch (err) {
-            const lang = document.getElementById('langSelect').value;
-            alert(lang === 'bn' ? 'বক্সের ভেতর চেপে ধরে Paste করুন।' : 'Please long-press inside the box to paste.');
         }
     }
 
