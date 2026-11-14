@@ -727,11 +727,11 @@
             transition: all 0.25s ease;
         }
 
-        /* Neon Click / Tap Glow Animation Effect */
+        /* Neon Click / Tap Glow Animation Effect when tapped/clicked */
         .gallery-item.clicked {
             border-color: #10b981 !important;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.8), 0 0 5px rgba(13, 148, 136, 0.9);
-            transform: scale(0.97);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.9), 0 0 5px rgba(13, 148, 136, 0.9);
+            transform: scale(0.96);
         }
 
         .gallery-img-wrapper {
@@ -779,10 +779,9 @@
             transition: background 0.2s;
         }
 
-        .download-img-btn:active {
+        .download-img-btn:hover {
             background-color: var(--teal-primary);
             color: white;
-            box-shadow: 0 0 10px rgba(13, 148, 136, 0.8);
         }
 
         /* Notepad Toolbar */
@@ -1295,7 +1294,6 @@
                 
                 // Add Neon Glow click effect when user taps/clicks the image card
                 item.addEventListener('click', (e) => {
-                    // Prevent triggering double if download button is clicked directly
                     if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
                     
                     item.classList.add('clicked');
@@ -1303,7 +1301,6 @@
                         item.classList.remove('clicked');
                     }, 400);
 
-                    // Optional: trigger download on card click too
                     downloadImage(imageUrl, `Professional_${gender}_${i}.jpg`);
                 });
 
