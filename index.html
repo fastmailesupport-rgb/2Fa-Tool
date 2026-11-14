@@ -680,7 +680,7 @@
             background-color: var(--teal-light);
         }
 
-        /* Professional Gallery Tab Styles */
+        /* Professional Gallery Tab Styles & Neon Click Glow Effect */
         .gallery-filter-row {
             display: flex;
             gap: 6px;
@@ -717,12 +717,21 @@
 
         .gallery-item {
             background: var(--bg-subcard);
-            border: 1px solid var(--border-color);
+            border: 1.5px solid var(--border-color);
             border-radius: 10px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             position: relative;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        /* Neon Click / Tap Glow Animation Effect */
+        .gallery-item.clicked {
+            border-color: #10b981 !important;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.8), 0 0 5px rgba(13, 148, 136, 0.9);
+            transform: scale(0.97);
         }
 
         .gallery-img-wrapper {
@@ -770,9 +779,10 @@
             transition: background 0.2s;
         }
 
-        .download-img-btn:hover {
+        .download-img-btn:active {
             background-color: var(--teal-primary);
             color: white;
+            box-shadow: 0 0 10px rgba(13, 148, 136, 0.8);
         }
 
         /* Notepad Toolbar */
@@ -1184,7 +1194,7 @@
                 </div>
                 <h2 id="titlePhotos">Professional Photos</h2>
             </div>
-            <p class="sub-desc" id="descPhotos">Browse professional corporate portrait photos (suit & tie / professional attire) and download them instantly.</p>
+            <p class="sub-desc" id="descPhotos">Browse professional corporate portrait photos and tap any photo to download instantly.</p>
             
             <!-- Filter Buttons -->
             <div class="gallery-filter-row">
@@ -1267,31 +1277,42 @@
         if(activeSec) activeSec.classList.add('active');
     }
 
-    // Populate Photo Gallery with Professional Corporate Portrait Photos
+    // Populate Photo Gallery with Fast & Reliable Professional Headshots + Click Neon Glow Effect
     document.addEventListener("DOMContentLoaded", () => {
         const galleryGrid = document.getElementById('galleryGrid');
         if (galleryGrid) {
             galleryGrid.innerHTML = '';
-            // Generate 100 professional photos (50 male, 50 female in suits/professional attire)
             for (let i = 1; i <= 100; i++) {
                 const isMale = i % 2 === 0;
                 const gender = isMale ? 'male' : 'female';
-                // Specific curated ID ranges from Unsplash representing professional corporate headshots
-                const photoIds = isMale ? 
-                    [500, 501, 505, 507, 512, 514, 519, 522, 532, 534, 537, 541, 547, 552, 557, 560, 564, 567, 570, 578, 586, 589, 592, 595, 599] : 
-                    [531, 533, 535, 544, 548, 550, 554, 559, 566, 573, 576, 580, 582, 584, 588, 590, 593, 596, 600, 602, 605, 609, 611, 614, 618];
+                const idNum = (i % 70) + 1;
                 
-                const randomId = photoIds[(i - 1) % photoIds.length] + Math.floor(i / photoIds.length);
-                const imageUrl = `https://picsum.photos/id/${randomId}/400/400`;
+                // 100% Reliable professional corporate portrait API source
+                const imageUrl = `https://randomuser.me/api/portraits/${gender === 'male' ? 'men' : 'women'}/${idNum}.jpg`;
                 
                 const item = document.createElement('div');
                 item.className = `gallery-item ${gender}`;
+                
+                // Add Neon Glow click effect when user taps/clicks the image card
+                item.addEventListener('click', (e) => {
+                    // Prevent triggering double if download button is clicked directly
+                    if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
+                    
+                    item.classList.add('clicked');
+                    setTimeout(() => {
+                        item.classList.remove('clicked');
+                    }, 400);
+
+                    // Optional: trigger download on card click too
+                    downloadImage(imageUrl, `Professional_${gender}_${i}.jpg`);
+                });
+
                 item.innerHTML = `
                     <div class="gallery-img-wrapper">
                         <span class="gender-badge ${isMale ? 'badge-male' : 'badge-female'}">${isMale ? 'Male Pro' : 'Female Pro'}</span>
                         <img src="${imageUrl}" alt="Professional ${gender} photo ${i}" class="gallery-img" loading="lazy">
                     </div>
-                    <button class="download-img-btn" onclick="downloadImage('${imageUrl}', 'Professional_${gender}_${i}.jpg')">
+                    <button class="download-img-btn" onclick="triggerGlowAndDownload(this, '${imageUrl}', 'Professional_${gender}_${i}.jpg')">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                         Download
                     </button>
@@ -1301,7 +1322,18 @@
         }
     });
 
-    // Direct Image Download Function (Forces file download to device instead of opening new tab)
+    // Glow Effect + Direct Image Download Function
+    function triggerGlowAndDownload(btnElement, url, filename) {
+        const card = btnElement.closest('.gallery-item');
+        if (card) {
+            card.classList.add('clicked');
+            setTimeout(() => {
+                card.classList.remove('clicked');
+            }, 400);
+        }
+        downloadImage(url, filename);
+    }
+
     function downloadImage(url, filename) {
         fetch(url, { mode: 'cors' })
             .then(response => response.blob())
@@ -1317,7 +1349,6 @@
                 document.body.removeChild(a);
             })
             .catch(() => {
-                // Fallback link if CORS blocks direct blob fetch
                 const a = document.createElement('a');
                 a.href = url;
                 a.target = '_blank';
@@ -1382,7 +1413,7 @@
             setTxt('activeTokenText', 'অ্যাক্টিভ টোকেন');
             setTxt('copyText', 'কোড কপি করুন');
             setTxt('titlePhotos', 'প্রফেশনাল ফটোস');
-            setTxt('descPhotos', 'স্যুট-টুট পরা প্রফেশনাল জব হোল্ডার ও এক্সিকিউটিভদের ছবি ব্রাউজ করুন এবং সরাসরি ডাউনলোড করুন।');
+            setTxt('descPhotos', 'প্রফেশনাল কর্পোরেট পোর্ট্রেট ছবি ব্রাউজ করুন এবং যেকোনো ইমেজে ট্যাপ করে ইনস্ট্যান্ট ডাউনলোড করুন।');
             setTxt('filterAll', 'সব ছবি');
             setTxt('filterMale', '👨 প্রফেশনাল পুরুষ');
             setTxt('filterFemale', '👩 প্রফেশনাল নারী');
@@ -1419,7 +1450,7 @@
             setTxt('activeTokenText', 'Active Token');
             setTxt('copyText', 'Copy Code');
             setTxt('titlePhotos', 'Professional Photos');
-            setTxt('descPhotos', 'Browse professional corporate portrait photos (suit & tie / professional attire) and download them instantly.');
+            setTxt('descPhotos', 'Browse professional corporate portrait photos and tap any photo to download instantly.');
             setTxt('filterAll', 'All Photos');
             setTxt('filterMale', '👨 Male Pro');
             setTxt('filterFemale', '👩 Female Pro');
