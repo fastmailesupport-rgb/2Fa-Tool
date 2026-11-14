@@ -478,17 +478,33 @@
             font-weight: 700;
         }
 
+        /* Enhanced Highlighted Field Boxes */
         .field-box {
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 7px 10px;
-            border-radius: 8px;
-            margin-bottom: 6px;
+            border: 1.5px solid var(--teal-primary);
+            box-shadow: 0 2px 8px rgba(13, 148, 136, 0.08);
+            padding: 9px 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
             font-size: 0.82rem;
             text-align: left;
+            transition: transform 0.15s ease;
+        }
+
+        .field-box:hover {
+            border-color: #0f766e;
+            box-shadow: 0 3px 12px rgba(13, 148, 136, 0.15);
+        }
+
+        /* Special Larger Highlighted Box specifically for Name */
+        .field-box.name-highlight-box {
+            background: var(--teal-light);
+            border: 2px solid var(--teal-primary);
+            padding: 12px 14px;
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.12);
         }
 
         .field-info span {
@@ -506,16 +522,30 @@
             color: var(--text-main);
         }
 
+        /* Large Prominent Name Styling */
+        .field-value.large-name-text {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--teal-primary);
+            letter-spacing: -0.2px;
+            margin-top: 2px;
+        }
+
+        body.dark-mode .field-value.large-name-text {
+            color: #2dd4bf;
+        }
+
         .copy-sm-btn {
             background: var(--teal-light);
             border: 1px solid var(--teal-primary);
-            padding: 4px 8px;
+            padding: 5px 10px;
             border-radius: 6px;
             cursor: pointer;
             color: var(--teal-primary);
-            font-size: 0.72rem;
-            font-weight: 600;
+            font-size: 0.75rem;
+            font-weight: 700;
             transition: all 0.2s;
+            flex-shrink: 0;
         }
 
         .copy-sm-btn:hover {
@@ -928,7 +958,7 @@
             </div>
         </div>
 
-        <!-- TAB 3: FAKE NAME GENERATOR (Comprehensive Country & Name Sets) -->
+        <!-- TAB 3: FAKE NAME GENERATOR (Highlighted Boxes & Large Name Card) -->
         <div id="sectionFake" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1023,16 +1053,16 @@
                 <span id="btnGenerateFake">Generate Identity</span>
             </button>
 
-            <!-- Result Box with Name -> DOB -> Address sequence -->
+            <!-- Result Box with Prominent Large Name & Highlighted Fields -->
             <div class="result-card" id="fakeResultCard">
                 <div class="avatar-placeholder" id="fakeAvatarIcon">👨</div>
                 <div class="identity-title" id="resIdentityTitle">Your Randomly Generated Identity</div>
                 
-                <!-- 1. Full Name -->
-                <div class="field-box">
+                <!-- 1. Full Name (Large Text & Prominent Highlight Box) -->
+                <div class="field-box name-highlight-box">
                     <div class="field-info">
                         <span class="field-label" id="resLabelName">Full Name</span>
-                        <span class="field-value" id="resName">Matthew T. Gonzales</span>
+                        <span class="field-value large-name-text" id="resName">Matthew T. Gonzales</span>
                     </div>
                     <button class="copy-sm-btn" onclick="copyFakeText('resName', this)">Copy</button>
                 </div>
