@@ -898,7 +898,7 @@
                 </div>
                 <h2 id="titleFake">Fake Identity Generator</h2>
             </div>
-            <p class="sub-desc" id="descFake">Generate random names, addresses, and identity details instantly.</p>
+            <p class="sub-desc" id="descFake">Generate random names, dates of birth, and addresses instantly.</p>
             
             <div class="fake-form-group">
                 <label class="fake-label" id="labelGender">Gender</label>
@@ -921,9 +921,21 @@
             <div class="fake-form-group">
                 <label class="fake-label" id="labelCountry">Country</label>
                 <select class="fake-select" id="fakeCountry">
-                    <option value="us">United States</option>
-                    <option value="uk">United Kingdom</option>
-                    <option value="au">Australia</option>
+                    <option value="United States">United States</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="Canada">Canada</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Germany">Germany</option>
+                    <option value="France">France</option>
+                    <option value="Japan">Japan</option>
+                    <option value="India">India</option>
+                    <option value="Bangladesh">Bangladesh</option>
+                    <option value="Brazil">Brazil</option>
+                    <option value="Italy">Italy</option>
+                    <option value="Spain">Spain</option>
+                    <option value="Netherlands">Netherlands</option>
+                    <option value="Sweden">Sweden</option>
+                    <option value="Switzerland">Switzerland</option>
                 </select>
             </div>
 
@@ -932,25 +944,36 @@
                 <span id="btnGenerateFake">Generate Identity</span>
             </button>
 
-            <!-- Result Box -->
+            <!-- Result Box with Name, DOB, Address sequence -->
             <div class="result-card" id="fakeResultCard">
                 <div class="avatar-placeholder" id="fakeAvatarIcon">👨</div>
                 <div class="identity-title" id="resIdentityTitle">Your Randomly Generated Identity</div>
                 
+                <!-- 1. Full Name -->
                 <div class="field-box">
                     <div class="field-info">
                         <span class="field-label" id="resLabelName">Full Name</span>
                         <span class="field-value" id="resName">Matthew T. Gonzales</span>
                     </div>
-                    <button class="copy-sm-btn" id="copyBtnName" onclick="copyFakeText('resName', this)">Copy</button>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resName', this)">Copy</button>
                 </div>
 
+                <!-- 2. Date of Birth -->
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label" id="resLabelDob">Date of Birth</span>
+                        <span class="field-value" id="resDob">15 July 1995</span>
+                    </div>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resDob', this)">Copy</button>
+                </div>
+
+                <!-- 3. Address -->
                 <div class="field-box">
                     <div class="field-info">
                         <span class="field-label" id="resLabelAddress">Address</span>
                         <span class="field-value" id="resAddress">1483 Better Street, Overland Park, KS 66210</span>
                     </div>
-                    <button class="copy-sm-btn" id="copyBtnAddress" onclick="copyFakeText('resAddress', this)">Copy</button>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resAddress', this)">Copy</button>
                 </div>
             </div>
         </div>
@@ -1030,13 +1053,14 @@
             document.getElementById('noteArea').placeholder = 'এখানে আপনার নোট পেস্ট বা টাইপ করুন...';
             
             document.getElementById('titleFake').innerText = 'ফেক আইডি জেনারেটর';
-            document.getElementById('descFake').innerText = 'খুব সহজেই রেন্ডম নাম, ঠিকানা এবং পরিচয় জেনারেট করুন।';
+            document.getElementById('descFake').innerText = 'খুব সহজেই রেন্ডম নাম, জন্মতারিখ এবং ঠিকানা জেনারেট করুন।';
             document.getElementById('labelGender').innerText = 'লিঙ্গ (Gender)';
             document.getElementById('labelNameSet').innerText = 'নামের সেট (Name Set)';
             document.getElementById('labelCountry').innerText = 'দেশ (Country)';
             document.getElementById('btnGenerateFake').innerText = 'আইডেন্টিটি জেনারেট করুন';
             document.getElementById('resIdentityTitle').innerText = 'আপনার রেন্ডমলি জেনারেটেড আইডি';
             document.getElementById('resLabelName').innerText = 'পূর্ণ নাম';
+            document.getElementById('resLabelDob').innerText = 'জন্মতারিখ';
             document.getElementById('resLabelAddress').innerText = 'ঠিকানা';
             document.getElementById('footerText').innerHTML = 'অ্যাকাউন্টের নিরাপত্তা বাড়াতে <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a>-এর অনলাইন টুলস ব্যবহার করুন।';
         } else {
@@ -1058,13 +1082,14 @@
             document.getElementById('noteArea').placeholder = 'Paste or type your notes here...';
             
             document.getElementById('titleFake').innerText = 'Fake Identity Generator';
-            document.getElementById('descFake').innerText = 'Generate random names, addresses, and identity details instantly.';
+            document.getElementById('descFake').innerText = 'Generate random names, dates of birth, and addresses instantly.';
             document.getElementById('labelGender').innerText = 'Gender';
             document.getElementById('labelNameSet').innerText = 'Name Set';
             document.getElementById('labelCountry').innerText = 'Country';
             document.getElementById('btnGenerateFake').innerText = 'Generate Identity';
             document.getElementById('resIdentityTitle').innerText = 'Your Randomly Generated Identity';
             document.getElementById('resLabelName').innerText = 'Full Name';
+            document.getElementById('resLabelDob').innerText = 'Date of Birth';
             document.getElementById('resLabelAddress').innerText = 'Address';
             document.getElementById('footerText').innerHTML = 'Use <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a> online tools to enhance account security and productivity.';
         }
@@ -1229,22 +1254,23 @@
         document.body.removeChild(a);
     }
 
-    // Fake Identity Generator Logic
+    // Fake Identity Generator Logic (With Name, DOB, Address sequence)
     const fakeDatabase = {
         male: [
-            { name: "Matthew T. Gonzales", address: "1483 Better Street, Overland Park, KS 66210", icon: "👨" },
-            { name: "John A. Smith", address: "2789 Pinewood Drive, Atlanta, GA 30303", icon: "👨" },
-            { name: "Robert J. Wilson", address: "912 Oakridge Lane, Seattle, WA 98101", icon: "👨" }
+            { name: "Matthew T. Gonzales", dob: "14 July 1995", address: "1483 Better Street, Overland Park, KS 66210", icon: "👨" },
+            { name: "John A. Smith", dob: "22 November 1988", address: "2789 Pinewood Drive, Atlanta, GA 30303", icon: "👨" },
+            { name: "Robert J. Wilson", id: 3, dob: "05 March 1992", address: "912 Oakridge Lane, Seattle, WA 98101", icon: "👨" }
         ],
         female: [
-            { name: "Jessica L. Miller", address: "4521 Maple Avenue, Dallas, TX 75201", icon: "👩" },
-            { name: "Sarah J. Davis", address: "1234 Willow Lane, Chicago, IL 60601", icon: "👩" },
-            { name: "Emily R. Taylor", address: "789 Sunset Blvd, Los Angeles, CA 90028", icon: "👩" }
+            { name: "Jessica L. Miller", dob: "10 January 1996", address: "4521 Maple Avenue, Dallas, TX 75201", icon: "👩" },
+            { name: "Sarah J. Davis", dob: "19 August 1990", address: "1234 Willow Lane, Chicago, IL 60601", icon: "👩" },
+            { name: "Emily R. Taylor", dob: "30 December 1994", address: "789 Sunset Blvd, Los Angeles, CA 90028", icon: "👩" }
         ]
     };
 
     function generateFakeIdentity() {
         const genderSelect = document.getElementById('fakeGender').value;
+        const selectedCountry = document.getElementById('fakeCountry').value;
         let chosenGender = genderSelect;
         
         if (chosenGender === 'random') {
@@ -1255,7 +1281,8 @@
         const randomItem = list[Math.floor(Math.random() * list.length)];
 
         document.getElementById('resName').innerText = randomItem.name;
-        document.getElementById('resAddress').innerText = randomItem.address;
+        document.getElementById('resDob').innerText = randomItem.dob;
+        document.getElementById('resAddress').innerText = `${randomItem.address} (${selectedCountry})`;
         document.getElementById('fakeAvatarIcon').innerText = randomItem.icon;
 
         document.getElementById('fakeResultCard').style.display = 'block';
