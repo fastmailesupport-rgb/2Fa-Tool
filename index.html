@@ -348,11 +348,11 @@
             animation: none;
         }
 
-        /* Fake Name 3-Item Inline Row Layout */
+        /* Fake Name 3-Item Inline Row Layout with Icons */
         .fake-row-wrapper {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 6px;
+            gap: 5px;
             margin-bottom: 1rem;
         }
 
@@ -360,7 +360,7 @@
             background-color: var(--bg-subcard);
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            padding: 6px 8px;
+            padding: 5px 6px;
             transition: border-color 0.2s;
         }
 
@@ -368,14 +368,27 @@
             border-color: var(--teal-primary);
         }
 
-        .fake-label {
-            display: block;
-            font-size: 0.65rem;
+        .fake-label-row {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 0.62rem;
             font-weight: 700;
             color: var(--text-muted);
             margin-bottom: 2px;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.2px;
+        }
+
+        .fake-label-row svg {
+            color: var(--teal-primary);
+            flex-shrink: 0;
+        }
+
+        .fake-select-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
         }
 
         .fake-select {
@@ -383,15 +396,28 @@
             background: transparent;
             border: none;
             color: var(--text-main);
-            font-size: 0.78rem;
+            font-size: 0.74rem;
             font-weight: 600;
             outline: none;
             cursor: pointer;
+            appearance: none;
+            padding-right: 14px;
+            text-overflow: ellipsis;
         }
 
         .fake-select option {
             background-color: var(--bg-card);
             color: var(--text-main);
+        }
+
+        /* Dropdown arrow check icon simulation */
+        .select-arrow {
+            position: absolute;
+            right: 0;
+            pointer-events: none;
+            color: var(--teal-primary);
+            display: flex;
+            align-items: center;
         }
 
         .generate-id-btn {
@@ -903,7 +929,7 @@
             </div>
         </div>
 
-        <!-- TAB 3: FAKE NAME GENERATOR (Inline 3-Item Row) -->
+        <!-- TAB 3: FAKE NAME GENERATOR (Inline 3-Item Row with Icons & Tick/Dropdown Arrows) -->
         <div id="sectionFake" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -913,45 +939,72 @@
             </div>
             <p class="sub-desc" id="descFake">Generate random names, dates of birth, and addresses instantly.</p>
             
-            <!-- Inline 3-Item Row for Gender, Name Set, Country -->
+            <!-- Inline 3-Item Row with Icons -->
             <div class="fake-row-wrapper">
+                <!-- 1. Gender -->
                 <div class="fake-field-box">
-                    <label class="fake-label" id="labelGender">Gender</label>
-                    <select class="fake-select" id="fakeGender">
-                        <option value="random">Random</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
+                    <div class="fake-label-row">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        <span id="labelGender">Gender</span>
+                    </div>
+                    <div class="fake-select-wrapper">
+                        <select class="fake-select" id="fakeGender">
+                            <option value="random">Random</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                        <div class="select-arrow">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- 2. Name Set -->
                 <div class="fake-field-box">
-                    <label class="fake-label" id="labelNameSet">Name Set</label>
-                    <select class="fake-select" id="fakeNameSet">
-                        <option value="american">American</option>
-                        <option value="british">British</option>
-                        <option value="australian">Australian</option>
-                    </select>
+                    <div class="fake-label-row">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        <span id="labelNameSet">Name Set</span>
+                    </div>
+                    <div class="fake-select-wrapper">
+                        <select class="fake-select" id="fakeNameSet">
+                            <option value="american">American</option>
+                            <option value="british">British</option>
+                            <option value="australian">Australian</option>
+                        </select>
+                        <div class="select-arrow">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- 3. Country -->
                 <div class="fake-field-box">
-                    <label class="fake-label" id="labelCountry">Country</label>
-                    <select class="fake-select" id="fakeCountry">
-                        <option value="United States">USA</option>
-                        <option value="United Kingdom">UK</option>
-                        <option value="Canada">Canada</option>
-                        <option value="Australia">Australia</option>
-                        <option value="Germany">Germany</option>
-                        <option value="France">France</option>
-                        <option value="Japan">Japan</option>
-                        <option value="India">India</option>
-                        <option value="Bangladesh">Bangladesh</option>
-                        <option value="Brazil">Brazil</option>
-                        <option value="Italy">Italy</option>
-                        <option value="Spain">Spain</option>
-                        <option value="Netherlands">Netherlands</option>
-                        <option value="Sweden">Sweden</option>
-                        <option value="Switzerland">Switzerland</option>
-                    </select>
+                    <div class="fake-label-row">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        <span id="labelCountry">Country</span>
+                    </div>
+                    <div class="fake-select-wrapper">
+                        <select class="fake-select" id="fakeCountry">
+                            <option value="United States">USA</option>
+                            <option value="United Kingdom">UK</option>
+                            <option value="Canada">Canada</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Germany">Germany</option>
+                            <option value="France">France</option>
+                            <option value="Japan">Japan</option>
+                            <option value="India">India</option>
+                            <option value="Bangladesh">Bangladesh</option>
+                            <option value="Brazil">Brazil</option>
+                            <option value="Italy">Italy</option>
+                            <option value="Spain">Spain</option>
+                            <option value="Netherlands">Netherlands</option>
+                            <option value="Sweden">Sweden</option>
+                            <option value="Switzerland">Switzerland</option>
+                        </select>
+                        <div class="select-arrow">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1071,7 +1124,7 @@
             document.getElementById('titleFake').innerText = 'ফেক আইডি জেনারেটর';
             document.getElementById('descFake').innerText = 'খুব সহজেই রেন্ডম নাম, জন্মতারিখ এবং ঠিকানা জেনারেট করুন।';
             document.getElementById('labelGender').innerText = 'লিঙ্গ';
-            document.getElementById('labelNameSet').innerText = 'নেম সেট';
+            document.getElementById('labelNameSet').innerText = 'সেট';
             document.getElementById('labelCountry').innerText = 'দেশ';
             document.getElementById('btnGenerateFake').innerText = 'আইডেন্টিটি জেনারেট করুন';
             document.getElementById('resIdentityTitle').innerText = 'আপনার রেন্ডমলি জেনারেটেড আইডি';
