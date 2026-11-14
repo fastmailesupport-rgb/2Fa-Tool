@@ -680,13 +680,37 @@
             background-color: var(--teal-light);
         }
 
-        /* Photo Gallery Tab Styles */
+        /* Photo Gallery Tab Styles (Enhanced & Fixed) */
+        .gallery-filter-row {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .filter-btn {
+            flex: 1;
+            background: var(--bg-subcard);
+            border: 1px solid var(--border-color);
+            padding: 6px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: var(--teal-primary);
+            color: white;
+            border-color: var(--teal-primary);
+        }
+
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
-            margin-top: 1rem;
-            max-height: 380px;
+            max-height: 360px;
             overflow-y: auto;
             padding-right: 4px;
         }
@@ -698,30 +722,47 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            transition: transform 0.2s;
+            position: relative;
         }
 
-        .gallery-item:hover {
-            transform: scale(1.02);
+        .gallery-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 120px;
+            background: #e2e8f0;
         }
 
         .gallery-img {
             width: 100%;
-            height: 120px;
+            height: 100%;
             object-fit: cover;
             display: block;
         }
+
+        .gender-badge {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .badge-male { background-color: #3b82f6; }
+        .badge-female { background-color: #ec4899; }
 
         .download-img-btn {
             background-color: var(--teal-light);
             color: var(--teal-primary);
             border: none;
-            padding: 8px;
+            padding: 7px;
             font-size: 0.72rem;
             font-weight: 700;
             cursor: pointer;
             text-align: center;
-            text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -904,7 +945,7 @@
         </div>
     </div>
 
-    <!-- 4-Tab Switcher Layout (2FA -> Fake Name -> Photos -> Notepad) -->
+    <!-- 4-Tab Switcher Layout -->
     <div class="tab-wrapper">
         <button class="tab-btn active" id="tabBtn2fa" onclick="switchTab('2fa')">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
@@ -922,7 +963,7 @@
         </button>
 
         <button class="tab-btn" id="tabBtnNote" onclick="switchTab('note')">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            <switchTab('note')><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             <span id="tabTextNote">Note</span>
         </button>
     </div>
@@ -1135,16 +1176,23 @@
             </div>
         </div>
 
-        <!-- TAB 3: PHOTOS GALLERY & DOWNLOAD -->
+        <!-- TAB 3: PHOTOS GALLERY & DOWNLOAD (Fixed & Enhanced) -->
         <div id="sectionPhotos" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                 </div>
-                <h2 id="titlePhotos">Stock Photos</h2>
+                <h2 id="titlePhotos">Model Photos</h2>
             </div>
-            <p class="sub-desc" id="descPhotos">Browse through high-quality photos and download them directly for your projects.</p>
+            <p class="sub-desc" id="descPhotos">Browse male and female portrait photos and download them directly to your phone.</p>
             
+            <!-- Filter Buttons -->
+            <div class="gallery-filter-row">
+                <button class="filter-btn active" onclick="filterGallery('all', this)" id="filterAll">All Photos</button>
+                <button class="filter-btn" onclick="filterGallery('male', this)" id="filterMale">👨 Male</button>
+                <button class="filter-btn" onclick="filterGallery('female', this)" id="filterFemale">👩 Female</button>
+            </div>
+
             <div class="gallery-grid" id="galleryGrid">
                 <!-- Dynamically injected photos via JavaScript -->
             </div>
@@ -1203,66 +1251,90 @@
     </div>
 
 <script>
-    // Switch Between Tabs (2FA, Fake Name, Photos, Note)
+    // Switch Between Tabs
     function switchTab(tab) {
-        const btn2fa = document.getElementById('tabBtn2fa');
-        const btnFake = document.getElementById('tabBtnFake');
-        const btnPhotos = document.getElementById('tabBtnPhotos');
-        const btnNote = document.getElementById('tabBtnNote');
+        const tabs = ['2fa', 'fake', 'photos', 'note'];
+        tabs.forEach(t => {
+            const btn = document.getElementById(`tabBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
+            const sec = document.getElementById(`section${t.charAt(0).toUpperCase() + t.slice(1)}`);
+            if(btn) btn.classList.remove('active');
+            if(sec) sec.classList.remove('active');
+        });
         
-        const sec2fa = document.getElementById('section2fa');
-        const secFake = document.getElementById('sectionFake');
-        const secPhotos = document.getElementById('sectionPhotos');
-        const secNote = document.getElementById('sectionNote');
-
-        if (!btn2fa || !btnFake || !btnPhotos || !btnNote) return;
-
-        btn2fa.classList.remove('active');
-        btnFake.classList.remove('active');
-        btnPhotos.classList.remove('active');
-        btnNote.classList.remove('active');
-        
-        sec2fa.classList.remove('active');
-        secFake.classList.remove('active');
-        secPhotos.classList.remove('active');
-        secNote.classList.remove('active');
-
-        if (tab === '2fa') {
-            btn2fa.classList.add('active');
-            sec2fa.classList.add('active');
-        } else if (tab === 'fake') {
-            btnFake.classList.add('active');
-            secFake.classList.add('active');
-        } else if (tab === 'photos') {
-            btnPhotos.classList.add('active');
-            secPhotos.classList.add('active');
-        } else if (tab === 'note') {
-            btnNote.classList.add('active');
-            secNote.classList.add('active');
-        }
+        const activeBtn = document.getElementById(`tabBtn${tab.charAt(0).toUpperCase() + tab.slice(1)}`);
+        const activeSec = document.getElementById(`section${tab.charAt(0).toUpperCase() + tab.slice(1)}`);
+        if(activeBtn) activeBtn.classList.add('active');
+        if(activeSec) activeSec.classList.add('active');
     }
 
-    // Populate Photo Gallery (approx 100 images dynamically)
+    // Populate Photo Gallery with Male & Female Portraits (Using reliable RandomUser API)
     document.addEventListener("DOMContentLoaded", () => {
         const galleryGrid = document.getElementById('galleryGrid');
         if (galleryGrid) {
-            for (let i = 1; i <= 100; i++) {
-                const randomSeed = i * 137; // Unique seed for variety
-                const imageUrl = `https://picsum.photos/seed/${randomSeed}/400/400`;
+            galleryGrid.innerHTML = '';
+            // Generate 120 photos (60 male, 60 female)
+            for (let i = 1; i <= 120; i++) {
+                const isMale = i % 2 === 0;
+                const gender = isMale ? 'male' : 'female';
+                const idNum = (i % 90) + 1; // ID range for portraits
+                
+                // Reliable high-speed portrait source
+                const imageUrl = `https://randomuser.me/api/portraits/${gender === 'male' ? 'men' : 'women'}/${idNum}.jpg`;
                 
                 const item = document.createElement('div');
-                item.className = 'gallery-item';
+                item.className = `gallery-item ${gender}`;
                 item.innerHTML = `
-                    <img src="${imageUrl}" alt="Photo ${i}" class="gallery-img" loading="lazy">
-                    <a href="${imageUrl}" download="Model_Photo_${i}.jpg" target="_blank" class="download-img-btn">
+                    <div class="gallery-img-wrapper">
+                        <span class="gender-badge ${isMale ? 'badge-male' : 'badge-female'}">${isMale ? 'Male' : 'Female'}</span>
+                        <img src="${imageUrl}" alt="${gender} photo ${i}" class="gallery-img" loading="lazy">
+                    </div>
+                    <button class="download-img-btn" onclick="downloadImage('${imageUrl}', '${gender}_photo_${i}.jpg')">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                         Download
-                    </a>
+                    </button>
                 `;
                 galleryGrid.appendChild(item);
             }
         }
     });
+
+    // Direct Image Download Function for Mobile & Desktop
+    function downloadImage(url, filename) {
+        fetch(url)
+            .then(response => response.blob())
+            .then(blob => {
+                const blobUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = blobUrl;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(blobUrl);
+                document.body.removeChild(a);
+            })
+            .catch(() => {
+                // Fallback for cross-origin restriction
+                window.open(url, '_blank');
+            });
+    }
+
+    // Filter Gallery (All / Male / Female)
+    function filterGallery(type, btnElement) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btnElement.classList.add('active');
+
+        const items = document.querySelectorAll('.gallery-item');
+        items.forEach(item => {
+            if (type === 'all') {
+                item.style.display = 'flex';
+            } else if (item.classList.contains(type)) {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
 
     // Dark Mode Toggle
     function toggleDarkMode() {
@@ -1300,8 +1372,11 @@
             setTxt('btnClear', 'ক্লিয়ার');
             setTxt('activeTokenText', 'অ্যাক্টিভ টোকেন');
             setTxt('copyText', 'কোড কপি করুন');
-            setTxt('titlePhotos', 'স্টক ফটোস');
-            setTxt('descPhotos', 'প্রয়োজনীয় চমৎকার সব ছবি ব্রাউজ করুন এবং সহজেই ডাউনলোড করুন।');
+            setTxt('titlePhotos', 'মডেল ফটোস');
+            setTxt('descPhotos', 'ছেলে ও মেয়ের পোর্ট্রেট ছবি ব্রাউজ করুন এবং সরাসরি ফোনে ডাউনলোড করুন।');
+            setTxt('filterAll', 'সব ছবি');
+            setTxt('filterMale', '👨 ছেলে');
+            setTxt('filterFemale', '👩 মেয়ে');
             setTxt('titleNote', 'স্মার্ট নোটপ্যাড');
             setTxt('descNote', 'আপনার নোট বা টেক্সট এখানে লিখে সরাসরি ফাইল ডাউনলোড করুন।');
             setTxt('formatLabel', 'ফরম্যাট সিলেক্ট করুন:');
@@ -1334,8 +1409,11 @@
             setTxt('btnClear', 'Clear');
             setTxt('activeTokenText', 'Active Token');
             setTxt('copyText', 'Copy Code');
-            setTxt('titlePhotos', 'Stock Photos');
-            setTxt('descPhotos', 'Browse through high-quality photos and download them directly for your projects.');
+            setTxt('titlePhotos', 'Model Photos');
+            setTxt('descPhotos', 'Browse male and female portrait photos and download them directly to your phone.');
+            setTxt('filterAll', 'All Photos');
+            setTxt('filterMale', '👨 Male');
+            setTxt('filterFemale', '👩 Female');
             setTxt('titleNote', 'Smart Notepad');
             setTxt('descNote', 'Write or paste your notes, codes, or credentials and download them instantly.');
             setTxt('formatLabel', 'Select Format:');
@@ -1543,7 +1621,7 @@
         document.body.removeChild(a);
     }
 
-    // Comprehensive International Fake Identity & Address Database
+    // Fake Identity Database
     const nameDatabase = {
         american: {
             male: ["James A. Smith", "Robert J. Johnson", "Michael W. Williams", "David B. Brown", "William R. Jones", "Joseph M. Miller"],
