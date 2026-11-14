@@ -69,11 +69,20 @@
             margin-bottom: 6px;
         }
 
+        /* Brand Container (Left side) */
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
         .brand-logo {
             background: linear-gradient(135deg, #10b981, #0d9488);
             color: white;
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -84,6 +93,35 @@
 
         .brand-logo:active {
             transform: scale(0.92);
+        }
+
+        /* Neon Glowing Animation Effect for "Fast Mail Shop" */
+        @keyframes neonGlow {
+            0%, 100% {
+                text-shadow: 0 0 5px rgba(13, 148, 136, 0.3), 0 0 10px rgba(16, 185, 129, 0.2);
+                opacity: 0.9;
+            }
+            50% {
+                text-shadow: 0 0 12px rgba(13, 148, 136, 0.8), 0 0 20px rgba(16, 185, 129, 0.5);
+                opacity: 1;
+            }
+        }
+
+        .brand-name {
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #0d9488, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            animation: neonGlow 2.5s infinite ease-in-out;
+        }
+
+        body.dark-mode .brand-name {
+            background: linear-gradient(135deg, #14b8a6, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .nav-controls {
@@ -247,7 +285,7 @@
             line-height: 1.4;
         }
 
-        /* Glowing & Pulsing Border Animation */
+        /* Pulsing Border Animation for Input Boxes */
         @keyframes pulseBorder {
             0% {
                 border-color: var(--teal-primary);
@@ -263,7 +301,7 @@
             }
         }
 
-        /* 1. 2FA Secret Key Box: Fixed Size, Not Resizable */
+        /* 1. 2FA Secret Key Box: Fixed Size */
         #secret {
             width: 100%;
             height: 95px;
@@ -272,7 +310,7 @@
             border-radius: 12px;
             color: var(--text-main);
             padding: 12px;
-            resize: none; /* Fixed size, cannot be dragged */
+            resize: none;
             font-family: monospace;
             font-size: 0.88rem;
             margin-bottom: 1rem;
@@ -288,16 +326,16 @@
             animation: none;
         }
 
-        /* 2. Notepad Box: Larger & Resizable vertically */
+        /* 2. Notepad Box: Resizable Vertically */
         #noteArea {
             width: 100%;
-            height: 250px; /* Bigger initial height */
+            height: 250px;
             background-color: var(--bg-input);
             border: 2px solid var(--teal-primary);
             border-radius: 12px;
             color: var(--text-main);
             padding: 12px;
-            resize: vertical; /* Can be resized vertically */
+            resize: vertical;
             font-family: monospace;
             font-size: 0.95rem;
             margin-bottom: 1rem;
@@ -519,7 +557,7 @@
             transform: scale(1.02);
         }
 
-        /* Notepad Bottom Action Buttons (Download & Clear side-by-side) */
+        /* Notepad Bottom Action Buttons */
         .notepad-btn-row {
             display: flex;
             gap: 8px;
@@ -611,13 +649,17 @@
 
     <!-- Top Navigation Bar -->
     <div class="navbar">
-        <div class="brand-logo" onclick="this.style.transform='rotate(360deg)'; setTimeout(()=>this.style.transform='none', 400);">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 10.5V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12.5"/>
-                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-                <path d="m16 19 2 2 4-4"/>
-            </svg>
-        </div>
+        <a href="https://fastmailshop.com" target="_blank" class="brand-container">
+            <div class="brand-logo" onclick="this.style.transform='rotate(360deg)'; setTimeout(()=>this.style.transform='none', 400);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 10.5V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12.5"/>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    <path d="m16 19 2 2 4-4"/>
+                </svg>
+            </div>
+            <!-- Neon Glowing Fast Mail Shop Name -->
+            <span class="brand-name">Fast Mail Shop</span>
+        </a>
 
         <div class="nav-controls">
             <div class="nav-pill" title="Active Users">
@@ -970,7 +1012,7 @@
         } 
         else if (format === 'pdf') {
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
+            The doc = new jsPDF();
             const lines = doc.splitTextToSize(text, 180);
             doc.text(lines, 15, 20);
             doc.save(`${fileName}.pdf`);
