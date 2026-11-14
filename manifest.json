@@ -1,0 +1,15 @@
+{
+"name": "2FA Live Code",
+"short_name": "2FA",
+"start_url": "/2Fa-Tool/",
+"display": "standalone",
+"background_color": "#ffffff",
+"theme_color": "#009488",
+"icons": [
+{
+"src": "https://cdn-icons-png.flaticon.com/512/6195/6195699.png",
+"sizes": "512x512",
+"type": "image/png"
+}
+]
+}
