@@ -247,7 +247,7 @@
             line-height: 1.4;
         }
 
-        /* Unique Glowing & Pulsing Border Animation for Input Boxes */
+        /* Glowing & Pulsing Border Animation */
         @keyframes pulseBorder {
             0% {
                 border-color: var(--teal-primary);
@@ -263,14 +263,16 @@
             }
         }
 
-        textarea {
+        /* 1. 2FA Secret Key Box: Fixed Size, Not Resizable */
+        #secret {
             width: 100%;
+            height: 95px;
             background-color: var(--bg-input);
             border: 2px solid var(--teal-primary);
             border-radius: 12px;
             color: var(--text-main);
             padding: 12px;
-            resize: vertical;
+            resize: none; /* Fixed size, cannot be dragged */
             font-family: monospace;
             font-size: 0.88rem;
             margin-bottom: 1rem;
@@ -279,11 +281,32 @@
             line-height: 1.45;
         }
 
-        #secret {
-            height: 70px;
+        #secret:focus {
+            outline: none;
+            border-color: #0d9488;
+            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.25);
+            animation: none;
         }
 
-        textarea:focus {
+        /* 2. Notepad Box: Larger & Resizable vertically */
+        #noteArea {
+            width: 100%;
+            height: 250px; /* Bigger initial height */
+            background-color: var(--bg-input);
+            border: 2px solid var(--teal-primary);
+            border-radius: 12px;
+            color: var(--text-main);
+            padding: 12px;
+            resize: vertical; /* Can be resized vertically */
+            font-family: monospace;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            animation: pulseBorder 3s infinite;
+            transition: all 0.2s;
+            line-height: 1.5;
+        }
+
+        #noteArea:focus {
             outline: none;
             border-color: #0d9488;
             box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.25);
@@ -434,7 +457,7 @@
             transform: scale(0.97);
         }
 
-        /* Notepad Specific Styles (Bigger & Clearer) */
+        /* Notepad Toolbar */
         .notepad-toolbar {
             display: flex;
             justify-content: space-between;
@@ -446,12 +469,6 @@
             font-size: 0.82rem;
             color: var(--text-muted);
             font-weight: 600;
-        }
-
-        #noteArea {
-            height: 220px !important;
-            font-size: 0.95rem !important;
-            line-height: 1.5;
         }
 
         /* Format selector radios */
