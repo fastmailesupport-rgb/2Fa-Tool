@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2FA & Smart Notepad Tool</title>
+    <title>Fast Mail Shop - 2FA, Notepad & Fake Identity Generator</title>
     <!-- OTPAuth Library for Real 2FA Code Generation -->
     <script src="https://unpkg.com/otpauth/dist/otpauth.umd.min.js"></script>
     <!-- jsPDF Library for PDF Export -->
@@ -69,7 +69,6 @@
             margin-bottom: 6px;
         }
 
-        /* Neon Glowing Box Effect for Brand Container */
         @keyframes neonBoxGlow {
             0%, 100% {
                 border-color: rgba(13, 148, 136, 0.5);
@@ -155,10 +154,6 @@
             border-color: var(--teal-primary);
         }
 
-        .nav-pill:active {
-            transform: scale(0.94);
-        }
-
         .nav-circle {
             width: 36px;
             padding: 0;
@@ -185,7 +180,7 @@
             color: var(--text-main);
         }
 
-        /* Tab Switcher */
+        /* 3-Tab Switcher Layout */
         .tab-wrapper {
             width: calc(100% - 32px);
             max-width: 408px;
@@ -193,8 +188,8 @@
             padding: 5px;
             border-radius: 14px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
             margin-bottom: 14px;
             border: 1px solid var(--border-color);
         }
@@ -202,16 +197,16 @@
         .tab-btn {
             border: none;
             background: transparent;
-            padding: 10px 12px;
+            padding: 9px 6px;
             border-radius: 10px;
-            font-size: 0.92rem;
+            font-size: 0.82rem;
             font-weight: 600;
             color: var(--text-muted);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 7px;
+            gap: 5px;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -288,7 +283,6 @@
             line-height: 1.4;
         }
 
-        /* Pulsing Border Animation for Input Boxes */
         @keyframes pulseBorder {
             0% {
                 border-color: var(--teal-primary);
@@ -304,7 +298,7 @@
             }
         }
 
-        /* 1. 2FA Secret Key Box: Fixed Size */
+        /* 2FA Secret Key Box */
         #secret {
             width: 100%;
             height: 95px;
@@ -329,7 +323,7 @@
             animation: none;
         }
 
-        /* 2. Notepad Box: Resizable Vertically */
+        /* Notepad Box */
         #noteArea {
             width: 100%;
             height: 250px;
@@ -341,6 +335,948 @@
             resize: vertical;
             font-family: monospace;
             font-size: 0.95rem;
+            margin-bottom: 1rem;
+            animation: pulseBorder 3s infinite;
+            transition: all 0.2s;
+            line-height: 1.5;
+        }
+
+        #noteArea:focus {
+            outline: none;
+            border-color: #0d9488;
+            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.25);
+            animation: none;
+        }
+
+        /* Fake Name Form Inputs */
+        .fake-form-group {
+            margin-bottom: 0.85rem;
+        }
+
+        .fake-label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .fake-select {
+            width: 100%;
+            padding: 10px 12px;
+            background-color: var(--bg-input);
+            border: 2px solid var(--teal-primary);
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 0.88rem;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .fake-select:focus {
+            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.2);
+        }
+
+        .generate-id-btn {
+            width: 100%;
+            background-color: var(--teal-primary);
+            color: white;
+            border: none;
+            padding: 11px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 3px 8px rgba(13, 148, 136, 0.25);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 1rem;
+        }
+
+        .generate-id-btn:hover {
+            background-color: var(--teal-hover);
+        }
+
+        .generate-id-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* Fake Name Output Result Card */
+        .result-card {
+            margin-top: 1.2rem;
+            background-color: var(--bg-subcard);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            display: none;
+        }
+
+        .avatar-placeholder {
+            width: 55px;
+            height: 55px;
+            background-color: var(--teal-light);
+            color: var(--teal-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px auto;
+            font-size: 1.4rem;
+        }
+
+        .identity-title {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.6px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .field-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 7px 10px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            font-size: 0.82rem;
+            text-align: left;
+        }
+
+        .field-info span {
+            display: block;
+        }
+
+        .field-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .field-value {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .copy-sm-btn {
+            background: var(--teal-light);
+            border: 1px solid var(--teal-primary);
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--teal-primary);
+            font-size: 0.72rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .copy-sm-btn:hover {
+            background-color: var(--teal-primary);
+            color: #fff;
+        }
+
+        /* Button Rows */
+        .btn-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1.25rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            background-color: var(--teal-primary);
+            color: white;
+            border: none;
+            padding: 11px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 3px 8px rgba(13, 148, 136, 0.25);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .action-btn:hover {
+            background-color: var(--teal-hover);
+        }
+
+        .clear-btn {
+            background-color: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+            padding: 11px 16px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .clear-btn:hover {
+            background-color: #fca5a5;
+            color: #991b1b;
+        }
+
+        /* 2FA Token Card */
+        .token-card {
+            background-color: var(--bg-subcard);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .token-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.4rem;
+        }
+
+        .token-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            font-weight: 600;
+        }
+
+        .timer-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--teal-primary);
+            background: var(--teal-light);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-family: monospace;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background-color: var(--border-color);
+            border-radius: 999px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 100%;
+            background-color: var(--teal-primary);
+            transition: width 1s linear;
+        }
+
+        #code-display {
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+            font-family: monospace;
+            transition: transform 0.2s ease;
+        }
+
+        .copy-btn {
+            background-color: var(--bg-card);
+            color: var(--teal-primary);
+            border: 1px solid var(--teal-primary);
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            width: 100%;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .copy-btn:hover {
+            background-color: var(--teal-light);
+        }
+
+        /* Notepad Toolbar */
+        .notepad-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .char-count {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .format-selector {
+            margin-bottom: 1rem;
+        }
+
+        .format-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .format-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .format-option {
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-subcard);
+            padding: 8px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-main);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .format-option input {
+            accent-color: var(--teal-primary);
+            margin-right: 4px;
+        }
+
+        .format-option:has(input:checked) {
+            border-color: var(--teal-primary);
+            background-color: var(--teal-light);
+            color: var(--teal-primary);
+            transform: scale(1.02);
+        }
+
+        .notepad-btn-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .notepad-download-btn {
+            flex: 2;
+            background-color: var(--teal-primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 8px rgba(13, 148, 136, 0.25);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .notepad-download-btn:hover {
+            background-color: var(--teal-hover);
+        }
+
+        .notepad-clear-btn {
+            flex: 1;
+            background-color: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .notepad-clear-btn:hover {
+            background-color: #fca5a5;
+            color: #991b1b;
+        }
+
+        .site-footer {
+            width: calc(100% - 32px);
+            max-width: 408px;
+            margin-top: 14px;
+            padding: 12px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .footer-text {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        .footer-text a {
+            color: var(--teal-primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <div class="navbar">
+        <a href="https://fastmailshop.com" target="_blank" class="brand-container">
+            <div class="brand-logo">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 10.5V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12.5"/>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    <path d="m16 19 2 2 4-4"/>
+                </svg>
+            </div>
+            <span class="brand-name">Fast Mail Shop</span>
+        </a>
+
+        <div class="nav-controls">
+            <div class="nav-pill" title="Active Users">
+                <span class="icon-teal">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                    </svg>
+                </span>
+                <span id="active-users" style="color: var(--text-muted);">26052</span>
+            </div>
+
+            <div class="nav-pill">
+                <select class="lang-select" id="langSelect" onchange="changeLanguage()">
+                    <option value="en">EN</option>
+                    <option value="bn">BN</option>
+                </select>
+            </div>
+
+            <button class="nav-pill nav-circle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+                <svg id="moonIcon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color: var(--text-muted);">
+                    <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- 3-Tab Switcher: 1st=2FA Key, 2nd=Note, 3rd=Fake Name -->
+    <div class="tab-wrapper">
+        <button class="tab-btn active" id="tabBtn2fa" onclick="switchTab('2fa')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+            <span id="tabText2fa">2FA Key</span>
+        </button>
+
+        <button class="tab-btn" id="tabBtnNote" onclick="switchTab('note')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            <span id="tabTextNote">Note</span>
+        </button>
+
+        <button class="tab-btn" id="tabBtnFake" onclick="switchTab('fake')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span id="tabTextFake">Fake Name</span>
+        </button>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        
+        <!-- TAB 1: 2FA KEY GENERATOR -->
+        <div id="section2fa" class="tab-content active">
+            <div class="header-title">
+                <div class="header-icon soft">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+                </div>
+                <h2 id="title2fa">Secret Key</h2>
+            </div>
+            <p class="sub-desc" id="desc2fa">Enter your Base32 secret key and click Get Code to generate your 2FA token.</p>
+            
+            <textarea id="secret" placeholder="Paste your Secret Key here..."></textarea>
+            
+            <div class="btn-row">
+                <button class="action-btn" onclick="start2FA()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    <span id="btn2fa">Get Code</span>
+                </button>
+                <button class="clear-btn" onclick="clear2FA()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    <span id="btnClear">Clear</span>
+                </button>
+            </div>
+            
+            <div class="token-card">
+                <div class="token-header-row">
+                    <div class="token-label" id="activeTokenText">Active Token</div>
+                    <div id="timer-display" class="timer-badge">15s</div>
+                </div>
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div id="code-display">000000</div>
+                <button class="copy-btn" onclick="copyCode()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span id="copyText">Copy Code</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- TAB 2: SMART NOTEPAD -->
+        <div id="sectionNote" class="tab-content">
+            <div class="header-title">
+                <div class="header-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </div>
+                <h2 id="titleNote">Smart Notepad</h2>
+            </div>
+            <p class="sub-desc" id="descNote">Write or paste your notes, codes, or credentials and download them instantly.</p>
+            
+            <div class="notepad-toolbar">
+                <span id="wordCount" class="char-count">0 Characters</span>
+            </div>
+
+            <textarea id="noteArea" oninput="updateNoteStats()" placeholder="Paste or type your notes here..."></textarea>
+
+            <div class="format-selector">
+                <span class="format-label" id="formatLabel">Select Format:</span>
+                <div class="format-options">
+                    <label class="format-option">
+                        <input type="radio" name="fileFormat" value="txt" checked> TXT
+                    </label>
+                    <label class="format-option">
+                        <input type="radio" name="fileFormat" value="pdf"> PDF
+                    </label>
+                    <label class="format-option">
+                        <input type="radio" name="fileFormat" value="docx"> DOCX
+                    </label>
+                </div>
+            </div>
+
+            <div class="notepad-btn-row">
+                <button class="notepad-download-btn" onclick="downloadNoteFile()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span id="btnDownload">Download</span>
+                </button>
+                <button class="notepad-clear-btn" onclick="clearNote()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    <span id="btnClearNote">Clear</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- TAB 3: FAKE NAME GENERATOR -->
+        <div id="sectionFake" class="tab-content">
+            <div class="header-title">
+                <div class="header-icon soft">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </div>
+                <h2 id="titleFake">Fake Identity Generator</h2>
+            </div>
+            <p class="sub-desc" id="descFake">Generate random names, addresses, and identity details instantly.</p>
+            
+            <div class="fake-form-group">
+                <label class="fake-label" id="labelGender">Gender</label>
+                <select class="fake-select" id="fakeGender">
+                    <option value="random">Random</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            <div class="fake-form-group">
+                <label class="fake-label" id="labelNameSet">Name Set</label>
+                <select class="fake-select" id="fakeNameSet">
+                    <option value="american">American</option>
+                    <option value="british">British</option>
+                    <option value="australian">Australian</option>
+                </select>
+            </div>
+
+            <div class="fake-form-group">
+                <label class="fake-label" id="labelCountry">Country</label>
+                <select class="fake-select" id="fakeCountry">
+                    <option value="us">United States</option>
+                    <option value="uk">United Kingdom</option>
+                    <option value="au">Australia</option>
+                </select>
+            </div>
+
+            <button class="generate-id-btn" onclick="generateFakeIdentity()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                <span id="btnGenerateFake">Generate Identity</span>
+            </button>
+
+            <!-- Result Box -->
+            <div class="result-card" id="fakeResultCard">
+                <div class="avatar-placeholder" id="fakeAvatarIcon">👨</div>
+                <div class="identity-title" id="resIdentityTitle">Your Randomly Generated Identity</div>
+                
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label" id="resLabelName">Full Name</span>
+                        <span class="field-value" id="resName">Matthew T. Gonzales</span>
+                    </div>
+                    <button class="copy-sm-btn" id="copyBtnName" onclick="copyFakeText('resName', this)">Copy</button>
+                </div>
+
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label" id="resLabelAddress">Address</span>
+                        <span class="field-value" id="resAddress">1483 Better Street, Overland Park, KS 66210</span>
+                    </div>
+                    <button class="copy-sm-btn" id="copyBtnAddress" onclick="copyFakeText('resAddress', this)">Copy</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer SEO Information Box -->
+    <div class="site-footer">
+        <p class="footer-text" id="footerText">
+            Use <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a> online tools to enhance account security and productivity. Search "fastmailshop.com 2FA tools".
+        </p>
+    </div>
+
+<script>
+    // Switch Between Tabs (2FA, Note, Fake Name)
+    function switchTab(tab) {
+        const btn2fa = document.getElementById('tabBtn2fa');
+        const btnNote = document.getElementById('tabBtnNote');
+        const btnFake = document.getElementById('tabBtnFake');
+        const sec2fa = document.getElementById('section2fa');
+        const secNote = document.getElementById('sectionNote');
+        const secFake = document.getElementById('sectionFake');
+
+        btn2fa.classList.remove('active');
+        btnNote.classList.remove('active');
+        btnFake.classList.remove('active');
+        sec2fa.classList.remove('active');
+        secNote.classList.remove('active');
+        secFake.classList.remove('active');
+
+        if (tab === '2fa') {
+            btn2fa.classList.add('active');
+            sec2fa.classList.add('active');
+        } else if (tab === 'note') {
+            btnNote.classList.add('active');
+            secNote.classList.add('active');
+        } else if (tab === 'fake') {
+            btnFake.classList.add('active');
+            secFake.classList.add('active');
+        }
+    }
+
+    // Dark Mode Toggle
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        const moonIcon = document.getElementById('moonIcon');
+        
+        if (isDark) {
+            moonIcon.innerHTML = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 0 0 0-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>';
+            moonIcon.style.color = '#facc15';
+        } else {
+            moonIcon.innerHTML = '<path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>';
+            moonIcon.style.color = 'var(--text-muted)';
+        }
+    }
+
+    // Language Switcher (EN <-> BN)
+    function changeLanguage() {
+        const lang = document.getElementById('langSelect').value;
+        if (lang === 'bn') {
+            document.getElementById('tabText2fa').innerText = '২এফএ কি';
+            document.getElementById('tabTextNote').innerText = 'নোটপ্যাড';
+            document.getElementById('tabTextFake').innerText = 'ফেক নেম';
+            document.getElementById('title2fa').innerText = 'সিক্রেট কি';
+            document.getElementById('desc2fa').innerText = 'সিক্রেট কি দিয়ে গেট কোড বাটনে ক্লিক করলে লাইভ 2FA কোড দেখতে পাবেন।';
+            document.getElementById('btn2fa').innerText = 'গেট কোড';
+            document.getElementById('btnClear').innerText = 'ক্লিয়ার';
+            document.getElementById('activeTokenText').innerText = 'অ্যাক্টিভ টোকেন';
+            document.getElementById('copyText').innerText = 'কোড কপি করুন';
+            document.getElementById('titleNote').innerText = 'স্মার্ট নোটপ্যাড';
+            document.getElementById('descNote').innerText = 'আপনার নোট বা টেক্সট এখানে লিখে সরাসরি ফাইল ডাউনলোড করুন।';
+            document.getElementById('formatLabel').innerText = 'ফরম্যাট সিলেক্ট করুন:';
+            document.getElementById('btnDownload').innerText = 'ডাউনলোড';
+            document.getElementById('btnClearNote').innerText = 'ক্লিয়ার';
+            document.getElementById('secret').placeholder = 'এখানে আপনার সিক্রেট কি পেস্ট করুন...';
+            document.getElementById('noteArea').placeholder = 'এখানে আপনার নোট পেস্ট বা টাইপ করুন...';
+            
+            document.getElementById('titleFake').innerText = 'ফেক আইডি জেনারেটর';
+            document.getElementById('descFake').innerText = 'খুব সহজেই রেন্ডম নাম, ঠিকানা এবং পরিচয় জেনারেট করুন।';
+            document.getElementById('labelGender').innerText = 'লিঙ্গ (Gender)';
+            document.getElementById('labelNameSet').innerText = 'নামের সেট (Name Set)';
+            document.getElementById('labelCountry').innerText = 'দেশ (Country)';
+            document.getElementById('btnGenerateFake').innerText = 'আইডেন্টিটি জেনারেট করুন';
+            document.getElementById('resIdentityTitle').innerText = 'আপনার রেন্ডমলি জেনারেটেড আইডি';
+            document.getElementById('resLabelName').innerText = 'পূর্ণ নাম';
+            document.getElementById('resLabelAddress').innerText = 'ঠিকানা';
+            document.getElementById('footerText').innerHTML = 'অ্যাকাউন্টের নিরাপত্তা বাড়াতে <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a>-এর অনলাইন টুলস ব্যবহার করুন।';
+        } else {
+            document.getElementById('tabText2fa').innerText = '2FA Key';
+            document.getElementById('tabTextNote').innerText = 'Note';
+            document.getElementById('tabTextFake').innerText = 'Fake Name';
+            document.getElementById('title2fa').innerText = 'Secret Key';
+            document.getElementById('desc2fa').innerText = 'Enter your Base32 secret key and click Get Code to generate your 2FA tokenrem
+            document.getElementById('btn2fa').innerText = 'Get Code';
+            document.getElementById('btnClear').innerText = 'Clear';
+            document.getElementById('activeTokenText').innerText = 'Active Token';
+            document.getElementById('copyText').innerText = 'Copy Code';
+            document.getElementById('titleNote').innerText = 'Smart Notepad';
+            document.getElementById('descNote').innerText = 'Write or paste your notes, codes, or credentials and download them instantly.';
+            document.getElementById('formatLabel').innerText = 'Select Format:';
+            document.getElementById('btnDownload').innerText = 'Download';
+            document.getElementById('btnClearNote').innerText = 'Clear';
+            document.getElementById('secret').placeholder = 'Paste your Secret Key here...';
+            document.getElementById('noteArea').placeholder = 'Paste or type your notes here...';
+            
+            document.getElementById('titleFake').innerText = 'Fake Identity Generator';
+            document.getElementById('descFake').innerText = 'Generate random names, addresses, and identity details instantly.';
+            document.getElementById('labelGender').innerText = 'Gender';
+            document.getElementById('labelNameSet').innerText = 'Name Set';
+            document.getElementById('labelCountry').innerText = 'Country';
+            document.getElementById('btnGenerateFake').innerText = 'Generate Identity';
+            document.getElementById('resIdentityTitle').innerText = 'Your Randomly Generated Identity';
+            document.getElementById('resLabelName').innerText = 'Full Name';
+            document.getElementById('resLabelAddress').innerText = 'Address';
+            document.getElementById('footerText').innerHTML = 'Use <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a> online tools to enhance account security and productivity.';
+        }
+    }
+
+    // Live Active Users Counter
+    setInterval(() => {
+        const userEl = document.getElementById('active-users');
+        let current = parseInt(userEl.innerText);
+        let change = Math.floor(Math.random() * 5) - 2;
+        userEl.innerText = current + change;
+    }, 4000);
+
+    // 2FA 15s Countdown & Auto-Refresh Logic
+    let totpInterval = null;
+    let currentSecret = "";
+
+    function start2FA() {
+        const secretInput = document.getElementById('secret').value.replace(/\s+/g, '');
+        const lang = document.getElementById('langSelect').value;
+
+        if (!secretInput) {
+            alert(lang === 'bn' ? 'দয়া করে আগে সিক্রেট কি (Secret Key) দিন!' : 'Please enter your Secret Key first!');
+            return;
+        }
+
+        currentSecret = secretInput;
+        if (totpInterval) clearInterval(totpInterval);
+
+        document.getElementById('progressContainer').style.display = 'block';
+
+        generateAndDisplayCode();
+        totpInterval = setInterval(generateAndDisplayCode, 1000);
+    }
+
+    function clear2FA() {
+        if (totpInterval) clearInterval(totpInterval);
+        document.getElementById('secret').value = '';
+        document.getElementById('code-display').innerText = '000000';
+        document.getElementById('timer-display').innerText = '15s';
+        document.getElementById('progressContainer').style.display = 'none';
+        currentSecret = '';
+        document.getElementById('secret').focus();
+    }
+
+    function generateAndDisplayCode() {
+        const display = document.getElementById('code-display');
+        const timerDisplay = document.getElementById('timer-display');
+        const progressBar = document.getElementById('progressBar');
+
+        try {
+            let totp = new OTPAuth.TOTP({
+                issuer: "ACME",
+                label: "User",
+                algorithm: "SHA1",
+                digits: 6,
+                period: 30,
+                secret: OTPAuth.Secret.fromBase32(currentSecret)
+            });
+
+            display.innerText = totp.generate();
+
+            const epoch = Math.floor(Date.now() / 1000);
+            const remaining = 15 - (epoch % 15);
+            
+            timerDisplay.innerText = `${remaining}s`;
+            
+            const percent = (remaining / 15) * 100;
+            progressBar.style.width = `${percent}%`;
+
+        } catch (e) {
+            display.innerText = "Error";
+            timerDisplay.innerText = "--";
+        }
+    }
+
+    function copyCode() {
+        const code = document.getElementById('code-display').innerText;
+        const lang = document.getElementById('langSelect').value;
+        if(code !== "000000" && code !== "Error") {
+            navigator.clipboard.writeText(code);
+            const copyText = document.getElementById('copyText');
+            copyText.innerText = lang === 'bn' ? "কপি হয়েছে!" : "Copied!";
+            
+            const disp = document.getElementById('code-display');
+            disp.style.transform = 'scale(1.08)';
+            setTimeout(() => disp.style.transform = 'none', 200);
+
+            setTimeout(() => {
+                copyText.innerText = lang === 'bn' ? "কোড কপি করুন" : "Copy Code";
+            }, 1500);
+        }
+    }
+
+    // Notepad Logic & LocalStorage Auto-save
+    const noteArea = document.getElementById('noteArea');
+    const wordCount = document.getElementById('wordCount');
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const saved = localStorage.getItem('smart_notepad_data');
+        if (saved) {
+            noteArea.value = saved;
+            updateNoteStats();
+        }
+    });
+
+    function updateNoteStats() {
+        localStorage.setItem('smart_notepad_data', noteArea.value);
+        const lang = document.getElementById('langSelect').value;
+        wordCount.innerText = `${noteArea.value.length} ${lang === 'bn' ? 'অক্ষর' : 'Characters'}`;
+    }
+
+    function clearNote() {
+        const lang = document.getElementById('langSelect').value;
+        const confirmMsg = lang === 'bn' ? 'সব লেখা মুছে ফেলতে চান?' : 'Are you sure you want to clear all text?';
+        if(confirm(confirmMsg)) {
+            noteArea.value = '';
+            localStorage.removeItem('smart_notepad_data');
+            updateNoteStats();
+            noteArea.focus();
+        }
+    }
+
+    function downloadNoteFile() {
+        const text = noteArea.value.trim();
+        const lang = document.getElementById('langSelect').value;
+        
+        if (!text) {
+            alert(lang === 'bn' ? 'ডাউনলোড করার আগে নোটপ্যাডে কিছু লিখুন!' : 'Please write something in the notepad before downloading!');
+            return;
+        }
+
+        const format = document.querySelector('input[name="fileFormat"]:checked').value;
+        const fileName = `Note_${new Date().toISOString().slice(0,10)}`;
+
+        if (format === 'txt') {
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            triggerDownload(URL.createObjectURL(blob), `${fileName}.txt`);
+        } 
+        else if (format === 'pdf') {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const lines = doc.splitTextToSize(text, 180);
+            doc.text(lines, 15, 20);
+            doc.save(`${fileName}.pdf`);
+        } 
+        else if (format === 'docx') {
+            const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'></head><body>";
+            const footer = "</body></html>";
+            const formattedText = text.replace(/\n/g, "<br>");
+            const blob = new Blob(['\ufeff', header + formattedText + footer], { type: 'application/msword' });
+            triggerDownload(URL.createObjectURL(blob), `${fileName}.docx`);
+        }
+    }
+
+    function triggerDownload(url, filename) {
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+    // Fake Identity Generator Logic
+    const fakeDatabase = {
+        male: [
+            { name: "Matthew T. Gonzales", address: "1483 Better Street, Overland Park, KS 66210", icon: "👨" },
+            { name: "John A. Smith", address: "2789 Pinewood Drive, Atlanta, GA 30303", icon: "👨" },
+            { name: "Robert J. Wilson", address: "912 Oakridge Lane, Seattle, WA 98101", icon: "👨" }
+        ],
+        female: [
+            { name: "Jessica L. Miller", address: "4521 Maple Avenue, Dallas, TX 75201", icon: "👩" },
+            { name: "Sarah J. Davis", address: "1234 Willow Lane, Chicago, IL 60601", icon: "👩" },
+            { name: "Emily R. Taylor", address: "789 Sunset Blvd, Los Angeles, CA 90028", icon: "👩" }
+        ]
+    };
+
+    function generateFakeIdentity() {
+        const genderSelect = document.getElementById('fakeGender').value;
+        let chosenGender = genderSelect;
+        
+        if (chosenGender === 'random') {
+            chosenGender = Math.random() > 0.5 ? 'male' : 'female';
+        }
+
+        const list = fakeDatabase[chosenGender];
+        const randomItem = list[Math.floor(Math.random() * list.length)];
+
+        document.getElementById('resName').innerText = randomItem.name;
+        document.getElementById('resAddress').innerText = randomItem.address;
+        document.getElementById('fakeAvatarIcon').innerText = randomItem.icon;
+
+        document.getElementById('fakeResultCard').style.display = 'block';
+    }
+
+    function copyFakeText(elementId, btnElement) {
+        const text = document.getElementById(elementId).innerText;
+        const lang = document.getElementById('langSelect').value;
+        navigator.clipboard.writeText(text);
+        
+        const originalText = btnElement.innerText;
+        btnElement.innerText = lang === 'bn' ? 'কপি হয়েছে' : 'Copied!';
+        setTimeout(() => {
+            btnElement.innerText = originalText;
+        }, 1500);
+    }
+</script>
+
+</body>
+</html>
+rem;
             margin-bottom: 1rem;
             animation: pulseBorder 3s infinite;
             transition: all 0.2s;
