@@ -686,20 +686,26 @@
             border-radius: 12px;
             padding: 1rem;
             text-align: center;
-            display: block; /* ডিফল্টভাবে দৃশ্যমান থাকবে */
+            display: block;
         }
 
-        .avatar-placeholder {
-            width: 50px;
-            height: 50px;
-            background-color: var(--teal-light);
-            color: var(--teal-primary);
+        /* Premium AI Avatar Styling matching user screenshot */
+        .avatar-img-container {
+            width: 88px;
+            height: 88px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 6px auto;
-            font-size: 1.3rem;
+            overflow: hidden;
+            margin: 0 auto 10px auto;
+            border: 3px solid var(--teal-primary);
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+            background-color: var(--teal-light);
+        }
+
+        .avatar-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .identity-title {
@@ -711,7 +717,7 @@
             font-weight: 700;
         }
 
-        /* Enhanced Highlighted Field Boxes */
+        /* Enhanced Highlighted Field Boxes with Side Copy Icon Button */
         .field-box {
             display: flex;
             justify-content: space-between;
@@ -734,8 +740,15 @@
         .field-box.name-highlight-box {
             background: var(--teal-light);
             border: 2px solid var(--teal-primary);
-            padding: 9px 12px;
+            padding: 10px 12px;
             box-shadow: 0 3px 10px rgba(13, 148, 136, 0.1);
+            align-items: center;
+        }
+
+        .field-info {
+            flex-grow: 1;
+            overflow: hidden;
+            padding-right: 8px;
         }
 
         .field-info span {
@@ -755,14 +768,39 @@
         }
 
         .field-value.large-name-text {
-            font-size: 1.05rem;
+            font-size: 1.35rem;
             font-weight: 800;
-            color: var(--teal-primary);
+            color: var(--text-main);
+            letter-spacing: -0.5px;
             margin-top: 2px;
+            line-height: 1.25;
         }
 
         body.dark-mode .field-value.large-name-text {
-            color: #2dd4bf;
+            color: #f8fafc;
+        }
+
+        /* Modern Square Icon Copy Button matching screenshot style */
+        .copy-icon-btn {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-color);
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .copy-icon-btn:hover {
+            border-color: var(--teal-primary);
+            color: var(--teal-primary);
+            background-color: var(--teal-light);
         }
 
         .copy-sm-btn {
@@ -1410,15 +1448,21 @@
             </button>
 
             <div class="result-card" id="fakeResultCard">
-                <div class="avatar-placeholder" id="fakeAvatarIcon">👩</div>
+                <!-- Premium AI Avatar Container -->
+                <div class="avatar-img-container" id="fakeAvatarContainer">
+                    <img id="fakeAvatarImg" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80" alt="Avatar">
+                </div>
                 <div class="identity-title" id="resIdentityTitle">Your Randomly Generated Identity</div>
                 
+                <!-- Premium Large Name Box with Side Copy Icon Button -->
                 <div class="field-box name-highlight-box">
                     <div class="field-info">
                         <span class="field-label" id="resLabelName">Full Name</span>
                         <span class="field-value large-name-text" id="resName">Mary L. Davis</span>
                     </div>
-                    <button class="copy-sm-btn" onclick="copyFakeText('resName', this)">Copy</button>
+                    <button class="copy-icon-btn" onclick="copyFakeText('resName', this)" title="Copy Name">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
                 </div>
 
                 <div class="field-box">
@@ -2160,17 +2204,58 @@
         document.body.removeChild(a);
     }
 
-    // Fake Identity Database & Generator
+    // Fake Identity Database & Generator with AI Avatars
     const nameDatabase = {
-        american: { male: ["James A. Smith", "Robert J. Johnson"], female: ["Mary L. Davis", "Patricia K. Wilson"] },
-        british: { male: ["Oliver T. Clarke", "George H. Smith"], female: ["Olivia S. Roberts", "Amelia L. Jones"] },
-        australian: { male: ["Lachlan M. Kelly", "Oliver J. O'Connor"], female: ["Charlotte E. Smith", "Olivia M. Kelly"] },
-        canadian: { male: ["Liam T. Tremblay", "Noah M. Gagnon"], female: ["Emma S. Gagnon", "Olivia L. Roy"] },
-        german: { male: ["Maximilian H. Müller", "Alexander K. Schmidt"], female: ["Mia A. Wagner", "Emma S. Becker"] },
-        french: { male: ["Gabriel L. Martin", "Léo M. Bernard"], female: ["Jade A. Durand", "Louise S. Leroy"] },
-        japanese: { male: ["Hiroshi T. Tanaka", "Kenji M. Sato"], female: ["Hina A. Yamamoto", "Yui S. Nakamura"] },
-        indian: { male: ["Aarav M. Sharma", "Vivaan R. Verma"], female: ["Diya A. Joshi", "Saanvi S. Mehta"] },
-        bangladeshi: { male: ["Tanvir A. Rahman", "Rakibul S. Islam"], female: ["Nusrat J. Mim", "Sadia K. Akter"] }
+        american: { 
+            male: ["James A. Smith", "Robert J. Johnson", "William D. Brown"], 
+            female: ["Mary L. Davis", "Patricia K. Wilson", "Rebecca D. Munsey"] 
+        },
+        british: { 
+            male: ["Oliver T. Clarke", "George H. Smith"], 
+            female: ["Olivia S. Roberts", "Amelia L. Jones"] 
+        },
+        australian: { 
+            male: ["Lachlan M. Kelly", "Oliver J. O'Connor"], 
+            female: ["Charlotte E. Smith", "Olivia M. Kelly"] 
+        },
+        canadian: { 
+            male: ["Liam T. Tremblay", "Noah M. Gagnon"], 
+            female: ["Emma S. Gagnon", "Olivia L. Roy"] 
+        },
+        german: { 
+            male: ["Maximilian H. Müller", "Alexander K. Schmidt"], 
+            female: ["Mia A. Wagner", "Emma S. Becker"] 
+        },
+        french: { 
+            male: ["Gabriel L. Martin", "Léo M. Bernard"], 
+            female: ["Jade A. Durand", "Louise S. Leroy"] 
+        },
+        japanese: { 
+            male: ["Hiroshi T. Tanaka", "Kenji M. Sato"], 
+            female: ["Hina A. Yamamoto", "Yui S. Nakamura"] 
+        },
+        indian: { 
+            male: ["Aarav M. Sharma", "Vivaan R. Verma"], 
+            female: ["Diya A. Joshi", "Saanvi S. Mehta"] 
+        },
+        bangladeshi: { 
+            male: ["Tanvir A. Rahman", "Rakibul S. Islam"], 
+            female: ["Nusrat J. Mim", "Sadia K. Akter"] 
+        }
+    };
+
+    // Unsplash professional AI portrait avatar pool for male and female
+    const avatarPool = {
+        male: [
+            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
+            "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=200&q=80",
+            "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80"
+        ],
+        female: [
+            "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80",
+            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+            "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80"
+        ]
     };
 
     const detailedAddressDatabase = {
@@ -2192,6 +2277,10 @@
         
         const names = (nameDatabase[nameSet] || nameDatabase['american'])[gender];
         const addr = (detailedAddressDatabase[country] || detailedAddressDatabase["United States"])[0];
+        
+        // Pick random AI avatar based on gender
+        const avatars = avatarPool[gender];
+        const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
 
         document.getElementById('resName').innerText = names[Math.floor(Math.random() * names.length)];
         document.getElementById('resDob').innerText = `${Math.floor(Math.random() * 28) + 1} July 1995`;
@@ -2203,15 +2292,26 @@
         document.getElementById('resCountry').innerText = country;
         document.getElementById('resLat').innerText = addr.lat;
         document.getElementById('resLng').innerText = addr.lng;
-        document.getElementById('fakeAvatarIcon').innerText = (gender === 'male') ? "👨" : "👩";
+        
+        // Update avatar image
+        document.getElementById('fakeAvatarImg').src = randomAvatar;
         document.getElementById('fakeResultCard').style.display = 'block';
     }
 
     function copyFakeText(elementId, btnElement) {
-        navigator.clipboard.writeText(document.getElementById(elementId).innerText);
-        const originalText = btnElement.innerText;
-        btnElement.innerText = 'Copied!';
-        setTimeout(() => { btnElement.innerText = originalText; }, 1500);
+        const textToCopy = document.getElementById(elementId).innerText;
+        navigator.clipboard.writeText(textToCopy);
+        
+        // If it's the square copy icon button next to name
+        if(btnElement.classList.contains('copy-icon-btn')) {
+            const originalHTML = btnElement.innerHTML;
+            btnElement.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+            setTimeout(() => { btnElement.innerHTML = originalHTML; }, 1500);
+        } else {
+            const originalText = btnElement.innerText;
+            btnElement.innerText = 'Copied!';
+            setTimeout(() => { btnElement.innerText = originalText; }, 1500);
+        }
     }
 </script>
 
