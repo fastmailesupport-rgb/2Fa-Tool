@@ -48,7 +48,7 @@ def get_otp():
         if not access_token:
             access_token = raw_input
 
-        # মাইক্রোসফট গ্রাফ এপিআই থেকে সাম্প্রতিক ১৫টি মেসেজ ফেচ করা (যাতে কোনো লেটেস্ট মেইল মিস না হয়)
+        # মাইক্রোসফট গ্রাফ এপিআই থেকে লেটেস্ট মেসেজগুলো আনা
         headers = {
             'Authorization': f'Bearer {access_token}',
             'Content-Type': 'application/json'
@@ -74,17 +74,14 @@ def get_otp():
                 "full_message": "No recent messages found in this inbox."
             })
             
-        # সেন্ডারের নাম বা সাবজেক্টে 'X' বা 'Twitter' অথবা ভেরিফিকেশন কোড আছে এমন লেটেস্ট মেইলটি খুঁজে বের করা
-        target_msg = messages_data[0] # ডিফল্টভাবে সবচেয়ে লেটেস্ট মেইল
-        
+        # সবচেয়ে লেটেস্ট এবং রিয়েল সার্ভিস মেইলটি খুঁজে বের করা (যেমন Twitter/X)
+        target_msg = messages_data[0]
         for msg in messages_data:
             sender_name = msg.get('from', {}).get('emailAddress', {}).get('name', '').lower()
             sender_email = msg.get('from', {}).get('emailAddress', {}).get('address', '').lower()
             subject = msg.get('subject', '').lower()
-            body = msg.get('body', {}).get('content', '')
             
-            # যদি টুইটার/এক্স বা কোড রিলেটেড কিওয়ার্ড থাকে, তাকে প্রধান অগ্রাধিকার দেওয়া
-            if 'twitter' in sender_name or 'x' in sender_name or 'twitter' in sender_email or 'verification' in subject or 'code' in subject or 'otp' in subject or 'confirmation' in subject:
+            if any(k in sender_name or k in sender_email or k in subject for k in ['twitter', 'x', 'verification', 'code', 'otp', 'confirm', 'security', 'login']):
                 target_msg = msg
                 break
 
@@ -92,13 +89,27 @@ def get_otp():
         subject = target_msg.get('subject', 'No Subject')
         body_content = target_msg.get('body', {}).get('content', '')
         
-        # HTML ট্যাগ পরিষ্কার করে শুধু টেক্সট রাখা
+        # HTML ট্যাগ রিমুভ করে ক্লিন টেক্সট তৈরি
         clean_text = re.sub('<[^<]+?>', ' ', body_content)
         
-        # ওটিপি বা কোড খুঁজে বের করার লজিক (৪, ৫ বা ৬ ডিজিটের কোড নিখুঁতভাবে ধরতে)
-        otp_match = re.search(r'\b\d{6}\b', clean_text) or re.search(r'\b\d{5}\b', clean_text) or re.search(r'\b\d{4}\b', clean_text)
-        otp_code = otp_match.group(0) if otp_match else "N/A"
+        otp_code = "N/A"
         
+        # ১. প্রথমে সাবজেক্ট বা নির্দিষ্ট কীওয়ার্ডের (مثل code, is, pin) আশেপাশের ৪ থেকে ৮ ডিজিটের কোড খোঁজা
+        context_match = re.search(r'(?:code|pin|otp|verification|is)[:\s]+([0-9]{4,8})', clean_text, re.IGNORECASE)
+        if context_match:
+            otp_code = context_match.group(1)
+        else:
+            # ২. যদি সরাসরি বডিতে আলাদা কোনো ৪ থেকে ৮ ডিজিটের সংখ্যা থাকে (যেমন টুইটারের মূল ওটিপি)
+            # এটি এমনভাবে ফিল্টার করা হয়েছে যাতে কোনো স্টাইল বা বড় আইডি কোড না ধরে শুধু ওটিপি ধরে
+            all_numbers = re.findall(r'\b[0-9]{4,8}\b', clean_text)
+            if all_numbers:
+                # সাধারণ দীর্ঘ ট্র্যাকিং বা সিএসএস কোড (৬-৮ ডিজিটের বেশি বা অদ্ভুত সংখ্যা) বাদ দিয়ে সঠিক ওটিপি পিক করা
+                valid_otps = [num for num in all_numbers if len(num) in [4, 5, 6, 7, 8] and not num.startswith('2026') and not num.startswith('000')]
+                if valid_otps:
+                    otp_code = valid_otps[0] # সবচেয়ে প্রথম পাওয়া রিয়েল ওটিপি
+                else:
+                    otp_code = all_numbers[0]
+
         return jsonify({
             "email": extracted_email,
             "sender": sender,
