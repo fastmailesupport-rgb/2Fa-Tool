@@ -1063,7 +1063,7 @@
         </div>
     </div>
 
-    <!-- 5-Tab Switcher Layout -->
+    <!-- 5-Tab Switcher Layout (Mail Code at the first position) -->
     <div class="tab-wrapper">
         <button class="tab-btn active" id="tabBtnMail" onclick="switchTab('mail')">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -1094,7 +1094,7 @@
     <!-- Main Container -->
     <div class="container">
         
-        <!-- TAB 1: MAIL CODE -->
+        <!-- TAB 1: MAIL CODE (HOTMAIL/OUTLOOK TOKEN & OTP FETCHER WITH PLATFORM ICON & FULL MESSAGE) -->
         <div id="sectionMail" class="tab-content active">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1107,7 +1107,7 @@
             <textarea id="mailTokenInput" placeholder="Paste your full Mail Token here..."></textarea>
             
             <div class="btn-row">
-                <button class="action-btn" id="fetchMailBtn" onclick="fetchMailCode()">
+                <button class="action-btn" onclick="fetchMailCode()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
                     <span id="btnFetchMail">Get Mail & OTP</span>
                 </button>
@@ -1118,6 +1118,7 @@
             </div>
             
             <div class="mail-result-card" id="mailResultCard">
+                <!-- Extracted Email Copy Box -->
                 <div class="field-box name-highlight-box" style="margin-bottom: 10px;">
                     <div class="field-info" style="width: 100%; overflow: hidden;">
                         <span class="field-label" id="labelExtractedEmail">Extracted Email Address</span>
@@ -1126,19 +1127,23 @@
                     <button class="copy-sm-btn" onclick="copyMailText('resEmailAddress', this)">Copy</button>
                 </div>
 
+                <!-- OTP Card with Platform App Icon on the Left & Full Message Toggle -->
                 <div class="token-card" style="margin-top: 8px;">
                     <div class="token-header-row">
                         <div class="token-label" id="mailOtpLabel">OTP FROM: <span id="platformNameText" style="color: var(--teal-primary);">MICROSOFT</span></div>
                         <div id="mailTimerBadge" class="timer-badge">Just Now</div>
                     </div>
 
+                    <!-- App Icon on Left + OTP Display -->
                     <div class="otp-platform-display">
                         <div class="platform-icon-box" id="platformIconContainer" title="Sender Platform">
+                            <!-- Default Microsoft Icon -->
                             <svg width="24" height="24" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>
                         </div>
                         <div class="otp-code-value" id="mailCodeDisplay">------</div>
                     </div>
 
+                    <!-- Copy OTP & View Full Message Buttons -->
                     <div class="mail-action-grid">
                         <button class="copy-btn" onclick="copyMailCodeText()">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
@@ -1150,12 +1155,13 @@
                         </button>
                     </div>
 
+                    <!-- Collapsible Full Message Content Box -->
                     <div class="full-message-box" id="fullMessageBox">
                         <div class="msg-meta">
-                            <div><strong>From:</strong> <span id="msgSender"></span></div>
-                            <div><strong>Subject:</strong> <span id="msgSubject"></span></div>
+                            <div><strong>From:</strong> <span id="msgSender">account-security-noreply@accountprotection.microsoft.com</span></div>
+                            <div><strong>Subject:</strong> <span id="msgSubject">Microsoft account security code</span></div>
                         </div>
-                        <div class="msg-body-text" id="msgBodyContent"></div>
+                        <div class="msg-body-text" id="msgBodyContent">Your security code is: 482910. Please enter this code to verify your account identity.</div>
                     </div>
                 </div>
             </div>
@@ -1366,7 +1372,7 @@
             </div>
         </div>
 
-        <!-- TAB 4: USA PROFESSIONAL PHOTOS GALLERY -->
+        <!-- TAB 4: USA PROFESSIONAL PHOTOS GALLERY & DIRECT DOWNLOAD -->
         <div id="sectionPhotos" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1376,13 +1382,16 @@
             </div>
             <p class="sub-desc" id="descPhotos">Browse official American professional corporate headshots (Suit & Tie / Formal Attire) with tap lighting and instant download.</p>
             
+            <!-- Filter Buttons -->
             <div class="gallery-filter-row">
                 <button class="filter-btn active" onclick="filterGallery('all', this)" id="filterAll">All Photos</button>
                 <button class="filter-btn" onclick="filterGallery('male', this)" id="filterMale">👨 USA Pro Man</button>
                 <button class="filter-btn" onclick="filterGallery('female', this)" id="filterFemale">👩 USA Pro Woman</button>
             </div>
 
-            <div class="gallery-grid" id="galleryGrid"></div>
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Dynamically injected USA professional photos via JavaScript -->
+            </div>
         </div>
 
         <!-- TAB 5: SMART NOTEPAD -->
@@ -1456,7 +1465,7 @@
 
     // Platform Icon & Details Helper
     function getPlatformBadge(senderOrText) {
-        const lower = (senderOrText || '').toLowerCase();
+        const lower = senderOrText.toLowerCase();
         
         if (lower.includes('facebook') || lower.includes('fb')) {
             return {
@@ -1491,67 +1500,48 @@
         }
     }
 
-    // LIVE BACKEND CONNECTION (RENDER API)
-    async function fetchMailCode() {
-        const rawInput = document.getElementById('mailTokenInput').value.trim();
+    // Mail Code Tab Logic with Real Render Backend API Connection
+    function fetchMailCode() {
+        const tokenInput = document.getElementById('mailTokenInput').value.trim();
         const langSelect = document.getElementById('langSelect');
         const lang = langSelect ? langSelect.value : 'en';
 
-        if (!rawInput) {
+        if (!tokenInput) {
             alert(lang === 'bn' ? 'দয়া করে আগে আপনার হটমেইল/আউটলুক টোকেনটি দিন!' : 'Please enter your Mail Token first!');
             return;
         }
 
-        // Extract email if present
         let extractedEmail = "user@outlook.com";
-        const emailMatch = rawInput.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+        const emailMatch = tokenInput.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
         if (emailMatch) {
             extractedEmail = emailMatch[0];
+        } else {
+            extractedEmail = "outlook_user_" + Math.floor(Math.abs(hashCode(tokenInput)) % 90000 + 10000) + "@outlook.com";
         }
+
         document.getElementById('resEmailAddress').innerText = extractedEmail;
+        document.getElementById('mailCodeDisplay').innerText = "WAIT...";
+        document.getElementById('mailResultCard').style.display = 'block';
 
-        // Extract pure token if user pasted email|pass|token or email:token format
-        let cleanToken = rawInput;
-        if (rawInput.includes('|')) {
-            const parts = rawInput.split('|');
-            cleanToken = parts[parts.length - 1].trim();
-        } else if (rawInput.includes(':') && emailMatch) {
-            const parts = rawInput.split(':');
-            cleanToken = parts[parts.length - 1].trim();
-        }
-
-        const btnSpan = document.getElementById('btnFetchMail');
-        const originalBtnText = btnSpan.innerText;
-        btnSpan.innerText = lang === 'bn' ? 'অপেক্ষা করুন...' : 'Fetching...';
-
-        try {
-            const response = await fetch('https://twofa-tool-bucc.onrender.com/get-otp', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ token: cleanToken })
-            });
-
-            const data = await response.json();
-
-            if (!response.ok || data.error) {
-                alert((lang === 'bn' ? 'ত্রুটি: ' : 'Error: ') + (data.error || 'Failed to fetch OTP'));
+        // REAL RENDER BACKEND API CONNECTION
+        fetch('https://twofa-tool-bucc.onrender.com/get-otp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: tokenInput })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                alert("Error: " + data.error);
+                document.getElementById('mailCodeDisplay').innerText = "ERROR";
             } else {
-                updateMailUI(
-                    data.sender || 'Unknown Sender',
-                    data.subject || 'No Subject',
-                    data.otp || '------',
-                    data.full_message || 'No message content'
-                );
+                updateMailUI(data.sender, data.subject, data.otp, data.full_message);
             }
-        } catch (err) {
-            alert(lang === 'bn' 
-                ? 'সার্ভারের সাথে সংযোগ করা যাচ্ছে না! Render সার্ভার চালু হতে ৫০ সেকেন্ড সময় নিতে পারে, আবার চেষ্টা করুন।' 
-                : 'Cannot connect to backend server! Render free server may take 50s to wake up, please try again.');
-        } finally {
-            btnSpan.innerText = originalBtnText;
-        }
+        })
+        .catch(err => {
+            alert(lang === 'bn' ? 'সার্ভার রেসপন্স করতে সময় নিচ্ছে (Render ফ্রি সার্ভার প্রথমবার চালু হতে একটু সময় নেয়)। আবার চেষ্টা করুন।' : 'Server waking up! Please try again in a few seconds.');
+            document.getElementById('mailCodeDisplay').innerText = "FAILED";
+        });
     }
 
     function updateMailUI(sender, subject, otp, fullBody) {
@@ -1572,11 +1562,7 @@
     function toggleFullMessage() {
         const msgBox = document.getElementById('fullMessageBox');
         if (!msgBox) return;
-        if (msgBox.style.display === 'none' || msgBox.style.display === '') {
-            msgBox.style.display = 'block';
-        } else {
-            msgBox.style.display = 'none';
-        }
+        msgBox.style.display = (msgBox.style.display === 'none' || msgBox.style.display === '') ? 'block' : 'none';
     }
 
     function clearMailTab() {
@@ -1596,9 +1582,7 @@
         navigator.clipboard.writeText(text);
         const originalText = btnElement.innerText;
         btnElement.innerText = lang === 'bn' ? 'কপি হয়েছে' : 'Copied!';
-        setTimeout(() => {
-            btnElement.innerText = originalText;
-        }, 1500);
+        setTimeout(() => { btnElement.innerText = originalText; }, 1500);
     }
 
     function copyMailCodeText() {
@@ -1608,7 +1592,7 @@
         const langSelect = document.getElementById('langSelect');
         const lang = langSelect ? langSelect.value : 'en';
 
-        if(code !== "------") {
+        if(code !== "------" && code !== "WAIT..." && code !== "ERROR" && code !== "FAILED") {
             navigator.clipboard.writeText(code);
             const copyText = document.getElementById('copyOtpText');
             if (copyText) copyText.innerText = lang === 'bn' ? "কপি হয়েছে!" : "Copied!";
@@ -1618,32 +1602,29 @@
         }
     }
 
+    function hashCode(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return hash;
+    }
+
     // Populate Photo Gallery
     document.addEventListener("DOMContentLoaded", () => {
         const galleryGrid = document.getElementById('galleryGrid');
         if (galleryGrid) {
             galleryGrid.innerHTML = '';
             
-            const usaMaleIds = [
-                "1507003211169-0a1dd7228f2d", "1500648767791-00dcc994a43e", "1492562080023-ab3db95bfbce", 
-                "1519085360753-af0119f7cbe7", "1506794778202-cad84cf45f1d", "1534528741775-53994a69daeb",
-                "1522075469751-3a6694fb2f61", "1539571696357-5a69c17a67c6", "1517841905240-472988babdf9",
-                "1463453091185-61582044d556", "1524504388940-b1c1722653e1", "1535713875002-d1d0cf377fde"
-            ];
+            const usaMaleIds = ["1507003211169-0a1dd7228f2d", "1500648767791-00dcc994a43e", "1492562080023-ab3db95bfbce", "1519085360753-af0119f7cbe7", "1506794778202-cad84cf45f1d", "1534528741775-53994a69daeb"];
+            const usaFemaleIds = ["1534528741775-53994a69daeb", "1494790108377-be9c29b29330", "1517841905240-472988babdf9", "1544005313-94ddf0286df2", "1573496359142-b8d87734a5a2", "1580489944761-15a19d654956"];
 
-            const usaFemaleIds = [
-                "1534528741775-53994a69daeb", "1494790108377-be9c29b29330", "1517841905240-472988babdf9",
-                "1544005313-94ddf0286df2", "1573496359142-b8d87734a5a2", "1580489944761-15a19d654956",
-                "1531746020798-e6953c6e8e04", "1524504388940-b1c1722653e1", "1529626455594-4ff0802cfb7e",
-                "1567532939604-b6b5b0db2604", "1438761681033-6461ffad8d80", "1508214751196-bcfd4ca60f91"
-            ];
-
-            for (let i = 1; i <= 60; i++) {
+            for (let i = 1; i <= 30; i++) {
                 const isMale = i % 2 === 0;
                 const gender = isMale ? 'male' : 'female';
                 const idArray = isMale ? usaMaleIds : usaFemaleIds;
                 const unsplashId = idArray[(i - 1) % idArray.length];
-                
                 const imageUrl = `https://images.unsplash.com/photo-${unsplashId}?auto=format&fit=crop&w=400&q=80`;
                 
                 const item = document.createElement('div');
@@ -1651,12 +1632,8 @@
                 
                 item.addEventListener('click', (e) => {
                     if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
-                    
                     item.classList.add('clicked');
-                    setTimeout(() => {
-                        item.classList.remove('clicked');
-                    }, 500);
-
+                    setTimeout(() => item.classList.remove('clicked'), 500);
                     downloadImage(imageUrl, `USA_Professional_${gender}_${i}.jpg`);
                 });
 
@@ -1679,9 +1656,7 @@
         const card = btnElement.closest('.gallery-item');
         if (card) {
             card.classList.add('clicked');
-            setTimeout(() => {
-                card.classList.remove('clicked');
-            }, 500);
+            setTimeout(() => card.classList.remove('clicked'), 500);
         }
         downloadImage(url, filename);
     }
@@ -1692,7 +1667,6 @@
             .then(blob => {
                 const blobUrl = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
-                a.style.display = 'none';
                 a.href = blobUrl;
                 a.download = filename;
                 document.body.appendChild(a);
@@ -1715,11 +1689,8 @@
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btnElement.classList.add('active');
 
-        const items = document.querySelectorAll('.gallery-item');
-        items.forEach(item => {
-            if (type === 'all') {
-                item.style.display = 'flex';
-            } else if (item.classList.contains(type)) {
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            if (type === 'all' || item.classList.contains(type)) {
                 item.style.display = 'flex';
             } else {
                 item.style.display = 'none';
@@ -1743,7 +1714,7 @@
         }
     }
 
-    // Language Switcher (EN <-> BN)
+    // Language Switcher
     function changeLanguage() {
         const langSelect = document.getElementById('langSelect');
         if (!langSelect) return;
@@ -1772,7 +1743,7 @@
             setTxt('activeTokenText', 'অ্যাক্টিভ টোকেন');
             setTxt('copyText', 'কোড কপি করুন');
             setTxt('titlePhotos', 'ইউএসএ প্রফেশনাল ফটোস');
-            setTxt('descPhotos', 'আমেরিকান কর্পোরেট প্রফেশনাল পোর্ট্রেট ছবি ব্রাউজ করুন। যেকোনো ইমেজে ট্যাপ করলে নিয়ন গ্লো লাইটিং হবে এবং ইনস্ট্যান্ট ডাউনলোড হবে।');
+            setTxt('descPhotos', 'আমেরিকান কর্পোরেট প্রফেশনাল পোর্ট্রেট ছবি ব্রাউজ করুন। যেকোনো ইমেজে ট্যাপ করলে ইনস্ট্যান্ট ডাউনলোড হবে।');
             setTxt('filterAll', 'সব ছবি');
             setTxt('filterMale', '👨 ইউএসএ প্রফেশনাল ম্যান');
             setTxt('filterFemale', '👩 ইউএসএ প্রফেশনাল উইম্যান');
@@ -1782,12 +1753,9 @@
             setTxt('btnDownload', 'ডাউনলোড');
             setTxt('btnClearNote', 'ক্লিয়ার');
             
-            const mailInputEl = document.getElementById('mailTokenInput');
-            if(mailInputEl) mailInputEl.placeholder = 'এখানে আপনার মেইল টোকেন পেস্ট করুন...';
-            const secretEl = document.getElementById('secret');
-            if(secretEl) secretEl.placeholder = 'এখানে আপনার সিক্রেট কি পেস্ট করুন...';
-            const noteEl = document.getElementById('noteArea');
-            if(noteEl) noteEl.placeholder = 'এখানে আপনার নোট পেস্ট বা টাইপ করুন...';
+            document.getElementById('mailTokenInput').placeholder = 'এখানে আপনার মেইল টোকেন পেস্ট করুন...';
+            document.getElementById('secret').placeholder = 'এখানে আপনার সিক্রেট কি পেস্ট করুন...';
+            document.getElementById('noteArea').placeholder = 'এখানে আপনার নোট পেস্ট বা টাইপ করুন...';
             
             setTxt('titleFake', 'ফেক আইডি জেনারেটর');
             setTxt('descFake', 'খুব সহজেই রেন্ডম নাম, জন্মতারিখ এবং পূর্ণাঙ্গ আন্তর্জাতিক ঠিকানা জেনারেট করুন।');
@@ -1829,12 +1797,9 @@
             setTxt('btnDownload', 'Download');
             setTxt('btnClearNote', 'Clear');
             
-            const mailInputEl = document.getElementById('mailTokenInput');
-            if(mailInputEl) mailInputEl.placeholder = 'Paste your full Mail Token here...';
-            const secretEl = document.getElementById('secret');
-            if(secretEl) secretEl.placeholder = 'Paste your Secret Key here...';
-            const noteEl = document.getElementById('noteArea');
-            if(noteEl) noteEl.placeholder = 'Paste or type your notes here...';
+            document.getElementById('mailTokenInput').placeholder = 'Paste your full Mail Token here...';
+            document.getElementById('secret').placeholder = 'Paste your Secret Key here...';
+            document.getElementById('noteArea').placeholder = 'Paste or type your notes here...';
             
             setTxt('titleFake', 'Fake Identity Generator');
             setTxt('descFake', 'Generate random names, dates of birth, and comprehensive international addresses instantly.');
@@ -1854,8 +1819,7 @@
         const userEl = document.getElementById('active-users');
         if (userEl) {
             let current = parseInt(userEl.innerText);
-            let change = Math.floor(Math.random() * 5) - 2;
-            userEl.innerText = current + change;
+            userEl.innerText = current + (Math.floor(Math.random() * 5) - 2);
         }
     }, 4000);
 
@@ -1917,15 +1881,10 @@
             });
 
             display.innerText = totp.generate();
-
             const epoch = Math.floor(Date.now() / 1000);
             const remaining = 15 - (epoch % 15);
-            
             timerDisplay.innerText = `${remaining}s`;
-            
-            const percent = (remaining / 15) * 100;
-            progressBar.style.width = `${percent}%`;
-
+            progressBar.style.width = `${(remaining / 15) * 100}%`;
         } catch (e) {
             display.innerText = "Error";
             timerDisplay.innerText = "--";
@@ -1943,10 +1902,8 @@
             navigator.clipboard.writeText(code);
             const copyText = document.getElementById('copyText');
             if (copyText) copyText.innerText = lang === 'bn' ? "কপি হয়েছে!" : "Copied!";
-            
             codeDisplay.style.transform = 'scale(1.08)';
             setTimeout(() => codeDisplay.style.transform = 'none', 200);
-
             setTimeout(() => {
                 if (copyText) copyText.innerText = lang === 'bn' ? "কোড কপি করুন" : "Copy Code";
             }, 1500);
@@ -1970,17 +1927,14 @@
     function updateNoteStats() {
         if (!noteArea || !wordCount) return;
         localStorage.setItem('smart_notepad_data', noteArea.value);
-        const langSelect = document.getElementById('langSelect');
-        const lang = langSelect ? langSelect.value : 'en';
+        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
         wordCount.innerText = `${noteArea.value.length} ${lang === 'bn' ? 'অক্ষর' : 'Characters'}`;
     }
 
     function clearNote() {
         if (!noteArea) return;
-        const langSelect = document.getElementById('langSelect');
-        const lang = langSelect ? langSelect.value : 'en';
-        const confirmMsg = lang === 'bn' ? 'সব লেখা মুছে ফেলতে চান?' : 'Are you sure you want to clear all text?';
-        if(confirm(confirmMsg)) {
+        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
+        if(confirm(lang === 'bn' ? 'সব লেখা মুছে ফেলতে চান?' : 'Are you sure you want to clear all text?')) {
             noteArea.value = '';
             localStorage.removeItem('smart_notepad_data');
             updateNoteStats();
@@ -1988,4 +1942,97 @@
         }
     }
 
-    function downloadNoteFile
+    function downloadNoteFile() {
+        if (!noteArea) return;
+        const text = noteArea.value.trim();
+        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
+        
+        if (!text) {
+            alert(lang === 'bn' ? 'ডাউনলোড করার আগে নোটপ্যাডে কিছু লিখুন!' : 'Please write something in the notepad before downloading!');
+            return;
+        }
+
+        const format = document.querySelector('input[name="fileFormat"]:checked').value;
+        const fileName = `Note_${new Date().toISOString().slice(0,10)}`;
+
+        if (format === 'txt') {
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            triggerDownload(URL.createObjectURL(blob), `${fileName}.txt`);
+        } else if (format === 'pdf') {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text(doc.splitTextToSize(text, 180), 15, 20);
+            doc.save(`${fileName}.pdf`);
+        } else if (format === 'docx') {
+            const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'></head><body>";
+            const blob = new Blob(['\ufeff', header + text.replace(/\n/g, "<br>") + "</body></html>"], { type: 'application/msword' });
+            triggerDownload(URL.createObjectURL(blob), `${fileName}.docx`);
+        }
+    }
+
+    function triggerDownload(url, filename) {
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+    // Fake Identity Database & Generator
+    const nameDatabase = {
+        american: { male: ["James A. Smith", "Robert J. Johnson"], female: ["Mary L. Davis", "Patricia K. Wilson"] },
+        british: { male: ["Oliver T. Clarke", "George H. Smith"], female: ["Olivia S. Roberts", "Amelia L. Jones"] },
+        australian: { male: ["Lachlan M. Kelly", "Oliver J. O'Connor"], female: ["Charlotte E. Smith", "Olivia M. Kelly"] },
+        canadian: { male: ["Liam T. Tremblay", "Noah M. Gagnon"], female: ["Emma S. Gagnon", "Olivia L. Roy"] },
+        german: { male: ["Maximilian H. Müller", "Alexander K. Schmidt"], female: ["Mia A. Wagner", "Emma S. Becker"] },
+        french: { male: ["Gabriel L. Martin", "Léo M. Bernard"], female: ["Jade A. Durand", "Louise S. Leroy"] },
+        japanese: { male: ["Hiroshi T. Tanaka", "Kenji M. Sato"], female: ["Hina A. Yamamoto", "Yui S. Nakamura"] },
+        indian: { male: ["Aarav M. Sharma", "Vivaan R. Verma"], female: ["Diya A. Joshi", "Saanvi S. Mehta"] },
+        bangladeshi: { male: ["Tanvir A. Rahman", "Rakibul S. Islam"], female: ["Nusrat J. Mim", "Sadia K. Akter"] }
+    };
+
+    const detailedAddressDatabase = {
+        "United States": [{ street: "1483 Better Street", city: "Overland Park", state: "Kansas (KS)", zip: "66210", phone: "+1 913-555-0148", lat: "38.9822", lng: "-94.6708" }],
+        "United Kingdom": [{ street: "12 Baker Street", city: "London", state: "Greater London", zip: "W1U 3BW", phone: "+44 20 7946 0912", lat: "51.5223", lng: "-0.1578" }],
+        "Canada": [{ street: "742 Evergreen Terrace", city: "Toronto", state: "Ontario", zip: "M4W 1A8", phone: "+1 416-555-0177", lat: "43.6532", lng: "-79.3832" }],
+        "Australia": [{ street: "15 Collins Street", city: "Melbourne", state: "Victoria", zip: "3000", phone: "+61 3 9555 0142", lat: "-37.8136", lng: "144.9631" }],
+        "Germany": [{ street: "Hauptstraße 45", city: "Berlin", state: "Berlin", zip: "10117", phone: "+49 30 123456", lat: "52.5200", lng: "13.4050" }],
+        "France": [{ street: "10 Rue de la Paix", city: "Paris", state: "Île-de-France", zip: "75002", phone: "+33 1 40 50 60 70", lat: "48.8688", lng: "2.3314" }],
+        "Japan": [{ street: "2-11-1 Nagata-cho", city: "Tokyo", state: "Chiyoda-ku", zip: "100-0014", phone: "+81 3 5555 0123", lat: "35.6762", lng: "139.6503" }],
+        "India": [{ street: "12 Park Street", city: "Kolkata", state: "West Bengal", zip: "700016", phone: "+91 33 2345 6789", lat: "22.5551", lng: "88.3524" }],
+        "Bangladesh": [{ street: "Station Road, Sadar", city: "Sirajganj", state: "Rajshahi Division", zip: "6700", phone: "+880 1811-987654", lat: "24.4533", lng: "89.7006" }]
+    };
+
+    function generateFakeIdentity() {
+        const gender = document.getElementById('fakeGender').value === 'random' ? (Math.random() > 0.5 ? 'male' : 'female') : document.getElementById('fakeGender').value;
+        const nameSet = document.getElementById('fakeNameSet').value;
+        const country = document.getElementById('fakeCountry').value;
+        
+        const names = (nameDatabase[nameSet] || nameDatabase['american'])[gender];
+        const addr = (detailedAddressDatabase[country] || detailedAddressDatabase["United States"])[0];
+
+        document.getElementById('resName').innerText = names[Math.floor(Math.random() * names.length)];
+        document.getElementById('resDob').innerText = `${Math.floor(Math.random() * 28) + 1} July 1995`;
+        document.getElementById('resStreet').innerText = addr.street;
+        document.getElementById('resCity').innerText = addr.city;
+        document.getElementById('resState').innerText = addr.state;
+        document.getElementById('resZip').innerText = addr.zip;
+        document.getElementById('resPhone').innerText = addr.phone;
+        document.getElementById('resCountry').innerText = country;
+        document.getElementById('resLat').innerText = addr.lat;
+        document.getElementById('resLng').innerText = addr.lng;
+        document.getElementById('fakeAvatarIcon').innerText = (gender === 'male') ? "👨" : "👩";
+        document.getElementById('fakeResultCard').style.display = 'block';
+    }
+
+    function copyFakeText(elementId, btnElement) {
+        navigator.clipboard.writeText(document.getElementById(elementId).innerText);
+        const originalText = btnElement.innerText;
+        btnElement.innerText = 'Copied!';
+        setTimeout(() => { btnElement.innerText = originalText; }, 1500);
+    }
+</script>
+
+</body>
+</html>
