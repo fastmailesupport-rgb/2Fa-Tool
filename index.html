@@ -386,7 +386,7 @@
             color: var(--teal-primary);
         }
 
-        /* --- PREMIER INBOX CARD STYLING (Matching User Screenshot 5078.png) --- */
+        /* --- PREMIER INBOX CARD STYLING (Matching User Screenshot 5079.png) --- */
         .inbox-section-wrapper {
             margin-top: 16px;
             border-top: 1px solid var(--border-color);
@@ -528,7 +528,7 @@
             overflow: hidden;
         }
 
-        /* Individual OTP Digit Boxes Container (Screenshot Style) */
+        /* Individual OTP Digit Boxes Grid (Screenshot Style) */
         .otp-digit-boxes-row {
             display: grid;
             grid-template-columns: repeat(6, 1fr) 1.2fr;
@@ -618,7 +618,6 @@
             color: white;
         }
 
-        /* Empty state styling */
         .inbox-empty-card {
             background-color: var(--bg-card);
             border: 1px dashed var(--border-color);
@@ -807,7 +806,6 @@
             transform: scale(0.97);
         }
 
-        /* Fake Name Output Result Card */
         .result-card {
             margin-top: 1.2rem;
             background-color: var(--bg-subcard);
@@ -1441,7 +1439,7 @@
                         </button>
                     </div>
 
-                    <!-- INBOX ALL MESSAGES LIST SECTION (Updated to Screenshot 5078.png Card UI) -->
+                    <!-- INBOX ALL MESSAGES LIST SECTION (Matching Screenshot 5079.png Card UI) -->
                     <div class="inbox-section-wrapper">
                         <div class="inbox-top-badge-row">
                             <div class="inbox-badge-pill" id="inboxTitleBadge">
@@ -1825,7 +1823,18 @@
                 document.getElementById('mailCodeDisplay').innerText = "ERROR";
             } else {
                 globalActiveFullMessage = data.full_message || "";
+                // Handle both `messages_list` and fallback to single message if array is empty
                 globalAllMessagesList = data.messages_list || [];
+                if (globalAllMessagesList.length === 0 && data.otp) {
+                    globalAllMessagesList.push({
+                        sender: data.sender || "Microsoft",
+                        email: "no-reply@microsoft.com",
+                        subject: data.subject || "Verification Code",
+                        otp: data.otp,
+                        time: "Just Now",
+                        full_message: data.full_message || ""
+                    });
+                }
 
                 updateMailUI(data.sender, data.subject, data.otp, globalActiveFullMessage);
                 renderInboxList(globalAllMessagesList);
@@ -1844,7 +1853,7 @@
         document.getElementById('mailCodeDisplay').innerText = otp;
     }
 
-    // Render Inbox List matching Screenshot 5078.png Card Layout exactly
+    // Render Inbox List matching Screenshot 5079.png Card Layout exactly
     function renderInboxList(messages) {
         const container = document.getElementById('inboxListContainer');
         const countBadge = document.getElementById('inboxCountBadge');
@@ -1861,20 +1870,22 @@
 
         messages.forEach((msg, idx) => {
             const platform = getPlatformBadge(msg.sender + " " + msg.subject);
-            const otpString = (msg.otp && msg.otp !== "------") ? msg.otp : "------";
+            const otpString = (msg.otp && msg.otp !== "------") ? msg.otp : "";
             
-            // Generate individual digit boxes for OTP
-            let digitsHtml = '';
-            for (let i = 0; i < 6; i++) {
-                const char = otpString[i] || '-';
-                digitsHtml += `<div class="otp-digit-box">${char}</div>`;
+            let otpSectionHtml = '';
+            if (otpString && otpString.length >= 4) {
+                let digitsHtml = '';
+                for (let i = 0; i < 6; i++) {
+                    const char = otpString[i] || '-';
+                    digitsHtml += `<div class="otp-digit-box">${char}</div>`;
+                }
+                digitsHtml += `
+                    <button class="otp-box-copy-btn" onclick="copySpecificOtp('${otpString}', this)" title="Copy OTP">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                `;
+                otpSectionHtml = `<div class="otp-digit-boxes-row">${digitsHtml}</div><div class="email-card-divider"></div>`;
             }
-            // Add copy icon button in the 7th column matching screenshot
-            digitsHtml += `
-                <button class="otp-box-copy-btn" onclick="copySpecificOtp('${otpString}', this)" title="Copy OTP">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                </button>
-            `;
 
             container.innerHTML += `
                 <div class="email-card-box">
@@ -1888,19 +1899,14 @@
                         </div>
                         <div class="email-time-tag">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                            ${msg.time || '15 Nov 2026, 4:30 pm'}
+                            ${msg.time || '15 Nov 2026, 4:48 pm'}
                         </div>
                     </div>
 
                     <div class="email-subject-highlight">${msg.subject}</div>
                     <div class="email-body-preview">${cleanHtmlText(msg.full_message)}</div>
 
-                    <!-- OTP Digit Boxes Grid -->
-                    <div class="otp-digit-boxes-row">
-                        ${digitsHtml}
-                    </div>
-
-                    <div class="email-card-divider"></div>
+                    ${otpSectionHtml}
 
                     <div class="email-card-footer-row">
                         <div class="email-msg-num-tag">
@@ -1926,7 +1932,6 @@
         }
     }
 
-    // Clean HTML Entities & Tags helper function for professional email card view
     function cleanHtmlText(htmlStr) {
         if (!htmlStr) return "";
         let txt = document.createElement("textarea");
@@ -1935,7 +1940,6 @@
         return decoded.replace(/<[^>]*>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
     }
 
-    // Open Modal with Specific Inbox Message (Professional Email Card View)
     function viewSpecificInboxMessage(index) {
         const msg = globalAllMessagesList[index];
         if (!msg) return;
@@ -1959,7 +1963,6 @@
         document.getElementById('fullMsgModal').style.display = 'flex';
     }
 
-    // Open Modal for Main Latest Full Message (Professional Email Card View)
     function openFullMessageModal() {
         const modalBody = document.getElementById('modalFullBodyContent');
         modalBody.innerHTML = `
