@@ -180,7 +180,7 @@
             color: var(--text-main);
         }
 
-        /* 5-Tab Switcher Layout (Updated to fit 5 tabs neatly) */
+        /* 5-Tab Switcher Layout */
         .tab-wrapper {
             width: calc(100% - 32px);
             max-width: 408px;
@@ -348,7 +348,7 @@
             animation: none;
         }
 
-        /* Mail Code Output Result Card */
+        /* Mail Code Output Result Card & Platform Icon Row */
         .mail-result-card {
             margin-top: 1.2rem;
             background-color: var(--bg-subcard);
@@ -356,6 +356,105 @@
             border-radius: 12px;
             padding: 1rem;
             display: none;
+        }
+
+        .otp-platform-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 12px 0;
+            padding: 10px;
+            background-color: var(--bg-card);
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
+        }
+
+        .platform-icon-box {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--teal-light);
+            flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .otp-code-value {
+            font-size: 1.85rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            font-family: monospace;
+            color: var(--teal-primary);
+        }
+
+        body.dark-mode .otp-code-value {
+            color: #2dd4bf;
+        }
+
+        .mail-action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .view-msg-btn {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 10px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .view-msg-btn:hover {
+            border-color: var(--teal-primary);
+            color: var(--teal-primary);
+        }
+
+        /* Full Message Box */
+        .full-message-box {
+            display: none;
+            margin-top: 12px;
+            background-color: var(--bg-card);
+            border: 1.5px solid var(--teal-primary);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: left;
+            animation: fadeIn 0.25s ease-in-out;
+        }
+
+        .msg-meta {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 6px;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .msg-meta strong {
+            color: var(--text-main);
+        }
+
+        .msg-body-text {
+            font-size: 0.82rem;
+            color: var(--text-main);
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 160px;
+            overflow-y: auto;
         }
 
         /* Fake Name 3-Item Inline Row Layout with Icons */
@@ -613,7 +712,7 @@
         .token-card {
             background-color: var(--bg-subcard);
             border-radius: 12px;
-            padding: 1.25rem;
+            padding: 1.15rem;
             text-align: center;
             border: 1px solid var(--border-color);
         }
@@ -626,15 +725,15 @@
         }
 
         .token-label {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.6px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .timer-badge {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
             color: var(--teal-primary);
             background: var(--teal-light);
@@ -674,16 +773,16 @@
             background-color: var(--bg-card);
             color: var(--teal-primary);
             border: 1px solid var(--teal-primary);
-            padding: 10px 16px;
+            padding: 10px 12px;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             width: 100%;
             font-weight: 600;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -964,7 +1063,7 @@
         </div>
     </div>
 
-    <!-- 5-Tab Switcher Layout (Mail Code added at the first position) -->
+    <!-- 5-Tab Switcher Layout (Mail Code at the first position) -->
     <div class="tab-wrapper">
         <button class="tab-btn active" id="tabBtnMail" onclick="switchTab('mail')">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -995,7 +1094,7 @@
     <!-- Main Container -->
     <div class="container">
         
-        <!-- TAB 1: MAIL CODE (HOTMAIL/OUTLOOK TOKEN & OTP FETCHER) -->
+        <!-- TAB 1: MAIL CODE (HOTMAIL/OUTLOOK TOKEN & OTP FETCHER WITH PLATFORM ICON & FULL MESSAGE) -->
         <div id="sectionMail" class="tab-content active">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1003,7 +1102,7 @@
                 </div>
                 <h2 id="titleMail">Hotmail / Outlook Mail Code</h2>
             </div>
-            <p class="sub-desc" id="descMail">Paste your full Hotmail/Outlook access token or refresh token to fetch email address and live OTP codes.</p>
+            <p class="sub-desc" id="descMail">Paste your full Hotmail/Outlook token to extract your email, see the sender app icon, OTP code, and full message.</p>
             
             <textarea id="mailTokenInput" placeholder="Paste your full Mail Token here..."></textarea>
             
@@ -1019,7 +1118,8 @@
             </div>
             
             <div class="mail-result-card" id="mailResultCard">
-                <div class="field-box name-highlight-box" style="margin-bottom: 8px;">
+                <!-- Extracted Email Copy Box -->
+                <div class="field-box name-highlight-box" style="margin-bottom: 10px;">
                     <div class="field-info" style="width: 100%; overflow: hidden;">
                         <span class="field-label" id="labelExtractedEmail">Extracted Email Address</span>
                         <span class="field-value large-name-text" id="resEmailAddress">user@outlook.com</span>
@@ -1027,16 +1127,42 @@
                     <button class="copy-sm-btn" onclick="copyMailText('resEmailAddress', this)">Copy</button>
                 </div>
 
-                <div class="token-card" style="margin-top: 10px;">
+                <!-- OTP Card with Platform App Icon on the Left & Full Message Toggle -->
+                <div class="token-card" style="margin-top: 8px;">
                     <div class="token-header-row">
-                        <div class="token-label" id="mailOtpLabel">Latest OTP Code / Inbox</div>
-                        <div id="mailTimerBadge" class="timer-badge">Live</div>
+                        <div class="token-label" id="mailOtpLabel">OTP FROM: <span id="platformNameText" style="color: var(--teal-primary);">MICROSOFT</span></div>
+                        <div id="mailTimerBadge" class="timer-badge">Just Now</div>
                     </div>
-                    <div id="mailCodeDisplay" style="font-size: 1.8rem; font-weight: 700; letter-spacing: 3px; font-family: monospace; color: var(--teal-primary); margin: 10px 0;">------</div>
-                    <button class="copy-btn" onclick="copyMailCodeText()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                        <span id="copyOtpText">Copy OTP Code</span>
-                    </button>
+
+                    <!-- App Icon on Left + OTP Display -->
+                    <div class="otp-platform-display">
+                        <div class="platform-icon-box" id="platformIconContainer" title="Sender Platform">
+                            <!-- Default Microsoft Icon (Dynamically changes based on sender) -->
+                            <svg width="24" height="24" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>
+                        </div>
+                        <div class="otp-code-value" id="mailCodeDisplay">------</div>
+                    </div>
+
+                    <!-- Copy OTP & View Full Message Buttons -->
+                    <div class="mail-action-grid">
+                        <button class="copy-btn" onclick="copyMailCodeText()">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            <span id="copyOtpText">Copy OTP</span>
+                        </button>
+                        <button class="view-msg-btn" onclick="toggleFullMessage()" id="toggleMsgBtn">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <span id="viewFullMsgText">Full Message</span>
+                        </button>
+                    </div>
+
+                    <!-- Collapsible Full Message Content Box -->
+                    <div class="full-message-box" id="fullMessageBox">
+                        <div class="msg-meta">
+                            <div><strong>From:</strong> <span id="msgSender">account-security-noreply@accountprotection.microsoft.com</span></div>
+                            <div><strong>Subject:</strong> <span id="msgSubject">Microsoft account security code</span></div>
+                        </div>
+                        <div class="msg-body-text" id="msgBodyContent">Your security code is: 482910. Please enter this code to verify your account identity. Do not share this code with anyone.</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1337,7 +1463,45 @@
         if(activeSec) activeSec.classList.add('active');
     }
 
-    // Mail Code Tab Logic (Token Input & Extraction Handler)
+    // Platform Icon & Details Helper (Detects Microsoft, Facebook, Twitter/X, Google, Instagram, TikTok, etc.)
+    function getPlatformBadge(senderOrText) {
+        const lower = senderOrText.toLowerCase();
+        
+        if (lower.includes('facebook') || lower.includes('fb')) {
+            return {
+                name: 'FACEBOOK',
+                svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="#1877F2"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>`
+            };
+        } else if (lower.includes('twitter') || lower.includes('x.com')) {
+            return {
+                name: 'TWITTER / X',
+                svg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="#000000"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`
+            };
+        } else if (lower.includes('instagram')) {
+            return {
+                name: 'INSTAGRAM',
+                svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>`
+            };
+        } else if (lower.includes('google') || lower.includes('gmail')) {
+            return {
+                name: 'GOOGLE',
+                svg: `<svg width="24" height="24" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.09C3.515 21.3 7.565 24 12.255 24z"/><path fill="#FBBC05" d="M5.525 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62h-3.98a11.86 11.86 0 000 10.76l3.98-3.09z"/><path fill="#EA4335" d="M12.255 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C18.205 1.19 15.495 0 12.255 0c-4.69 0-8.74 2.7-10.71 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>`
+            };
+        } else if (lower.includes('tiktok')) {
+            return {
+                name: 'TIKTOK',
+                svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="#000000"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>`
+            };
+        } else {
+            // Default: Microsoft / Outlook
+            return {
+                name: 'MICROSOFT',
+                svg: `<svg width="24" height="24" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>`
+            };
+        }
+    }
+
+    // Mail Code Tab Logic (Token Input, Platform Detection & Full Message Display)
     function fetchMailCode() {
         const tokenInput = document.getElementById('mailTokenInput').value.trim();
         const langSelect = document.getElementById('langSelect');
@@ -1348,29 +1512,89 @@
             return;
         }
 
-        // Simulating email and OTP extraction from token format or string
+        // Extract email address if present in token string (e.g. email|pass|token or email:token)
         let extractedEmail = "user@outlook.com";
-        // If token contains an email-like pattern, extract it
         const emailMatch = tokenInput.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
         if (emailMatch) {
             extractedEmail = emailMatch[0];
         } else {
-            // Generate a plausible placeholder based on input length hash if email not found
             extractedEmail = "outlook_user_" + Math.floor(Math.abs(hashCode(tokenInput)) % 90000 + 10000) + "@outlook.com";
         }
 
         document.getElementById('resEmailAddress').innerText = extractedEmail;
-        
-        // Generate a random dynamic OTP or message code
+
+        // =========================================================================
+        // NOTE FOR BACKEND API INTEGRATION:
+        // If you connect your Python backend (Render/Flask/FastAPI), replace the
+        // simulated data block below with your fetch() call to your API endpoint:
+        //
+        // fetch('https://your-backend-api.onrender.com/get-otp', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({ token: tokenInput })
+        // })
+        // .then(res => res.json())
+        // .then(data => {
+        //     updateMailUI(data.sender, data.subject, data.otp, data.full_message);
+        // });
+        // =========================================================================
+
+        // Simulated Sample Platforms for Preview (Detects keywords in input if tested, otherwise defaults to Microsoft)
         const randomOtp = Math.floor(100000 + Math.random() * 900000);
-        document.getElementById('mailCodeDisplay').innerText = randomOtp;
+        let sampleSender = "account-security-noreply@accountprotection.microsoft.com";
+        let sampleSubject = "Microsoft account security code";
+        let sampleBody = `Microsoft account\nSecurity code\n\nPlease use the following security code for the Microsoft account ${extractedEmail}.\n\nSecurity code: ${randomOtp}\n\nIf you didn't request this code, you can safely ignore this email. Someone else might have typed your email address by mistake.\n\nThanks,\nThe Microsoft account team`;
+
+        if (tokenInput.toLowerCase().includes('facebook')) {
+            sampleSender = "security@facebookmail.com";
+            sampleSubject = `${randomOtp} is your Facebook confirmation code`;
+            sampleBody = `Hi,\n\nYour Facebook security code is: ${randomOtp}\n\nTo help keep your account safe, please don't forward this email or share this code with anyone.\n\nThanks,\nThe Facebook Security Team`;
+        } else if (tokenInput.toLowerCase().includes('twitter') || tokenInput.toLowerCase().includes('x.com')) {
+            sampleSender = "info@x.com";
+            sampleSubject = `${randomOtp} is your X verification code`;
+            sampleBody = `Confirm your email address\n\nThere's one quick step you need to complete before creating your X account. Please enter this verification code to get started:\n\n${randomOtp}\n\nVerification codes expire after two hours.\n\nThanks,\nX`;
+        } else if (tokenInput.toLowerCase().includes('instagram')) {
+            sampleSender = "security@mail.instagram.com";
+            sampleSubject = `${randomOtp} is your Instagram code`;
+            sampleBody = `Hi,\n\nSomeone tried to log in to your Instagram account. If this was you, please use the following code to confirm your identity:\n\n${randomOtp}\n\nIf this wasn't you, please reset your password immediately.`;
+        } else if (tokenInput.toLowerCase().includes('google')) {
+            sampleSender = "no-reply@accounts.google.com";
+            sampleSubject = "Google Verification Code";
+            sampleBody = `Google received a request to use ${extractedEmail} as a recovery email for Google Account.\n\nUse this code to finish setting up this recovery email:\n${randomOtp}\n\nThis code will expire in 24 hours.`;
+        }
+
+        updateMailUI(sampleSender, sampleSubject, randomOtp, sampleBody);
+    }
+
+    function updateMailUI(sender, subject, otp, fullBody) {
+        const platform = getPlatformBadge(sender + " " + subject);
         
+        document.getElementById('platformNameText').innerText = platform.name;
+        document.getElementById('platformIconContainer').innerHTML = platform.svg;
+        document.getElementById('mailCodeDisplay').innerText = otp;
+        
+        document.getElementById('msgSender').innerText = sender;
+        document.getElementById('msgSubject').innerText = subject;
+        document.getElementById('msgBodyContent').innerText = fullBody;
+        
+        document.getElementById('fullMessageBox').style.display = 'none';
         document.getElementById('mailResultCard').style.display = 'block';
+    }
+
+    function toggleFullMessage() {
+        const msgBox = document.getElementById('fullMessageBox');
+        if (!msgBox) return;
+        if (msgBox.style.display === 'none' || msgBox.style.display === '') {
+            msgBox.style.display = 'block';
+        } else {
+            msgBox.style.display = 'none';
+        }
     }
 
     function clearMailTab() {
         document.getElementById('mailTokenInput').value = '';
         document.getElementById('mailResultCard').style.display = 'none';
+        document.getElementById('fullMessageBox').style.display = 'none';
         document.getElementById('mailTokenInput').focus();
     }
 
@@ -1401,7 +1625,7 @@
             const copyText = document.getElementById('copyOtpText');
             if (copyText) copyText.innerText = lang === 'bn' ? "কপি হয়েছে!" : "Copied!";
             setTimeout(() => {
-                if (copyText) copyText.innerText = lang === 'bn' ? "ওটিপি কোড কপি করুন" : "Copy OTP Code";
+                if (copyText) copyText.innerText = lang === 'bn' ? "ওটিপি কপি" : "Copy OTP";
             }, 1500);
         }
     }
@@ -1556,12 +1780,12 @@
             setTxt('tabTextPhotos', 'ফটোস');
             setTxt('tabTextNote', 'নোটপ্যাড');
             setTxt('titleMail', 'হটমেইল / আউটলুক মেইল কোড');
-            setTxt('descMail', 'আপনার হটমেইল বা আউটলুক এক্সেস টোকেন পেস্ট করে মেইল ও লাইভ ওটিপি কোড দেখুন।');
+            setTxt('descMail', 'আপনার হটমেইল/আউটলুক টোকেন পেস্ট করে মেইল অ্যাড্রেস, প্রেরক অ্যাপের আইকন, ওটিপি এবং ফুল মেসেজ দেখুন।');
             setTxt('btnFetchMail', 'মেইল ও ওটিপি আনুন');
             setTxt('btnClearMail', 'ক্লিয়ার');
             setTxt('labelExtractedEmail', 'এক্সট্রাক্ট করা মেইল অ্যাড্রেস');
-            setTxt('mailOtpLabel', 'সর্বশেষ ওটিপি কোড / ইনবক্স');
-            setTxt('copyOtpText', 'ওটিপি কোড কপি করুন');
+            setTxt('copyOtpText', 'ওটিপি কপি');
+            setTxt('viewFullMsgText', 'ফুল মেসেজ');
             setTxt('title2fa', 'সিক্রেট কি');
             setTxt('desc2fa', 'সিক্রেট কি দিয়ে গেট কোড বাটনে ক্লিক করলে লাইভ 2FA কোড দেখতে পাবেন।');
             setTxt('btn2fa', 'গেট কোড');
@@ -1603,12 +1827,12 @@
             setTxt('tabTextPhotos', 'Photos');
             setTxt('tabTextNote', 'Note');
             setTxt('titleMail', 'Hotmail / Outlook Mail Code');
-            setTxt('descMail', 'Paste your full Hotmail/Outlook access token or refresh token to fetch email address and live OTP codes.');
+            setTxt('descMail', 'Paste your full Hotmail/Outlook token to extract your email, see the sender app icon, OTP code, and full message.');
             setTxt('btnFetchMail', 'Get Mail & OTP');
             setTxt('btnClearMail', 'Clear');
             setTxt('labelExtractedEmail', 'Extracted Email Address');
-            setTxt('mailOtpLabel', 'Latest OTP Code / Inbox');
-            setTxt('copyOtpText', 'Copy OTP Code');
+            setTxt('copyOtpText', 'Copy OTP');
+            setTxt('viewFullMsgText', 'Full Message');
             setTxt('title2fa', 'Secret Key');
             setTxt('desc2fa', 'Enter your Base32 secret key and click Get Code to generate your 2FA token.');
             setTxt('btn2fa', 'Get Code');
