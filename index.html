@@ -4,362 +4,485 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#ffffff">
-<title>Advanced Tools Hub</title>
-<script src="https://unpkg.com/otpauth@9.3.6/dist/otpauth.umd.min.js"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+<meta name="theme-color" content="#f97316">
+<title>Orange Tools - Premium Workspace</title>
+<script src="https://cdn.jsdelivr.net/npm/otpauth@9.3.6/dist/otpauth.umd.min.js"></script>
 <style>
-:root {
- --orange:#f47721;--orange2:#ff9b50;--bg:#fff;
- --surface:#fffaf6;--text:#292522;--muted:#91877f;
- --line:#f0e7df;--shadow:0 5px 22px #75401a0d;
+:root{
+ --orange:#f97316;
+ --orange2:#ea580c;
+ --pale:#fff7ed;
+ --bg:#ffffff;
+ --text:#252525;
+ --muted:#777;
+ --border:#eee5dc;
+ --green:#16a36a;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,Arial,sans-serif;background:#fff;color:var(--text);min-height:100vh}
+*{box-sizing:border-box}
+body{
+ margin:0;background:#fff;color:var(--text);
+ font-family:Arial,Helvetica,sans-serif;
+}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-.app{width:100%;max-width:650px;margin:auto;padding:18px 15px 45px}
-header{height:55px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.brand{display:flex;align-items:center;gap:10px}
-.logo{width:42px;height:42px;background:linear-gradient(145deg,#ff9b50,#ed6413);border-radius:13px;display:grid;place-items:center;color:white;box-shadow:0 5px 12px #f4772140}
-.brand h1{font-size:16px;font-weight:850;letter-spacing:.3px}
-.brand p{font-size:9px;color:var(--muted);letter-spacing:1.5px;margin-top:4px}
-.settings{width:40px;height:40px;border:1px solid var(--line);background:#fff;border-radius:12px;color:var(--orange);display:grid;place-items:center}
-.settings:active,.tool:active{transform:scale(.95)}
-.tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:8px 0 22px}
-.tool{min-width:0;border:1px solid var(--line);background:#fff;border-radius:15px;padding:12px 3px 11px;display:flex;align-items:center;flex-direction:column;gap:8px;box-shadow:var(--shadow);transition:.2s}
-.tool.active{border-color:#f6a36b;background:#fff6ef;box-shadow:0 4px 15px #f4772117}
-.tool-icon{width:39px;height:39px;border-radius:13px;background:linear-gradient(145deg,#fff0e4,#ffe0c8);display:grid;place-items:center;color:#e96c1b;box-shadow:inset 0 2px 4px #fff,0 3px 7px #b65b2014}
-.tool-icon svg{width:21px;height:21px;stroke-width:2}
-.tool span{font-size:10px;font-weight:750;text-align:center;line-height:1.3}
-.panel{display:none;border:1px solid var(--line);border-radius:19px;padding:18px;background:white;box-shadow:var(--shadow);animation:appear .25s ease}
-.panel.active{display:block}
+header{
+ height:66px;padding:0 17px;display:flex;
+ align-items:center;justify-content:space-between;
+ border-bottom:1px solid var(--border);
+ position:sticky;top:0;background:#fff;z-index:10;
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}
+.brand-icon{
+ width:39px;height:39px;border-radius:13px;
+ background:linear-gradient(135deg,#ff9a45,#ed620b);
+ color:white;display:grid;place-items:center;
+ font-size:22px;box-shadow:0 5px 14px #f9731633;
+}
+.brand small{display:block;color:#999;font-size:9px;letter-spacing:1.3px;margin-top:3px}
+.icon-btn{
+ border:1px solid var(--border);background:white;
+ width:39px;height:39px;border-radius:12px;color:var(--orange);
+ display:grid;place-items:center;position:relative;overflow:hidden;
+}
+svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.container{max-width:850px;margin:auto;padding:19px 15px 55px}
+.tools{
+ display:grid;grid-template-columns:repeat(4,1fr);gap:9px;
+ margin-bottom:24px;
+}
+.tool{
+ border:1px solid var(--border);border-radius:15px;
+ background:#fff;padding:12px 3px;text-align:center;
+ color:#555;transition:.2s;
+}
+.tool.active,.tool:active{
+ border-color:#ffad70;background:var(--pale);
+ color:var(--orange2);box-shadow:0 5px 15px #f9731615;
+}
+.tool-icon{
+ width:38px;height:38px;margin:0 auto 7px;
+ background:var(--pale);border-radius:12px;
+ display:grid;place-items:center;color:var(--orange);
+}
+.tool span{font-size:10px;font-weight:700;display:block}
+.section{display:none;animation:appear .25s ease}
+.section.active{display:block}
 @keyframes appear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
-.panel-head{display:flex;align-items:center;gap:10px;margin-bottom:7px}
-.panel-head .mini{width:38px;height:38px;border-radius:12px;background:#fff0e5;color:var(--orange);display:grid;place-items:center}
-.panel-head h2{font-size:17px}
-.desc{font-size:12px;color:var(--muted);line-height:1.6;margin:8px 0 17px}
-.field{width:100%;padding:13px 14px;border:1px solid var(--line);background:#fffdfa;color:var(--text);border-radius:11px;outline:none;font-size:13px;margin-bottom:11px}
-.field:focus{border-color:var(--orange);box-shadow:0 0 0 3px #f4772112}
-select.field{appearance:auto}
-textarea.field{min-height:190px;resize:vertical;line-height:1.6}
-.btn{border:0;background:linear-gradient(110deg,#ff923f,#ed6817);color:white;border-radius:11px;padding:13px 16px;font-weight:750;font-size:12px;box-shadow:0 4px 10px #f4772125}
-.btn:active{transform:scale(.98)}
-.btn.full{width:100%}
-.btn.light{background:#fff4eb;color:#df681d;border:1px solid #ffdfc6;box-shadow:none}
-.btnrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
-.btnrow .btn{flex:1}
-.result{margin-top:14px;border:1px solid var(--line);background:#fffaf6;border-radius:13px;padding:15px}
-.otp{font-size:34px;font-weight:850;letter-spacing:8px;color:var(--orange);text-align:center;padding:10px}
-.muted{text-align:center;color:var(--muted);font-size:11px}
-.progress{height:5px;border-radius:10px;background:#f3e8df;overflow:hidden;margin-top:12px}
-.progress div{height:100%;width:100%;background:var(--orange);transition:width .5s}
-.gender{display:flex;gap:9px;margin-bottom:12px}
-.gender label{flex:1;border:1px solid var(--line);padding:12px;border-radius:11px;text-align:center;font-size:12px;font-weight:700;cursor:pointer}
-.gender input{accent-color:var(--orange)}
-.identity{display:grid;gap:9px;margin-top:13px}
-.identity-item{border:1px solid var(--line);background:#fffaf6;border-radius:11px;padding:12px;font-size:12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
-.identity-item small{display:block;color:var(--muted);font-size:10px;margin-bottom:5px}
-.copy{border:0;background:#fff0e5;color:#e96c1b;border-radius:8px;padding:8px;display:grid;place-items:center}
-.gallery-tabs{display:flex;gap:8px;margin-bottom:13px}
-.gallery-tabs button{flex:1;padding:10px 5px;border-radius:10px;border:1px solid var(--line);background:white;color:var(--muted);font-size:11px;font-weight:700}
-.gallery-tabs button.active{background:#fff1e6;border-color:#f5b27f;color:#e66c20}
-.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
-.photo{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:white}
-.photo img{width:100%;height:175px;object-fit:cover;display:block;background:#f8eee7}
-.photo-info{padding:9px}
-.photo-info p{font-size:11px;font-weight:700;margin-bottom:8px}
-.photo-info button{width:100%;padding:9px;border:0;border-radius:8px;background:#fff0e5;color:#e66c20;font-size:11px;font-weight:750}
-.status{font-size:10px;color:#26946b;margin-top:8px}
-.note-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.note-tools button{flex:1;min-width:65px}
-.settings-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);font-size:12px}
-footer{text-align:center;padding:25px 0 5px;color:#b2a49a;font-size:10px}
-@media(max-width:360px){
- .app{padding-left:10px;padding-right:10px}
- .tools{gap:5px}
+.heading{margin-bottom:17px}
+.heading h2{font-size:21px;margin:0 0 5px;font-weight:800}
+.heading p{font-size:12px;color:var(--muted);margin:0;line-height:1.5}
+.panel{
+ border:1px solid var(--border);border-radius:17px;
+ padding:16px;background:#fff;
+ box-shadow:0 5px 22px #3b210b08;
+}
+label{font-size:12px;font-weight:700;display:block;margin:13px 0 7px}
+select,input,textarea{
+ width:100%;border:1px solid #dedede;border-radius:11px;
+ padding:13px;background:white;color:#333;outline:none;
+}
+select:focus,input:focus,textarea:focus{border-color:var(--orange);box-shadow:0 0 0 3px #f9731618}
+.primary{
+ background:linear-gradient(110deg,#ff8b35,#ed620b);
+ color:#fff;border:0;border-radius:11px;padding:13px 16px;
+ font-weight:800;box-shadow:0 5px 13px #f973162c;
+}
+.secondary{
+ background:#fff7ed;color:#c75a0a;border:1px solid #ffdfc4;
+ border-radius:10px;padding:10px 13px;font-weight:700;
+}
+.full{width:100%;margin-top:17px}
+.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.copy{
+ width:39px;height:39px;flex:none;position:relative;overflow:hidden;
+ border:1px solid #f1dfd0;background:#fff8f1;
+ border-radius:11px;color:#e96b16;display:grid;place-items:center;
+ transition:.2s;
+}
+.copy:active{transform:scale(.93);background:#ffe5d0}
+.ripple{
+ position:absolute;border-radius:50%;background:#f9731633;
+ transform:scale(0);animation:ripple .55s linear;pointer-events:none;
+}
+@keyframes ripple{to{transform:scale(4);opacity:0}}
+.profile{margin-top:22px;text-align:center}
+.avatar{
+ width:132px;height:132px;object-fit:cover;border-radius:50%;
+ border:4px solid #fff;outline:2px solid #f1d8c5;
+ box-shadow:0 7px 22px #f9731620;
+}
+.profile-label{
+ font-size:11px;font-weight:800;letter-spacing:2px;
+ color:#999;margin-top:22px;
+}
+.name-row{
+ display:flex;justify-content:center;align-items:center;
+ gap:9px;margin:8px 0 20px;flex-wrap:wrap;
+}
+.fullname{
+ font-size:clamp(25px,6vw,37px);font-weight:900;
+ color:#252525;letter-spacing:-1.2px;overflow-wrap:anywhere;
+}
+.info-list{border:1px solid #e9edf0;border-radius:12px;overflow:hidden;text-align:left}
+.info-row{
+ display:grid;grid-template-columns:1fr auto 39px;
+ align-items:center;gap:8px;padding:11px 10px;
+ border-bottom:1px solid #edf0f1;background:#fcfefe;
+ font-size:12px;min-height:54px;
+}
+.info-row:last-child{border-bottom:0}
+.info-label{color:#777}
+.info-value{font-weight:600;text-align:right;overflow-wrap:anywhere}
+.toast{
+ position:fixed;bottom:25px;left:50%;transform:translate(-50%,20px);
+ background:#242424;color:white;padding:12px 19px;
+ border-radius:30px;font-size:12px;opacity:0;
+ pointer-events:none;transition:.25s;z-index:99;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.avatar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}
+.avatar-card{border:1px solid var(--border);border-radius:12px;padding:7px;text-align:center}
+.avatar-card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:9px}
+.avatar-card button{margin-top:7px;width:100%;font-size:10px;padding:8px}
+textarea{min-height:230px;resize:vertical;line-height:1.6}
+.hint{font-size:11px;color:#888;line-height:1.5;margin-top:10px}
+.code-display{
+ background:var(--pale);border:1px solid #ffdfc4;
+ border-radius:13px;padding:23px;text-align:center;
+ font-size:34px;letter-spacing:7px;font-weight:900;color:var(--orange2);
+ margin-top:15px;
+}
+@media(max-width:420px){
+ .container{padding:15px 11px 40px}
+ .tools{gap:6px}
  .tool{padding:10px 1px}
+ .tool-icon{width:34px;height:34px}
  .tool span{font-size:9px}
- .tool-icon{width:35px;height:35px}
- .photo img{height:145px}
+ .panel{padding:13px}
+ .info-row{grid-template-columns:1fr auto 34px;padding:9px 7px;font-size:11px}
+ .copy{width:34px;height:34px}
 }
 </style>
 </head>
 <body>
-<div class="app">
+
 <header>
  <div class="brand">
-  <div class="logo"><i data-lucide="zap"></i></div>
-  <div>
-   <h1>ADVANCED TOOLS</h1>
-   <p>SMART TOOLS WORKSPACE</p>
-  </div>
+  <div class="brand-icon">✦</div>
+  <div>ORANGE TOOLS<small>PREMIUM WORKSPACE</small></div>
  </div>
- <button class="settings" onclick="openTool('settings')" aria-label="Settings">
-  <i data-lucide="settings"></i>
+ <button class="icon-btn" onclick="showToast('Settings coming soon')" aria-label="Settings">
+  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 3.1-.2-.1a1.7 1.7 0 0 0-1.8.1l-.2.1h-3.6l-.1-.2a1.7 1.7 0 0 0-1.5-1.1 1.7 1.7 0 0 0-1.5 1.1l-.1.2H5.4l-.1-.2a1.7 1.7 0 0 0-1.8-.1l-.2.1-1.8-3.1.1-.1A1.7 1.7 0 0 0 1.9 15l-.1-.2v-3.6l.2-.1a1.7 1.7 0 0 0 1.1-1.5A1.7 1.7 0 0 0 2 8.1l-.2-.1 1.8-3.1.2.1a1.7 1.7 0 0 0 1.8-.1l.1-.1h3.6l.1.2a1.7 1.7 0 0 0 1.5 1.1 1.7 1.7 0 0 0 1.5-1.1l.1-.2h3.6l.2.1a1.7 1.7 0 0 0 1.8.1l.2-.1 1.8 3.1-.1.1a1.7 1.7 0 0 0-.3 1.9l.1.2v3.6z"/></svg>
  </button>
 </header>
 
-<nav class="tools" aria-label="Tools">
- <button class="tool active" onclick="openTool('twofa',this)">
-  <div class="tool-icon"><i data-lucide="shield-check"></i></div>
-  <span>2FA Generator</span>
- </button>
- <button class="tool" onclick="openTool('identity',this)">
-  <div class="tool-icon"><i data-lucide="user-round"></i></div>
-  <span>Fake Name</span>
- </button>
- <button class="tool" onclick="openTool('gallery',this)">
-  <div class="tool-icon"><i data-lucide="images"></i></div>
-  <span>Photo Gallery</span>
- </button>
- <button class="tool" onclick="openTool('notes',this)">
-  <div class="tool-icon"><i data-lucide="notebook-pen"></i></div>
-  <span>Notepad</span>
- </button>
+<main class="container">
+
+<nav class="tools">
+ <button class="tool active" data-target="twofa"><div class="tool-icon"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div><span>2FA Generator</span></button>
+ <button class="tool" data-target="identity"><div class="tool-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><span>Fake Name</span></button>
+ <button class="tool" data-target="gallery"><div class="tool-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><span>Photo Gallery</span></button>
+ <button class="tool" data-target="notepad"><div class="tool-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg></div><span>Notepad</span></button>
 </nav>
 
-<section class="panel active" id="twofa">
- <div class="panel-head"><div class="mini"><i data-lucide="shield-check"></i></div><h2>2FA Authenticator</h2></div>
- <p class="desc">Generate secure time-based verification codes using your own authenticator secret.</p>
- <input id="secret" class="field" placeholder="Enter Base32 Secret Key" autocomplete="off">
- <button class="btn full" onclick="generate2FA()">Generate Code</button>
- <div class="result">
-  <div class="otp" id="otp">------</div>
-  <div class="muted" id="timer">Waiting for secret key</div>
-  <div class="progress"><div id="bar"></div></div>
-  <button class="btn light full" style="margin-top:14px" onclick="copyText(document.getElementById('otp').textContent)"> <i data-lucide="copy" style="width:14px;vertical-align:middle"></i> Copy Code</button>
- </div>
- <p class="desc">Your secret stays in your browser. Never share it with anyone.</p>
-</section>
-
-<section class="panel" id="identity">
- <div class="panel-head"><div class="mini"><i data-lucide="user-round"></i></div><h2>Fake Name Generator</h2></div>
- <p class="desc">Generate fictional identity details for testing and demo purposes.</p>
- <label class="desc">Select Gender</label>
- <div class="gender">
-  <label><input type="radio" name="gender" value="male" checked> <i data-lucide="user" style="width:15px;vertical-align:middle"></i> Male</label>
-  <label><input type="radio" name="gender" value="female"> <i data-lucide="user-round" style="width:15px;vertical-align:middle"></i> Female</label>
- </div>
- <label class="desc">Select Country</label>
- <select class="field" id="country">
-  <option value="USA">United States</option>
-  <option value="UK">United Kingdom</option>
-  <option value="Canada">Canada</option>
-  <option value="Australia">Australia</option>
-  <option value="Bangladesh">Bangladesh</option>
-  <option value="India">India</option>
-  <option value="Germany">Germany</option>
-  <option value="France">France</option>
- </select>
- <button class="btn full" onclick="makeIdentity()">Generate Fake Name</button>
- <div id="identityResult" class="identity">
-  <p class="muted">Select gender and country, then generate.</p>
+<!-- 2FA -->
+<section class="section active" id="twofa">
+ <div class="heading"><h2>2FA Authenticator</h2><p>Generate a time-based verification code.</p></div>
+ <div class="panel">
+  <label>Authenticator Secret</label>
+  <input id="secret" placeholder="Enter your Base32 secret" autocomplete="off">
+  <button class="primary full" onclick="generate2FA()">Generate Code</button>
+  <div class="code-display" id="totp">------</div>
+  <p class="hint" id="totpHint">Your code refreshes every 30 seconds. Keep your secret private.</p>
+  <button class="secondary full" onclick="copyText(document.getElementById('totp').dataset.code||'')">Copy Code</button>
  </div>
 </section>
 
-<section class="panel" id="gallery">
- <div class="panel-head"><div class="mini"><i data-lucide="images"></i></div><h2>Photo Gallery</h2></div>
- <p class="desc">Browse sample stock portraits and download images for lawful demo and design use.</p>
- <div class="gallery-tabs">
-  <button class="active" onclick="showGallery('male',this)">USA Male</button>
-  <button onclick="showGallery('female',this)">USA Female</button>
+<!-- IDENTITY -->
+<section class="section" id="identity">
+ <div class="heading"><h2>Fake Name Generator</h2><p>Generate a fictional sample identity with matching profile information.</p></div>
+ <div class="panel">
+  <label>Gender</label>
+  <select id="gender">
+   <option value="random">Random</option>
+   <option value="male">Male</option>
+   <option value="female">Female</option>
+  </select>
+  <label>Name Set</label>
+  <select id="nameSet">
+   <option value="american">American</option>
+   <option value="british">British</option>
+   <option value="canadian">Canadian</option>
+   <option value="australian">Australian</option>
+   <option value="european">European</option>
+  </select>
+  <label>Country</label>
+  <select id="country">
+   <option value="us">United States</option>
+   <option value="gb">United Kingdom</option>
+   <option value="ca">Canada</option>
+   <option value="au">Australia</option>
+   <option value="de">Germany</option>
+   <option value="fr">France</option>
+   <option value="ie">Ireland</option>
+   <option value="nz">New Zealand</option>
+   <option value="es">Spain</option>
+   <option value="it">Italy</option>
+   <option value="br">Brazil</option>
+   <option value="mx">Mexico</option>
+  </select>
+  <button class="primary full" id="generateIdentity">↻ &nbsp; Generate Identity</button>
+
+  <div id="identityResult" style="display:none">
+   <div class="profile">
+    <img id="avatar" class="avatar" src="" alt="Generated profile avatar">
+    <div class="profile-label">YOUR GENERATED SAMPLE IDENTITY</div>
+    <div class="name-row">
+     <div class="fullname" id="fullName"></div>
+     <button class="copy" onclick="copyText(identityData.name)" aria-label="Copy full name">
+      <svg viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>
+     </button>
+    </div>
+   </div>
+   <div class="info-list" id="infoList"></div>
+   <button class="primary full" onclick="copyAll()">Copy All Information</button>
+  </div>
+  <p class="hint">Generated profiles are fictional sample data, not valid identity documents or proof of identity.</p>
  </div>
- <div class="gallery" id="photos"></div>
- <p class="status">Stock photo samples. Internet connection is required to load images.</p>
 </section>
 
-<section class="panel" id="notes">
- <div class="panel-head"><div class="mini"><i data-lucide="notebook-pen"></i></div><h2>Smart Notepad</h2></div>
- <p class="desc">Write your notes. They are automatically saved in this browser.</p>
- <input id="noteTitle" class="field" placeholder="Note title">
- <textarea id="noteArea" class="field" placeholder="Start writing your notes..."></textarea>
- <div class="muted" id="noteStatus">Auto-save enabled</div>
- <div class="note-tools">
-  <button class="btn" onclick="downloadNote('txt')">TXT</button>
-  <button class="btn" onclick="downloadNote('html')">HTML</button>
-  <button class="btn" onclick="downloadNote('pdf')">PDF</button>
+<!-- GALLERY -->
+<section class="section" id="gallery">
+ <div class="heading"><h2>Photo Gallery</h2><p>Browse sample profile portraits.</p></div>
+ <div class="panel">
+  <label>Photo Category</label>
+  <select id="galleryGender">
+   <option value="female">USA Girls</option>
+   <option value="male">USA Boys</option>
+  </select>
+  <button class="primary full" onclick="loadGallery()">Load Photos</button>
+  <div class="avatar-grid" id="galleryGrid"></div>
  </div>
- <button class="btn light full" style="margin-top:10px" onclick="clearNote()">Clear Notes</button>
 </section>
 
-<section class="panel" id="settings">
- <div class="panel-head"><div class="mini"><i data-lucide="settings"></i></div><h2>Settings</h2></div>
- <p class="desc">Workspace information and preferences.</p>
- <div class="settings-row"><span>Appearance</span><strong>Official Light Mode</strong></div>
- <div class="settings-row"><span>Theme Color</span><strong style="color:#ed741e">Orange</strong></div>
- <div class="settings-row"><span>Version</span><strong>2.0</strong></div>
- <button class="btn light full" style="margin-top:16px" onclick="openTool('twofa')">Back to Tools</button>
+<!-- NOTEPAD -->
+<section class="section" id="notepad">
+ <div class="heading"><h2>Smart Notepad</h2><p>Write and save notes locally on your device.</p></div>
+ <div class="panel">
+  <textarea id="notes" placeholder="Start writing your notes..."></textarea>
+  <p class="hint" id="noteStatus">Auto-save is enabled on this device.</p>
+  <div class="row">
+   <button class="primary" onclick="downloadNote('txt')">Download TXT</button>
+   <button class="secondary" onclick="downloadNote('html')">Download HTML</button>
+   <button class="secondary" onclick="copyText(document.getElementById('notes').value)">Copy Notes</button>
+  </div>
+ </div>
 </section>
 
-<footer>ADVANCED TOOLS HUB · ALL RIGHTS RESERVED</footer>
-</div>
+</main>
+<div class="toast" id="toast">Copied successfully!</div>
 
 <script>
-if(window.lucide) lucide.createIcons();
-
 const $=id=>document.getElementById(id);
-let totp=null,totpTimer=null,saveTimer=null;
+let identityData={};
 
-function openTool(id,button){
- document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
- $(id).classList.add('active');
- document.querySelectorAll('.tool').forEach(t=>t.classList.remove('active'));
- if(button)button.classList.add('active');
- window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function generate2FA(){
- try{
-  const key=$('secret').value.replace(/\s/g,'').toUpperCase();
-  if(!key) return alert('Enter your Base32 secret key.');
-  const secret=OTPAuth.Secret.fromBase32(key);
-  totp=new OTPAuth.TOTP({secret,digits:6,period:30,algorithm:'SHA1'});
-  if(totpTimer)clearInterval(totpTimer);
-  updateOTP();
-  totpTimer=setInterval(updateOTP,1000);
- }catch(e){alert('Invalid secret key. Please check the Base32 value.');}
-}
-function updateOTP(){
- if(!totp)return;
- const now=Math.floor(Date.now()/1000);
- const left=30-now%30;
- $('otp').textContent=totp.generate();
- $('timer').textContent='New code in '+left+' seconds';
- $('bar').style.width=(left/30*100)+'%';
+function showToast(message){
+ const t=$('toast');t.textContent=message;t.classList.add('show');
+ clearTimeout(window.toastTimer);
+ window.toastTimer=setTimeout(()=>t.classList.remove('show'),1900);
 }
 async function copyText(value){
- if(!value||value==='------')return alert('Nothing to copy.');
+ if(!value){showToast('Nothing to copy');return}
  try{
-  await navigator.clipboard.writeText(value);
-  alert('Copied successfully!');
- }catch(e){alert('Clipboard unavailable. Please copy manually.');}
+  await navigator.clipboard.writeText(String(value));
+  showToast('✓ Copied successfully');
+ }catch(e){
+  const el=document.createElement('textarea');el.value=String(value);
+  document.body.appendChild(el);el.select();document.execCommand('copy');el.remove();
+  showToast('✓ Copied successfully');
+ }
 }
+document.addEventListener('click',e=>{
+ const btn=e.target.closest('.copy');
+ if(!btn)return;
+ const rect=btn.getBoundingClientRect();
+ const size=Math.max(rect.width,rect.height);
+ const ripple=document.createElement('span');
+ ripple.className='ripple';
+ ripple.style.width=ripple.style.height=size+'px';
+ ripple.style.left=(e.clientX-rect.left-size/2)+'px';
+ ripple.style.top=(e.clientY-rect.top-size/2)+'px';
+ btn.appendChild(ripple);
+ setTimeout(()=>ripple.remove(),600);
+});
 
-const names={
- USA:{male:['James','William','Oliver','Henry','Lucas','Benjamin','Elijah','Mason'],female:['Olivia','Emma','Charlotte','Amelia','Sophia','Mia','Ava','Isabella'],last:['Smith','Johnson','Brown','Davis','Wilson','Miller','Taylor','Anderson']},
- UK:{male:['Oliver','George','Harry','Arthur','Jack','Leo'],female:['Olivia','Amelia','Isla','Ava','Emily','Grace'],last:['Smith','Jones','Taylor','Brown','Wilson']},
- Canada:{male:['Liam','Noah','Theodore','Lucas','Jack','Benjamin'],female:['Olivia','Charlotte','Emma','Amelia','Sophia','Chloe'],last:['Smith','Brown','Martin','Wilson','Roy']},
- Australia:{male:['Oliver','Noah','Leo','Henry','Charlie','Jack'],female:['Charlotte','Olivia','Amelia','Mia','Isla','Matilda'],last:['Smith','Jones','Williams','Brown','Wilson']},
- Bangladesh:{male:['Arif','Rahim','Sakib','Hasan','Nabil','Imran'],female:['Ayesha','Nusrat','Mim','Sadia','Nabila','Tania'],last:['Ahmed','Hossain','Rahman','Islam','Khan']},
- India:{male:['Aarav','Arjun','Rohan','Vivaan','Aditya','Kabir'],female:['Aadhya','Ananya','Diya','Isha','Meera','Saanvi'],last:['Sharma','Patel','Singh','Kumar','Verma']},
- Germany:{male:['Lukas','Leon','Paul','Felix','Ben','Jonas'],female:['Mia','Emma','Emilia','Hannah','Lina','Clara'],last:['Müller','Schmidt','Schneider','Fischer']},
- France:{male:['Louis','Gabriel','Raphaël','Arthur','Jules','Lucas'],female:['Jade','Louise','Emma','Alice','Chloé','Léa'],last:['Martin','Bernard','Dubois','Thomas']}
+document.querySelectorAll('.tool').forEach(btn=>{
+ btn.addEventListener('click',()=>{
+  document.querySelectorAll('.tool').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+  $(btn.dataset.target).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+ });
+});
+
+let totpObject=null;
+function generate2FA(){
+ try{
+  if(!window.OTPAuth)throw new Error('2FA library unavailable. Check your internet connection.');
+  const secret=$('secret').value.replace(/\s/g,'').toUpperCase();
+  if(!secret)throw new Error('Please enter your Base32 secret.');
+  totpObject=new OTPAuth.TOTP({
+   issuer:'Orange Tools',label:'Authenticator',
+   algorithm:'SHA1',digits:6,period:30,
+   secret:OTPAuth.Secret.fromBase32(secret)
+  });
+  refresh2FA();
+ }catch(e){
+  $('totp').textContent='------';
+  $('totpHint').textContent=e.message;
+ }
+}
+function refresh2FA(){
+ if(!totpObject)return;
+ try{
+  const code=totpObject.generate();
+  $('totp').textContent=code.slice(0,3)+' '+code.slice(3);
+  $('totp').dataset.code=code;
+  $('totpHint').textContent='Refreshes automatically every 30 seconds.';
+ }catch(e){}
+}
+setInterval(()=>{
+ if(totpObject)refresh2FA();
+},1000);
+
+const countryNames={
+ us:'United States',gb:'United Kingdom',ca:'Canada',au:'Australia',
+ de:'Germany',fr:'France',ie:'Ireland',nz:'New Zealand',
+ es:'Spain',it:'Italy',br:'Brazil',mx:'Mexico'
 };
 
-function makeIdentity(){
- const gender=document.querySelector('input[name="gender"]:checked').value;
+async function generateIdentity(){
+ const gender=$('gender').value;
  const country=$('country').value;
- const d=names[country];
- const pick=a=>a[Math.floor(Math.random()*a.length)];
- const data=[
-  ['Full Name',pick(d[gender])+' '+pick(d.last)],
-  ['Gender',gender==='male'?'Male':'Female'],
-  ['Country',country],
-  ['Email (Demo)', 'demo'+Math.floor(10000+Math.random()*90000)+'@example.com'],
-  ['Demo ID','DEMO-'+Math.random().toString(36).slice(2,9).toUpperCase()],
-  ['Date of Birth',new Date(1985+Math.floor(Math.random()*20),Math.floor(Math.random()*12),1+Math.floor(Math.random()*28)).toLocaleDateString()]
- ];
- $('identityResult').innerHTML=data.map(([k,v])=>
-  `<div class="identity-item"><div><small>${k}</small><strong>${escapeHTML(v)}</strong></div><button class="copy" aria-label="Copy ${k}" onclick="copyText(${JSON.stringify(v).replace(/</g,'\\u003c')})"><i data-lucide="copy"></i></button></div>`
- ).join('');
- if(window.lucide)lucide.createIcons();
+ const genderParam=gender==='random'?'': '&gender='+gender;
+ const btn=$('generateIdentity');
+ btn.disabled=true;btn.textContent='Generating...';
+ try{
+  const url='https://randomuser.me/api/?nat='+country+genderParam+
+  '&inc=gender,name,location,email,dob,phone,picture,nat&noinfo';
+  const response=await fetch(url);
+  if(!response.ok)throw new Error('Profile service unavailable');
+  const json=await response.json();
+  const u=json.results[0];
+  const loc=u.location;
+  const name=[u.name.first,u.name.last].join(' ');
+  identityData={
+   name:name,
+   gender:u.gender,
+   street:loc.street.number+' '+loc.street.name,
+   city:loc.city,
+   state:loc.state,
+   postal:loc.postcode,
+   phone:u.phone,
+   country:countryNames[u.nat.toLowerCase()]||countryNames[country],
+   latitude:loc.coordinates.latitude,
+   longitude:loc.coordinates.longitude,
+   dateOfBirth:new Date(u.dob.date).toLocaleDateString(),
+   age:u.dob.age,
+   email:u.email
+  };
+  $('avatar').src=u.picture.large;
+  $('avatar').alt=u.gender+' sample avatar';
+  $('fullName').textContent=name;
+  const rows=[
+   ['Gender',identityData.gender],
+   ['Street',identityData.street],
+   ['City/Town',identityData.city],
+   ['State/Province/Region',identityData.state],
+   ['ZIP/Postal Code',identityData.postal],
+   ['Phone Number',identityData.phone],
+   ['Email',identityData.email],
+   ['Date of Birth',identityData.dateOfBirth],
+   ['Age',identityData.age],
+   ['Country',identityData.country],
+   ['Latitude',identityData.latitude],
+   ['Longitude',identityData.longitude]
+  ];
+  $('infoList').innerHTML=rows.map((r,i)=>`
+   <div class="info-row">
+    <span class="info-label">${escapeHTML(r[0])}</span>
+    <span class="info-value">${escapeHTML(String(r[1]))}</span>
+    <button class="copy" aria-label="Copy ${escapeHTML(r[0])}" data-copy-index="${i}">
+     <svg viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>
+    </button>
+   </div>`).join('');
+  $('infoList').querySelectorAll('[data-copy-index]').forEach((b,i)=>{
+   b.addEventListener('click',()=>copyText(rows[i][1]));
+  });
+  $('identityResult').style.display='block';
+ }catch(e){
+  showToast('Could not generate. Please try again.');
+ }finally{
+  btn.disabled=false;btn.textContent='↻  Generate Identity';
+ }
 }
 function escapeHTML(s){
  return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-
-const galleryData={
- male:[
-  ['Male Portrait 1','https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=700'],
-  ['Male Portrait 2','https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=700'],
-  ['Male Portrait 3','https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=700'],
-  ['Male Portrait 4','https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=700'],
-  ['Male Portrait 5','https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=700'],
-  ['Male Portrait 6','https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=700']
- ],
- female:[
-  ['Female Portrait 1','https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=700'],
-  ['Female Portrait 2','https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=700'],
-  ['Female Portrait 3','https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=700'],
-  ['Female Portrait 4','https://images.unsplash.com/photo-1517841905240-472988babdf9?w=700'],
-  ['Female Portrait 5','https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=700'],
-  ['Female Portrait 6','https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=700']
- ]
-};
-function showGallery(type,button){
- document.querySelectorAll('.gallery-tabs button').forEach(b=>b.classList.remove('active'));
- button.classList.add('active');
- $('photos').innerHTML=galleryData[type].map(([name,url])=>
-  `<article class="photo"><img loading="lazy" src="${url}" alt="${name}"><div class="photo-info"><p>${name}</p><button onclick="downloadPhoto('${url}','${type}-portrait.jpg')"><i data-lucide="download" style="width:13px;vertical-align:middle"></i> Download</button></div></article>`
- ).join('');
- if(window.lucide)lucide.createIcons();
+$('generateIdentity').addEventListener('click',generateIdentity);
+function copyAll(){
+ const text=Object.entries(identityData).map(([k,v])=>k+': '+v).join('\n');
+ copyText(text);
 }
-async function downloadPhoto(url,name){
+
+async function loadGallery(){
+ const gender=$('galleryGender').value;
+ const grid=$('galleryGrid');
+ grid.innerHTML='<p class="hint">Loading photos...</p>';
  try{
-  const response=await fetch(url);
-  if(!response.ok)throw Error();
-  const blob=await response.blob();
-  const link=document.createElement('a');
-  const objectURL=URL.createObjectURL(blob);
-  link.href=objectURL;link.download=name;link.click();
-  setTimeout(()=>URL.revokeObjectURL(objectURL),1000);
- }catch(e){
-  window.open(url,'_blank','noopener');
-  alert('Direct download was unavailable. The image has been opened in a new tab; use Save Image.');
- }
-}
-showGallery('male',document.querySelector('.gallery-tabs button'));
-
-$('noteTitle').value=localStorage.getItem('hubNoteTitle')||'';
-$('noteArea').value=localStorage.getItem('hubNotes')||'';
-function saveNotes(){
- $('noteStatus').textContent='Saving...';
- clearTimeout(saveTimer);
- saveTimer=setTimeout(()=>{
-  localStorage.setItem('hubNotes',$('noteArea').value);
-  localStorage.setItem('hubNoteTitle',$('noteTitle').value);
-  $('noteStatus').textContent='✓ Saved automatically';
- },350);
-}
-$('noteArea').addEventListener('input',saveNotes);
-$('noteTitle').addEventListener('input',saveNotes);
-
-function downloadNote(type){
- const title=$('noteTitle').value.trim()||'My Notes';
- const content=$('noteArea').value;
- if(!content.trim())return alert('Write something first.');
- if(type==='txt'){
-  downloadBlob(new Blob([content],{type:'text/plain;charset=utf-8'}),title+'.txt');
- }else if(type==='html'){
-  const html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+escapeHTML(title)+'</title></head><body><h1>'+escapeHTML(title)+'</h1><pre style="white-space:pre-wrap;font-family:Arial">'+escapeHTML(content)+'</pre></body></html>';
-  downloadBlob(new Blob([html],{type:'text/html;charset=utf-8'}),title+'.html');
- }else if(type==='pdf'){
-  if(!window.jspdf)return alert('PDF library did not load. Check your internet connection.');
-  const {jsPDF}=window.jspdf;
-  const pdf=new jsPDF();
-  pdf.setFont('helvetica','bold');pdf.setFontSize(18);pdf.text(title,15,20);
-  pdf.setFont('helvetica','normal');pdf.setFontSize(11);
-  const lines=pdf.splitTextToSize(content,180);
-  let y=32;
-  lines.forEach(line=>{
-   if(y>280){pdf.addPage();y=20;}
-   pdf.text(line,15,y);y+=6;
+  const res=await fetch('https://randomuser.me/api/?results=12&nat=us&gender='+gender+'&inc=picture,name');
+  if(!res.ok)throw new Error();
+  const data=await res.json();
+  grid.innerHTML='';
+  data.results.forEach(u=>{
+   const card=document.createElement('div');
+   card.className='avatar-card';
+   const img=document.createElement('img');
+   img.src=u.picture.large;img.alt='Sample portrait';
+   const download=document.createElement('button');
+   download.className='secondary';download.textContent='Download';
+   download.onclick=async()=>{
+    try{
+     const response=await fetch(u.picture.large);
+     const blob=await response.blob();
+     const a=document.createElement('a');
+     const url=URL.createObjectURL(blob);
+     a.href=url;a.download='sample-portrait.jpg';a.click();
+     setTimeout(()=>URL.revokeObjectURL(url),1000);
+    }catch(e){window.open(u.picture.large,'_blank')}
+   };
+   card.append(img,download);grid.appendChild(card);
   });
-  pdf.save(title+'.pdf');
+ }catch(e){grid.innerHTML='<p class="hint">Unable to load gallery. Please try again.</p>'}
+}
+
+$('notes').value=localStorage.getItem('orange_notes')||'';
+$('notes').addEventListener('input',()=>{
+ localStorage.setItem('orange_notes',$('notes').value);
+ $('noteStatus').textContent='✓ Saved locally · '+$('notes').value.length+' characters';
+});
+function downloadNote(type){
+ const text=$('notes').value;
+ let content=text,mime='text/plain',filename='my-notes.txt';
+ if(type==='html'){
+  content='<!doctype html><html><head><meta charset="utf-8"><title>My Notes</title></head><body><pre>'+escapeHTML(text)+'</pre></body></html>';
+  mime='text/html';filename='my-notes.html';
  }
-}
-function downloadBlob(blob,name){
+ const blob=new Blob([content],{type:mime+';charset=utf-8'});
  const url=URL.createObjectURL(blob);
- const a=document.createElement('a');a.href=url;a.download=name;a.click();
+ const a=document.createElement('a');a.href=url;a.download=filename;a.click();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
-}
-function clearNote(){
- if(!confirm('Are you sure you want to clear your notes?'))return;
- $('noteArea').value='';$('noteTitle').value='';
- localStorage.removeItem('hubNotes');localStorage.removeItem('hubNoteTitle');
- $('noteStatus').textContent='Notes cleared';
 }
 </script>
 </body>
