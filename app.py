@@ -29,7 +29,7 @@ def get_otp():
         raw_input = data.get('token', '').strip()
         
         if not raw_input:
-            return jsonify({"error": "Token is missing"}}, 400
+            return jsonify({"error": "Token is missing"}), 400
 
         extracted_email = "Unknown"
         access_token = None
@@ -90,19 +90,17 @@ def get_otp():
                 otp_code = sub_match.group(1)
                 break
             
-            # ২. বডি থেকে "is your ... verification code" অথবা কোডের নির্দিষ্ট প্যাটার্ন খোঁজা
+            # ২. বডি থেকে কোডের নির্দিষ্ট প্যাটার্ন খোঁজা
             body_match = re.search(r'\b([0-9]{6})\b(?:\s+is\s+your|\s+is\s+the|[\s\w\-]{0,25}verification)', clean_text, re.IGNORECASE)
             if body_match:
                 target_msg = msg
                 otp_code = body_match.group(1)
                 break
                 
-            # ৩. যদি টুইটার বা এক্স এর মেইল হয় এবং সাবজেক্টে বা শুরুতে কোড থাকে
+            # ৩. যদি এক্স/টুইটার বা অন্য ভেরিফিকেশন মেইল হয়
             if 'x' in msg.get('from', {}).get('emailAddress', {}).get('address', '').lower() or 'twitter' in subject.lower():
-                # সাধারণ ৬ ডিজিটের সংখ্যা যা অ্যাড্রেসের মধ্যে নেই
                 all_6_digits = re.findall(r'\b([0-9]{6})\b', clean_text)
                 if all_6_digits:
-                    # প্রথম ৬ ডিজিটের সংখ্যাটিই সাধারণত মূল ওটিপি হয়
                     target_msg = msg
                     otp_code = all_6_digits[0]
                     break
