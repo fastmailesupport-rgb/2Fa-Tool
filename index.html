@@ -686,7 +686,7 @@
             border-radius: 12px;
             padding: 1rem;
             text-align: center;
-            display: none;
+            display: block; /* ডিফল্টভাবে দৃশ্যমান থাকবে */
         }
 
         .avatar-placeholder {
@@ -1349,7 +1349,7 @@
                         <select class="fake-select" id="fakeGender">
                             <option value="random">Random</option>
                             <option value="male">Male</option>
-                            <option value="female">Female</option>
+                            <option value="female" selected>Female</option>
                         </select>
                         <div class="select-arrow">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -1364,7 +1364,7 @@
                     </div>
                     <div class="fake-select-wrapper">
                         <select class="fake-select" id="fakeNameSet">
-                            <option value="american">American</option>
+                            <option value="american" selected>American</option>
                             <option value="british">British</option>
                             <option value="australian">Australian</option>
                             <option value="canadian">Canadian</option>
@@ -1387,7 +1387,7 @@
                     </div>
                     <div class="fake-select-wrapper">
                         <select class="fake-select" id="fakeCountry">
-                            <option value="United States">USA</option>
+                            <option value="United States" selected>USA</option>
                             <option value="United Kingdom">UK</option>
                             <option value="Canada">Canada</option>
                             <option value="Australia">Australia</option>
@@ -1410,13 +1410,13 @@
             </button>
 
             <div class="result-card" id="fakeResultCard">
-                <div class="avatar-placeholder" id="fakeAvatarIcon">👨</div>
+                <div class="avatar-placeholder" id="fakeAvatarIcon">👩</div>
                 <div class="identity-title" id="resIdentityTitle">Your Randomly Generated Identity</div>
                 
                 <div class="field-box name-highlight-box">
                     <div class="field-info">
                         <span class="field-label" id="resLabelName">Full Name</span>
-                        <span class="field-value large-name-text" id="resName">Matthew T. Gonzales</span>
+                        <span class="field-value large-name-text" id="resName">Mary L. Davis</span>
                     </div>
                     <button class="copy-sm-btn" onclick="copyFakeText('resName', this)">Copy</button>
                 </div>
