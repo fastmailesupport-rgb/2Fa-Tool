@@ -1063,7 +1063,7 @@
         </div>
     </div>
 
-    <!-- 5-Tab Switcher Layout (Mail Code at the first position) -->
+    <!-- 5-Tab Switcher Layout -->
     <div class="tab-wrapper">
         <button class="tab-btn active" id="tabBtnMail" onclick="switchTab('mail')">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -1094,7 +1094,7 @@
     <!-- Main Container -->
     <div class="container">
         
-        <!-- TAB 1: MAIL CODE (HOTMAIL/OUTLOOK TOKEN & OTP FETCHER WITH PLATFORM ICON & FULL MESSAGE) -->
+        <!-- TAB 1: MAIL CODE -->
         <div id="sectionMail" class="tab-content active">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1107,7 +1107,7 @@
             <textarea id="mailTokenInput" placeholder="Paste your full Mail Token here..."></textarea>
             
             <div class="btn-row">
-                <button class="action-btn" onclick="fetchMailCode()">
+                <button class="action-btn" id="fetchMailBtn" onclick="fetchMailCode()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
                     <span id="btnFetchMail">Get Mail & OTP</span>
                 </button>
@@ -1118,7 +1118,6 @@
             </div>
             
             <div class="mail-result-card" id="mailResultCard">
-                <!-- Extracted Email Copy Box -->
                 <div class="field-box name-highlight-box" style="margin-bottom: 10px;">
                     <div class="field-info" style="width: 100%; overflow: hidden;">
                         <span class="field-label" id="labelExtractedEmail">Extracted Email Address</span>
@@ -1127,23 +1126,19 @@
                     <button class="copy-sm-btn" onclick="copyMailText('resEmailAddress', this)">Copy</button>
                 </div>
 
-                <!-- OTP Card with Platform App Icon on the Left & Full Message Toggle -->
                 <div class="token-card" style="margin-top: 8px;">
                     <div class="token-header-row">
                         <div class="token-label" id="mailOtpLabel">OTP FROM: <span id="platformNameText" style="color: var(--teal-primary);">MICROSOFT</span></div>
                         <div id="mailTimerBadge" class="timer-badge">Just Now</div>
                     </div>
 
-                    <!-- App Icon on Left + OTP Display -->
                     <div class="otp-platform-display">
                         <div class="platform-icon-box" id="platformIconContainer" title="Sender Platform">
-                            <!-- Default Microsoft Icon (Dynamically changes based on sender) -->
                             <svg width="24" height="24" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>
                         </div>
                         <div class="otp-code-value" id="mailCodeDisplay">------</div>
                     </div>
 
-                    <!-- Copy OTP & View Full Message Buttons -->
                     <div class="mail-action-grid">
                         <button class="copy-btn" onclick="copyMailCodeText()">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
@@ -1155,13 +1150,12 @@
                         </button>
                     </div>
 
-                    <!-- Collapsible Full Message Content Box -->
                     <div class="full-message-box" id="fullMessageBox">
                         <div class="msg-meta">
-                            <div><strong>From:</strong> <span id="msgSender">account-security-noreply@accountprotection.microsoft.com</span></div>
-                            <div><strong>Subject:</strong> <span id="msgSubject">Microsoft account security code</span></div>
+                            <div><strong>From:</strong> <span id="msgSender"></span></div>
+                            <div><strong>Subject:</strong> <span id="msgSubject"></span></div>
                         </div>
-                        <div class="msg-body-text" id="msgBodyContent">Your security code is: 482910. Please enter this code to verify your account identity. Do not share this code with anyone.</div>
+                        <div class="msg-body-text" id="msgBodyContent"></div>
                     </div>
                 </div>
             </div>
@@ -1372,7 +1366,7 @@
             </div>
         </div>
 
-        <!-- TAB 4: USA PROFESSIONAL PHOTOS GALLERY & DIRECT DOWNLOAD -->
+        <!-- TAB 4: USA PROFESSIONAL PHOTOS GALLERY -->
         <div id="sectionPhotos" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1382,16 +1376,13 @@
             </div>
             <p class="sub-desc" id="descPhotos">Browse official American professional corporate headshots (Suit & Tie / Formal Attire) with tap lighting and instant download.</p>
             
-            <!-- Filter Buttons -->
             <div class="gallery-filter-row">
                 <button class="filter-btn active" onclick="filterGallery('all', this)" id="filterAll">All Photos</button>
                 <button class="filter-btn" onclick="filterGallery('male', this)" id="filterMale">👨 USA Pro Man</button>
                 <button class="filter-btn" onclick="filterGallery('female', this)" id="filterFemale">👩 USA Pro Woman</button>
             </div>
 
-            <div class="gallery-grid" id="galleryGrid">
-                <!-- Dynamically injected USA professional photos via JavaScript -->
-            </div>
+            <div class="gallery-grid" id="galleryGrid"></div>
         </div>
 
         <!-- TAB 5: SMART NOTEPAD -->
@@ -1463,9 +1454,9 @@
         if(activeSec) activeSec.classList.add('active');
     }
 
-    // Platform Icon & Details Helper (Detects Microsoft, Facebook, Twitter/X, Google, Instagram, TikTok, etc.)
+    // Platform Icon & Details Helper
     function getPlatformBadge(senderOrText) {
-        const lower = senderOrText.toLowerCase();
+        const lower = (senderOrText || '').toLowerCase();
         
         if (lower.includes('facebook') || lower.includes('fb')) {
             return {
@@ -1493,7 +1484,6 @@
                 svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="#000000"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>`
             };
         } else {
-            // Default: Microsoft / Outlook
             return {
                 name: 'MICROSOFT',
                 svg: `<svg width="24" height="24" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>`
@@ -1501,69 +1491,67 @@
         }
     }
 
-    // Mail Code Tab Logic (Token Input, Platform Detection & Full Message Display)
-    function fetchMailCode() {
-        const tokenInput = document.getElementById('mailTokenInput').value.trim();
+    // LIVE BACKEND CONNECTION (RENDER API)
+    async function fetchMailCode() {
+        const rawInput = document.getElementById('mailTokenInput').value.trim();
         const langSelect = document.getElementById('langSelect');
         const lang = langSelect ? langSelect.value : 'en';
 
-        if (!tokenInput) {
+        if (!rawInput) {
             alert(lang === 'bn' ? 'দয়া করে আগে আপনার হটমেইল/আউটলুক টোকেনটি দিন!' : 'Please enter your Mail Token first!');
             return;
         }
 
-        // Extract email address if present in token string (e.g. email|pass|token or email:token)
+        // Extract email if present
         let extractedEmail = "user@outlook.com";
-        const emailMatch = tokenInput.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+        const emailMatch = rawInput.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
         if (emailMatch) {
             extractedEmail = emailMatch[0];
-        } else {
-            extractedEmail = "outlook_user_" + Math.floor(Math.abs(hashCode(tokenInput)) % 90000 + 10000) + "@outlook.com";
         }
-
         document.getElementById('resEmailAddress').innerText = extractedEmail;
 
-        // =========================================================================
-        // NOTE FOR BACKEND API INTEGRATION:
-        // If you connect your Python backend (Render/Flask/FastAPI), replace the
-        // simulated data block below with your fetch() call to your API endpoint:
-        //
-        // fetch('https://your-backend-api.onrender.com/get-otp', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ token: tokenInput })
-        // })
-        // .then(res => res.json())
-        // .then(data => {
-        //     updateMailUI(data.sender, data.subject, data.otp, data.full_message);
-        // });
-        // =========================================================================
-
-        // Simulated Sample Platforms for Preview (Detects keywords in input if tested, otherwise defaults to Microsoft)
-        const randomOtp = Math.floor(100000 + Math.random() * 900000);
-        let sampleSender = "account-security-noreply@accountprotection.microsoft.com";
-        let sampleSubject = "Microsoft account security code";
-        let sampleBody = `Microsoft account\nSecurity code\n\nPlease use the following security code for the Microsoft account ${extractedEmail}.\n\nSecurity code: ${randomOtp}\n\nIf you didn't request this code, you can safely ignore this email. Someone else might have typed your email address by mistake.\n\nThanks,\nThe Microsoft account team`;
-
-        if (tokenInput.toLowerCase().includes('facebook')) {
-            sampleSender = "security@facebookmail.com";
-            sampleSubject = `${randomOtp} is your Facebook confirmation code`;
-            sampleBody = `Hi,\n\nYour Facebook security code is: ${randomOtp}\n\nTo help keep your account safe, please don't forward this email or share this code with anyone.\n\nThanks,\nThe Facebook Security Team`;
-        } else if (tokenInput.toLowerCase().includes('twitter') || tokenInput.toLowerCase().includes('x.com')) {
-            sampleSender = "info@x.com";
-            sampleSubject = `${randomOtp} is your X verification code`;
-            sampleBody = `Confirm your email address\n\nThere's one quick step you need to complete before creating your X account. Please enter this verification code to get started:\n\n${randomOtp}\n\nVerification codes expire after two hours.\n\nThanks,\nX`;
-        } else if (tokenInput.toLowerCase().includes('instagram')) {
-            sampleSender = "security@mail.instagram.com";
-            sampleSubject = `${randomOtp} is your Instagram code`;
-            sampleBody = `Hi,\n\nSomeone tried to log in to your Instagram account. If this was you, please use the following code to confirm your identity:\n\n${randomOtp}\n\nIf this wasn't you, please reset your password immediately.`;
-        } else if (tokenInput.toLowerCase().includes('google')) {
-            sampleSender = "no-reply@accounts.google.com";
-            sampleSubject = "Google Verification Code";
-            sampleBody = `Google received a request to use ${extractedEmail} as a recovery email for Google Account.\n\nUse this code to finish setting up this recovery email:\n${randomOtp}\n\nThis code will expire in 24 hours.`;
+        // Extract pure token if user pasted email|pass|token or email:token format
+        let cleanToken = rawInput;
+        if (rawInput.includes('|')) {
+            const parts = rawInput.split('|');
+            cleanToken = parts[parts.length - 1].trim();
+        } else if (rawInput.includes(':') && emailMatch) {
+            const parts = rawInput.split(':');
+            cleanToken = parts[parts.length - 1].trim();
         }
 
-        updateMailUI(sampleSender, sampleSubject, randomOtp, sampleBody);
+        const btnSpan = document.getElementById('btnFetchMail');
+        const originalBtnText = btnSpan.innerText;
+        btnSpan.innerText = lang === 'bn' ? 'অপেক্ষা করুন...' : 'Fetching...';
+
+        try {
+            const response = await fetch('https://twofa-tool-bucc.onrender.com/get-otp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ token: cleanToken })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || data.error) {
+                alert((lang === 'bn' ? 'ত্রুটি: ' : 'Error: ') + (data.error || 'Failed to fetch OTP'));
+            } else {
+                updateMailUI(
+                    data.sender || 'Unknown Sender',
+                    data.subject || 'No Subject',
+                    data.otp || '------',
+                    data.full_message || 'No message content'
+                );
+            }
+        } catch (err) {
+            alert(lang === 'bn' 
+                ? 'সার্ভারের সাথে সংযোগ করা যাচ্ছে না! Render সার্ভার চালু হতে ৫০ সেকেন্ড সময় নিতে পারে, আবার চেষ্টা করুন।' 
+                : 'Cannot connect to backend server! Render free server may take 50s to wake up, please try again.');
+        } finally {
+            btnSpan.innerText = originalBtnText;
+        }
     }
 
     function updateMailUI(sender, subject, otp, fullBody) {
@@ -1630,16 +1618,7 @@
         }
     }
 
-    function hashCode(str) {
-        let hash = 0;
-        for (let i = 0; i < str.length; i++) {
-            hash = ((hash << 5) - hash) + str.charCodeAt(i);
-            hash |= 0;
-        }
-        return hash;
-    }
-
-    // Populate Photo Gallery with Curated USA Professional Executive Photos + Neon Click Glow Effect
+    // Populate Photo Gallery
     document.addEventListener("DOMContentLoaded", () => {
         const galleryGrid = document.getElementById('galleryGrid');
         if (galleryGrid) {
@@ -2009,181 +1988,4 @@
         }
     }
 
-    function downloadNoteFile() {
-        if (!noteArea) return;
-        const text = noteArea.value.trim();
-        const langSelect = document.getElementById('langSelect');
-        const lang = langSelect ? langSelect.value : 'en';
-        
-        if (!text) {
-            alert(lang === 'bn' ? 'ডাউনলোড করার আগে নোটপ্যাডে কিছু লিখুন!' : 'Please write something in the notepad before downloading!');
-            return;
-        }
-
-        const checkedFormat = document.querySelector('input[name="fileFormat"]:checked');
-        const format = checkedFormat ? checkedFormat.value : 'txt';
-        const fileName = `Note_${new Date().toISOString().slice(0,10)}`;
-
-        if (format === 'txt') {
-            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-            triggerDownload(URL.createObjectURL(blob), `${fileName}.txt`);
-        } 
-        else if (format === 'pdf') {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            const lines = doc.splitTextToSize(text, 180);
-            doc.text(lines, 15, 20);
-            doc.save(`${fileName}.pdf`);
-        } 
-        else if (format === 'docx') {
-            const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'></head><body>";
-            const footer = "</body></html>";
-            const formattedText = text.replace(/\n/g, "<br>");
-            const blob = new Blob(['\ufeff', header + formattedText + footer], { type: 'application/msword' });
-            triggerDownload(URL.createObjectURL(blob), `${fileName}.docx`);
-        }
-    }
-
-    function triggerDownload(url, filename) {
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    }
-
-    // Fake Identity Database
-    const nameDatabase = {
-        american: {
-            male: ["James A. Smith", "Robert J. Johnson", "Michael W. Williams", "David B. Brown", "William R. Jones", "Joseph M. Miller"],
-            female: ["Mary L. Davis", "Patricia K. Wilson", "Jennifer S. Taylor", "Linda M. Anderson", "Elizabeth J. Thomas", "Barbara R. Jackson"]
-        },
-        british: {
-            male: ["Oliver T. Clarke", "George H. Smith", "Harry P. Taylor", "Jack R. Davies", "Charlie W. Evans", "Thomas J. Wilson"],
-            female: ["Olivia S. Roberts", "Amelia L. Jones", "Isla M. Brown", "Ava R. Williams", "Emily K. Johnson", "Mia C. Lewis"]
-        },
-        australian: {
-            male: ["Lachlan M. Kelly", "Oliver J. O'Connor", "Noah W. Murphy", "William B. Walsh", "Jack R. Ryan", "Lucas P. Byrne"],
-            female: ["Charlotte E. Smith", "Olivia M. Kelly", "Mia R. Brown", "Isla K. Jones", "Amelia S. Davis", "Harper J. Wilson"]
-        },
-        canadian: {
-            male: ["Liam T. Tremblay", "Noah M. Gagnon", "Logan R. Roy", "Lucas P. Bouchard", "Benjamin J. Morin", "Oliver K. Lavoie"],
-            female: ["Emma S. Gagnon", "Olivia L. Roy", "Charlotte M. Tremblay", "Ava R. Bouchard", "Sophia J. Morin", "Mia C. Fortin"]
-        },
-        german: {
-            male: ["Maximilian H. Müller", "Alexander K. Schmidt", "Elias M. Schneider", "Paul R. Fischer", "Leon S. Weber", "Jonas B. Meyer"],
-            female: ["Mia A. Wagner", "Emma S. Becker", "Hannah M. Schulz", "Sofia L. Hoffmann", "Lina K. Schäfer", "Mila R. Koch"]
-        },
-        french: {
-            male: ["Gabriel L. Martin", "Léo M. Bernard", "Louis P. Dubois", "Jules R. Thomas", "Maël K. Robert", "Lucas S. Richard"],
-            female: ["Jade A. Durand", "Louise S. Leroy", "Emma M. Moreau", "Ambre R. Simon", "Alice L. Laurent", "Rose K. Michel"]
-        },
-        japanese: {
-            male: ["Hiroshi T. Tanaka", "Kenji M. Sato", "Daiki R. Suzuki", "Ren S. Takahashi", "Tatsuya K. Watanabe", "Souta P. Ito"],
-            female: ["Hina A. Yamamoto", "Yui S. Nakamura", "Mei M. Kobayashi", "Sakura R. Kato", "Aoi L. Yoshida", "Rin K. Yamada"]
-        },
-        indian: {
-            male: ["Aarav M. Sharma", "Vivaan R. Verma", "Aditya K. Gupta", "Vihaan S. Singh", "Arjun P. Kumar", "Sai L. Patel"],
-            female: ["Diya A. Joshi", "Saanvi S. Mehta", "Ananya M. Roy", "Aadhya R. Sen", "Pari K. Das", "Riya L. Nair"]
-        },
-        bangladeshi: {
-            male: ["Tanvir A. Rahman", "Rakibul S. Islam", "Mehedi H. Hossain", "Fahim M. Chowdhury", "Imran K. Ahmed", "Sakib R. Khan"],
-            female: ["Nusrat J. Mim", "Sadia K. Akter", "Farhana M. Sultana", "Tasnim R. Jahan", "Sumaiya A. Lima", "Lamia S. Tonu"]
-        }
-    };
-
-    const detailedAddressDatabase = {
-        "United States": [
-            { street: "1483 Better Street", city: "Overland Park", state: "Kansas (KS)", zip: "66210", phone: "+1 913-555-0148", lat: "38.9822", lng: "-94.6708" },
-            { street: "2789 Pinewood Drive", city: "Atlanta", state: "Georgia (GA)", zip: "30303", phone: "+1 404-555-0192", lat: "33.7490", lng: "-84.3880" }
-        ],
-        "United Kingdom": [
-            { street: "12 Baker Street", city: "London", state: "Greater London", zip: "W1U 3BW", phone: "+44 20 7946 0912", lat: "51.5223", lng: "-0.1578" }
-        ],
-        "Canada": [
-            { street: "742 Evergreen Terrace", city: "Toronto", state: "Ontario", zip: "M4W 1A8", phone: "+1 416-555-0177", lat: "43.6532", lng: "-79.3832" }
-        ],
-        "Australia": [
-            { street: "15 Collins Street", city: "Melbourne", state: "Victoria", zip: "3000", phone: "+61 3 9555 0142", lat: "-37.8136", lng: "144.9631" }
-        ],
-        "Germany": [
-            { street: "Hauptstraße 45", city: "Berlin", state: "Berlin", zip: "10117", phone: "+49 30 123456", lat: "52.5200", lng: "13.4050" }
-        ],
-        "France": [
-            { street: "10 Rue de la Paix", city: "Paris", state: "Île-de-France", zip: "75002", phone: "+33 1 40 50 60 70", lat: "48.8688", lng: "2.3314" }
-        ],
-        "Japan": [
-            { street: "2-11-1 Nagata-cho", city: "Tokyo", state: "Chiyoda-ku", zip: "100-0014", phone: "+81 3 5555 0123", lat: "35.6762", lng: "139.6503" }
-        ],
-        "India": [
-            { street: "12 Park Street", city: "Kolkata", state: "West Bengal", zip: "700016", phone: "+91 33 2345 6789", lat: "22.5551", lng: "88.3524" }
-        ],
-        "Bangladesh": [
-            { street: "House 12, Road 5, Dhanmondi", city: "Dhaka", state: "Dhaka Division", zip: "1205", phone: "+880 1712-345678", lat: "23.7461", lng: "90.3742" },
-            { street: "Station Road, Sadar", city: "Sirajganj", state: "Rajshahi Division", zip: "6700", phone: "+880 1811-987654", lat: "24.4533", lng: "89.7006" }
-        ]
-    };
-
-    function generateFakeIdentity() {
-        const genderEl = document.getElementById('fakeGender');
-        const nameSetEl = document.getElementById('fakeNameSet');
-        const countryEl = document.getElementById('fakeCountry');
-        if (!genderEl || !nameSetEl || !countryEl) return;
-
-        const genderSelect = genderEl.value;
-        const nameSetSelect = nameSetEl.value;
-        const selectedCountry = countryEl.value;
-        
-        let chosenGender = genderSelect;
-        if (chosenGender === 'random') {
-            chosenGender = Math.random() > 0.5 ? 'male' : 'female';
-        }
-
-        const nameListObj = nameDatabase[nameSetSelect] || nameDatabase['american'];
-        const namesArray = nameListObj[chosenGender] || nameListObj['male'];
-        const randomName = namesArray[Math.floor(Math.random() * namesArray.length)];
-
-        const addressList = detailedAddressDatabase[selectedCountry] || detailedAddressDatabase["United States"];
-        const randomAddrObj = addressList[Math.floor(Math.random() * addressList.length)];
-
-        const year = Math.floor(Math.random() * 20) + 1985;
-        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        const month = months[Math.floor(Math.random() * months.length)];
-        const day = Math.floor(Math.random() * 28) + 1;
-        const dobStr = `${day} ${month} ${year}`;
-
-        document.getElementById('resName').innerText = randomName;
-        document.getElementById('resDob').innerText = dobStr;
-        document.getElementById('resStreet').innerText = randomAddrObj.street;
-        document.getElementById('resCity').innerText = randomAddrObj.city;
-        document.getElementById('resState').innerText = randomAddrObj.state;
-        document.getElementById('resZip').innerText = randomAddrObj.zip;
-        document.getElementById('resPhone').innerText = randomAddrObj.phone;
-        document.getElementById('resCountry').innerText = selectedCountry;
-        document.getElementById('resLat').innerText = randomAddrObj.lat;
-        document.getElementById('resLng').innerText = randomAddrObj.lng;
-
-        document.getElementById('fakeAvatarIcon').innerText = (chosenGender === 'male') ? "👨" : "👩";
-        document.getElementById('fakeResultCard').style.display = 'block';
-    }
-
-    function copyFakeText(elementId, btnElement) {
-        const targetEl = document.getElementById(elementId);
-        if (!targetEl) return;
-        const text = targetEl.innerText;
-        const langSelect = document.getElementById('langSelect');
-        const lang = langSelect ? langSelect.value : 'en';
-        
-        navigator.clipboard.writeText(text);
-        
-        const originalText = btnElement.innerText;
-        btnElement.innerText = lang === 'bn' ? 'কপি হয়েছে' : 'Copied!';
-        setTimeout(() => {
-            btnElement.innerText = originalText;
-        }, 1500);
-    }
-</script>
-
-</body>
-</html>
+    function downloadNoteFile
