@@ -11,31 +11,31 @@
     
     <style>
         :root {
-            --bg-body: #f4f3ef;
+            --bg-body: #f3f4f6;
             --bg-card: #ffffff;
-            --bg-input: #eae8e1;
-            --bg-subcard: #f8f7f4;
-            --tab-bg: #dedcd4;
-            --text-main: #1c1c1a;
-            --text-muted: #6b6960;
-            --border-color: #d1cfc5;
-            --teal-primary: #8c8574;
-            --teal-hover: #736d5f;
-            --teal-light: #f0eeeb;
-            --shadow: 0 4px 20px rgba(140, 133, 116, 0.12);
+            --bg-input: #f9fafb;
+            --bg-subcard: #f8fafc;
+            --tab-bg: #e2e8f0;
+            --text-main: #111827;
+            --text-muted: #64748b;
+            --border-color: #e5e7eb;
+            --teal-primary: #0d9488;
+            --teal-hover: #0f766e;
+            --teal-light: #e6f4f1;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         body.dark-mode {
-            --bg-body: #090d16;
-            --bg-card: #111827;
-            --bg-input: #090d16;
-            --bg-subcard: #090d16;
-            --tab-bg: #090d16;
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --bg-input: #0f172a;
+            --bg-subcard: #0f172a;
+            --tab-bg: #0f172a;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --border-color: #1f2937;
-            --teal-light: rgba(140, 133, 116, 0.2);
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --border-color: #334155;
+            --teal-light: rgba(13, 148, 136, 0.15);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         }
 
         * {
@@ -71,12 +71,12 @@
 
         @keyframes neonBoxGlow {
             0%, 100% {
-                border-color: rgba(140, 133, 116, 0.5);
-                box-shadow: 0 0 8px rgba(140, 133, 116, 0.2);
+                border-color: rgba(13, 148, 136, 0.5);
+                box-shadow: 0 0 8px rgba(13, 148, 136, 0.2);
             }
             50% {
-                border-color: rgba(200, 192, 172, 0.9);
-                box-shadow: 0 0 16px rgba(140, 133, 116, 0.4);
+                border-color: rgba(10, 185, 129, 0.9);
+                box-shadow: 0 0 16px rgba(16, 185, 129, 0.4);
             }
         }
 
@@ -99,7 +99,7 @@
         }
 
         .brand-logo {
-            background: linear-gradient(135deg, #8c8574, #a8a08c);
+            background: linear-gradient(135deg, #10b981, #0d9488);
             color: white;
             width: 34px;
             height: 34px;
@@ -107,21 +107,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 6px rgba(140, 133, 116, 0.3);
+            box-shadow: 0 2px 6px rgba(13, 148, 136, 0.3);
         }
 
         .brand-name {
             font-size: 0.88rem;
             font-weight: 800;
             letter-spacing: -0.3px;
-            background: linear-gradient(135deg, #5c574c, #8c8574);
+            background: linear-gradient(135deg, #0d9488, #10b981);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
         }
 
         body.dark-mode .brand-name {
-            background: linear-gradient(135deg, #d1cfc5, #f4f3ef);
+            background: linear-gradient(135deg, #14b8a6, #34d399);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -286,18 +286,19 @@
         @keyframes pulseBorder {
             0% {
                 border-color: var(--teal-primary);
-                box-shadow: 0 0 0 0 rgba(140, 133, 116, 0.4);
+                box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.4);
             }
             70% {
-                border-color: #a8a08c;
-                box-shadow: 0 0 0 6px rgba(140, 133, 116, 0);
+                border-color: #14b8a6;
+                box-shadow: 0 0 0 6px rgba(13, 148, 136, 0);
             }
             100% {
                 border-color: var(--teal-primary);
-                box-shadow: 0 0 0 0 rgba(140, 133, 116, 0);
+                box-shadow: 0 0 0 0 rgba(13, 148, 136, 0);
             }
         }
 
+        /* Mail Code & 2FA Textareas */
         #mailTokenInput, #secret {
             width: 100%;
             height: 95px;
@@ -317,11 +318,12 @@
 
         #mailTokenInput:focus, #secret:focus {
             outline: none;
-            border-color: #736d5f;
-            box-shadow: 0 0 0 4px rgba(140, 133, 116, 0.25);
+            border-color: #0d9488;
+            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.25);
             animation: none;
         }
 
+        /* Notepad Box */
         #noteArea {
             width: 100%;
             height: 250px;
@@ -341,11 +343,12 @@
 
         #noteArea:focus {
             outline: none;
-            border-color: #736d5f;
-            box-shadow: 0 0 0 4px rgba(140, 133, 116, 0.25);
+            border-color: #0d9488;
+            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.25);
             animation: none;
         }
 
+        /* Mail Code Output Result Card & Platform Icon Row */
         .mail-result-card {
             margin-top: 1.2rem;
             background-color: var(--bg-subcard);
@@ -353,6 +356,42 @@
             border-radius: 12px;
             padding: 1rem;
             display: none;
+        }
+
+        .otp-platform-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 12px 0;
+            padding: 10px;
+            background-color: var(--bg-card);
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
+        }
+
+        .platform-icon-box {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--teal-light);
+            flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .otp-code-value {
+            font-size: 1.85rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            font-family: monospace;
+            color: var(--teal-primary);
+        }
+
+        body.dark-mode .otp-code-value {
+            color: #2dd4bf;
         }
 
         .mail-action-grid {
@@ -383,246 +422,86 @@
             color: var(--teal-primary);
         }
 
-        /* Inbox Section Wrapper */
-        .inbox-section-wrapper {
-            margin-top: 16px;
+        /* Inbox All Messages List Styles */
+        .inbox-list-section {
+            margin-top: 15px;
             border-top: 1px solid var(--border-color);
-            padding-top: 14px;
+            padding-top: 12px;
             text-align: left;
         }
 
-        .inbox-top-badge-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
+        .inbox-header-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
         }
 
-        .inbox-badge-pill {
+        .inbox-item-card {
             background-color: var(--bg-card);
-            border: 1.5px solid var(--border-color);
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 0.78rem;
-            font-weight: 800;
-            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 6px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-        }
-
-        .inbox-badge-count {
-            background-color: var(--tab-bg);
-            color: var(--text-main);
-            padding: 1px 6px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 800;
-        }
-
-        .email-card-box {
-            background-color: var(--bg-card);
-            border: 1.5px solid var(--border-color);
-            border-radius: 16px;
-            padding: 14px;
-            margin-bottom: 12px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
             transition: border-color 0.2s;
         }
 
-        .email-card-box:hover {
+        .inbox-item-card:hover {
             border-color: var(--teal-primary);
         }
 
-        .email-card-box::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 12px;
-            bottom: 12px;
-            width: 4px;
-            background-color: var(--teal-primary);
-            border-radius: 0 4px 4px 0;
-        }
-
-        .email-card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding-left: 6px;
-        }
-
-        .email-sender-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .email-app-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            background-color: var(--teal-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.06);
-            border: 1px solid var(--border-color);
-        }
-
-        .email-sender-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .email-sender-name {
-            font-size: 0.95rem;
-            font-weight: 800;
-            color: var(--text-main);
-            letter-spacing: -0.2px;
-        }
-
-        .email-sender-mail {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .email-time-tag {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .email-subject-highlight {
-            font-size: 0.92rem;
-            font-weight: 800;
-            color: var(--text-main);
-            margin-bottom: 6px;
-            padding-left: 6px;
-            letter-spacing: -0.2px;
-        }
-
-        .email-body-preview {
+        .inbox-item-info {
             font-size: 0.78rem;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-            padding-left: 6px;
-            line-height: 1.45;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
             overflow: hidden;
+            padding-right: 6px;
         }
 
-        .otp-digit-boxes-row {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr) 1.2fr;
-            gap: 4px;
-            margin: 10px 0 12px 6px;
-            align-items: center;
+        .inbox-item-sender {
+            font-weight: 700;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .otp-digit-box {
-            background-color: var(--bg-card);
-            border: 1.5px solid var(--teal-primary);
-            border-radius: 8px;
-            height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
+        .inbox-item-subject {
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 2px;
+        }
+
+        .inbox-item-otp {
             font-weight: 800;
             color: var(--teal-primary);
             font-family: monospace;
-            box-shadow: 0 1px 3px rgba(140, 133, 116, 0.1);
+            margin-top: 2px;
         }
 
-        body.dark-mode .otp-digit-box {
-            color: #d1cfc5;
-            background-color: var(--bg-input);
-        }
-
-        .otp-box-copy-btn {
-            background-color: var(--bg-card);
-            border: 1.5px dashed var(--teal-primary);
-            border-radius: 8px;
-            height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--teal-primary);
-            transition: all 0.2s;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-        }
-
-        .otp-box-copy-btn:hover {
-            background-color: var(--teal-light);
-            border-style: solid;
-        }
-
-        .email-card-divider {
-            height: 1px;
-            background-color: var(--border-color);
-            margin: 12px 0 10px 6px;
-        }
-
-        .email-card-footer-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-left: 6px;
-        }
-
-        .email-msg-num-tag {
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .email-view-full-btn {
+        .inbox-view-btn {
             background-color: var(--teal-light);
             color: var(--teal-primary);
-            border: 1px solid rgba(140, 133, 116, 0.3);
-            padding: 7px 12px;
-            border-radius: 8px;
-            font-size: 0.75rem;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.72rem;
             font-weight: 700;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            flex-shrink: 0;
             transition: all 0.2s;
         }
 
-        .email-view-full-btn:hover {
+        .inbox-view-btn:hover {
             background-color: var(--teal-primary);
             color: white;
         }
 
-        .inbox-empty-card {
-            background-color: var(--bg-card);
-            border: 1px dashed var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.82rem;
-            font-weight: 600;
-        }
-
+        /* Popup Modal Styles (Like screenshot) */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -699,105 +578,11 @@
             text-align: left;
             font-size: 0.88rem;
             line-height: 1.6;
+            white-space: pre-wrap;
             word-break: break-word;
         }
 
-        /* স্টাইলিশ কাস্টম কনফার্ম মডাল স্টাইল */
-        .custom-confirm-card {
-            background-color: var(--bg-card);
-            color: var(--text-main);
-            width: 100%;
-            max-width: 350px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            border: 1px solid var(--border-color);
-            padding: 24px 20px;
-            text-align: center;
-            animation: modalFadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .confirm-icon-circle {
-            width: 56px;
-            height: 56px;
-            background-color: #fee2e2;
-            color: #dc2626;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 14px auto;
-            border: 2px solid #fecaca;
-        }
-
-        .confirm-title {
-            font-size: 1.05rem;
-            font-weight: 800;
-            color: var(--text-main);
-            margin-bottom: 6px;
-        }
-
-        .confirm-message-box {
-            background-color: var(--bg-subcard);
-            border: 1.5px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 18px;
-            line-height: 1.45;
-            font-weight: 600;
-        }
-
-        .confirm-btn-row {
-            display: flex;
-            gap: 10px;
-        }
-
-        .confirm-cancel-btn {
-            flex: 1;
-            background-color: var(--bg-subcard);
-            color: var(--text-main);
-            border: 1.5px solid var(--border-color);
-            padding: 10px;
-            border-radius: 12px;
-            font-size: 0.88rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            transition: all 0.2s;
-        }
-
-        .confirm-cancel-btn:hover {
-            border-color: var(--teal-primary);
-            color: var(--teal-primary);
-            background-color: var(--teal-light);
-        }
-
-        .confirm-ok-btn {
-            flex: 1;
-            background-color: #dc2626;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 12px;
-            font-size: 0.88rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            box-shadow: 0 3px 10px rgba(220, 38, 38, 0.3);
-            transition: all 0.2s;
-        }
-
-        .confirm-ok-btn:hover {
-            background-color: #b91c1c;
-        }
-
+        /* Fake Name 3-Item Inline Row Layout with Icons */
         .fake-row-wrapper {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -882,7 +667,7 @@
             justify-content: center;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 3px 8px rgba(140, 133, 116, 0.25);
+            box-shadow: 0 3px 8px rgba(13, 148, 136, 0.25);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -894,6 +679,7 @@
             transform: scale(0.97);
         }
 
+        /* Fake Name Output Result Card */
         .result-card {
             margin-top: 1.2rem;
             background-color: var(--bg-subcard);
@@ -901,25 +687,20 @@
             border-radius: 12px;
             padding: 1rem;
             text-align: center;
-            display: block;
+            display: none;
         }
 
-        .avatar-img-container {
-            width: 88px;
-            height: 88px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin: 0 auto 10px auto;
-            border: 3px solid var(--teal-primary);
-            box-shadow: 0 4px 12px rgba(140, 133, 116, 0.25);
+        .avatar-placeholder {
+            width: 50px;
+            height: 50px;
             background-color: var(--teal-light);
-        }
-
-        .avatar-img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
+            color: var(--teal-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 6px auto;
+            font-size: 1.3rem;
         }
 
         .identity-title {
@@ -931,6 +712,7 @@
             font-weight: 700;
         }
 
+        /* Enhanced Highlighted Field Boxes */
         .field-box {
             display: flex;
             justify-content: space-between;
@@ -953,15 +735,8 @@
         .field-box.name-highlight-box {
             background: var(--teal-light);
             border: 2px solid var(--teal-primary);
-            padding: 10px 12px;
-            box-shadow: 0 3px 10px rgba(140, 133, 116, 0.1);
-            align-items: center;
-        }
-
-        .field-info {
-            flex-grow: 1;
-            overflow: hidden;
-            padding-right: 8px;
+            padding: 9px 12px;
+            box-shadow: 0 3px 10px rgba(13, 148, 136, 0.1);
         }
 
         .field-info span {
@@ -981,38 +756,14 @@
         }
 
         .field-value.large-name-text {
-            font-size: 1.35rem;
+            font-size: 1.05rem;
             font-weight: 800;
-            color: var(--text-main);
-            letter-spacing: -0.5px;
+            color: var(--teal-primary);
             margin-top: 2px;
-            line-height: 1.25;
         }
 
         body.dark-mode .field-value.large-name-text {
-            color: #f8fafc;
-        }
-
-        .copy-icon-btn {
-            background: var(--bg-card);
-            border: 1.5px solid var(--border-color);
-            width: 38px;
-            height: 38px;
-            border-radius: 8px;
-            cursor: pointer;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            flex-shrink: 0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-        }
-
-        .copy-icon-btn:hover {
-            border-color: var(--teal-primary);
-            color: var(--teal-primary);
-            background-color: var(--teal-light);
+            color: #2dd4bf;
         }
 
         .copy-sm-btn {
@@ -1033,6 +784,7 @@
             color: #fff;
         }
 
+        /* Button Rows */
         .btn-row {
             display: flex;
             gap: 8px;
@@ -1053,7 +805,7 @@
             justify-content: center;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 3px 8px rgba(140, 133, 116, 0.25);
+            box-shadow: 0 3px 8px rgba(13, 148, 136, 0.25);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -1081,6 +833,7 @@
             color: #991b1b;
         }
 
+        /* 2FA Token Card */
         .token-card {
             background-color: var(--bg-subcard);
             border-radius: 12px;
@@ -1162,6 +915,7 @@
             background-color: var(--teal-light);
         }
 
+        /* Professional Gallery Tab Styles & Neon Click Glow Effect */
         .gallery-filter-row {
             display: flex;
             gap: 6px;
@@ -1209,8 +963,8 @@
         }
 
         .gallery-item.clicked {
-            border-color: #a8a08c !important;
-            box-shadow: 0 0 16px rgba(168, 160, 140, 0.95), 0 0 6px rgba(140, 133, 116, 0.9);
+            border-color: #10b981 !important;
+            box-shadow: 0 0 16px rgba(16, 185, 129, 0.95), 0 0 6px rgba(13, 148, 136, 0.9);
             transform: scale(0.96);
         }
 
@@ -1218,7 +972,7 @@
             position: relative;
             width: 100%;
             height: 125px;
-            background: #dedcd4;
+            background: #e2e8f0;
         }
 
         .gallery-img {
@@ -1264,6 +1018,7 @@
             color: white;
         }
 
+        /* Notepad Toolbar */
         .notepad-toolbar {
             display: flex;
             justify-content: space-between;
@@ -1338,7 +1093,7 @@
             justify-content: center;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 3px 8px rgba(140, 133, 116, 0.25);
+            box-shadow: 0 3px 8px rgba(13, 148, 136, 0.25);
             transition: all 0.2s;
         }
 
@@ -1488,6 +1243,7 @@
             </div>
             
             <div class="mail-result-card" id="mailResultCard">
+                <!-- Extracted Email Copy Box -->
                 <div class="field-box name-highlight-box" style="margin-bottom: 10px;">
                     <div class="field-info" style="width: 100%; overflow: hidden;">
                         <span class="field-label" id="labelExtractedEmail">Extracted Email Address</span>
@@ -1496,19 +1252,22 @@
                     <button class="copy-sm-btn" onclick="copyMailText('resEmailAddress', this)">Copy</button>
                 </div>
 
+                <!-- OTP Card with Platform App Icon & Full Message Button -->
                 <div class="token-card" style="margin-top: 8px;">
                     <div class="token-header-row">
                         <div class="token-label" id="mailOtpLabel">OTP FROM: <span id="platformNameText" style="color: var(--teal-primary);">MICROSOFT</span></div>
                         <div id="mailTimerBadge" class="timer-badge">Just Now</div>
                     </div>
 
-                    <div class="otp-platform-display" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin: 12px 0; padding: 10px; background-color: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 12px;">
-                        <div class="platform-icon-box" id="platformIconContainer" title="Sender Platform" style="width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background-color: var(--teal-light); flex-shrink: 0; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);">
+                    <!-- App Icon on Left + OTP Display -->
+                    <div class="otp-platform-display">
+                        <div class="platform-icon-box" id="platformIconContainer" title="Sender Platform">
                             <svg width="24" height="24" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>
                         </div>
-                        <div class="otp-code-value" id="mailCodeDisplay" style="font-size: 1.85rem; font-weight: 800; letter-spacing: 3px; font-family: monospace; color: var(--teal-primary);">------</div>
+                        <div class="otp-code-value" id="mailCodeDisplay">------</div>
                     </div>
 
+                    <!-- Copy OTP & View Full Message Buttons -->
                     <div class="mail-action-grid">
                         <button class="copy-btn" onclick="copyMailCodeText()">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
@@ -1520,15 +1279,12 @@
                         </button>
                     </div>
 
-                    <div class="inbox-section-wrapper">
-                        <div class="inbox-top-badge-row">
-                            <div class="inbox-badge-pill" id="inboxTitleBadge">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                                <span id="inboxHeaderTitleText">INBOX</span>
-                            </div>
-                            <div class="inbox-badge-count" id="inboxCountBadge">0</div>
+                    <!-- Inbox All Messages List Section -->
+                    <div class="inbox-list-section">
+                        <div class="inbox-header-title" id="inboxListTitle">Inbox Messages</div>
+                        <div id="inboxListContainer">
+                            <!-- Dynamic inbox items will render here -->
                         </div>
-                        <div id="inboxListContainer"></div>
                     </div>
 
                 </div>
@@ -1594,7 +1350,7 @@
                         <select class="fake-select" id="fakeGender">
                             <option value="random">Random</option>
                             <option value="male">Male</option>
-                            <option value="female" selected>Female</option>
+                            <option value="female">Female</option>
                         </select>
                         <div class="select-arrow">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -1609,7 +1365,7 @@
                     </div>
                     <div class="fake-select-wrapper">
                         <select class="fake-select" id="fakeNameSet">
-                            <option value="american" selected>American</option>
+                            <option value="american">American</option>
                             <option value="british">British</option>
                             <option value="australian">Australian</option>
                             <option value="canadian">Canadian</option>
@@ -1632,7 +1388,7 @@
                     </div>
                     <div class="fake-select-wrapper">
                         <select class="fake-select" id="fakeCountry">
-                            <option value="United States" selected>USA</option>
+                            <option value="United States">USA</option>
                             <option value="United Kingdom">UK</option>
                             <option value="Canada">Canada</option>
                             <option value="Australia">Australia</option>
@@ -1655,19 +1411,15 @@
             </button>
 
             <div class="result-card" id="fakeResultCard">
-                <div class="avatar-img-container" id="fakeAvatarContainer">
-                    <img id="fakeAvatarImg" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80" alt="Avatar">
-                </div>
+                <div class="avatar-placeholder" id="fakeAvatarIcon">👨</div>
                 <div class="identity-title" id="resIdentityTitle">Your Randomly Generated Identity</div>
                 
                 <div class="field-box name-highlight-box">
                     <div class="field-info">
                         <span class="field-label" id="resLabelName">Full Name</span>
-                        <span class="field-value large-name-text" id="resName">Mary L. Davis</span>
+                        <span class="field-value large-name-text" id="resName">Matthew T. Gonzales</span>
                     </div>
-                    <button class="copy-icon-btn" onclick="copyFakeText('resName', this)" title="Copy Name">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    </button>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resName', this)">Copy</button>
                 </div>
 
                 <div class="field-box">
@@ -1815,7 +1567,7 @@
         </p>
     </div>
 
-    <!-- Full Message Popup Modal -->
+    <!-- Full Message Popup Modal (Matches user screenshot) -->
     <div id="fullMsgModal" class="modal-overlay" onclick="outsideCloseModal(event)">
         <div class="modal-card">
             <div class="modal-header">
@@ -1825,29 +1577,8 @@
                 </div>
                 <button class="modal-close-btn" onclick="closeFullMessageModal()">&times;</button>
             </div>
-            <div class="modal-body" id="modalFullBodyContent"></div>
-        </div>
-    </div>
-
-    <!-- Custom Confirm Delete Modal -->
-    <div id="customConfirmModal" class="modal-overlay">
-        <div class="custom-confirm-card">
-            <div class="confirm-icon-circle">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-            </div>
-            <div class="confirm-title" id="confirmTitleText">Clear Notes?</div>
-            <div class="confirm-message-box" id="confirmMsgText">
-                Are you sure you want to clear all text from the notepad?
-            </div>
-            <div class="confirm-btn-row">
-                <button class="confirm-cancel-btn" onclick="closeCustomConfirm(false)">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                    <span id="confirmCancelBtnText">Cancel</span>
-                </button>
-                <button class="confirm-ok-btn" onclick="closeCustomConfirm(true)">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                    <span id="confirmOkBtnText">Clear All</span>
-                </button>
+            <div class="modal-body" id="modalFullBodyContent">
+                <!-- Dynamic full message content -->
             </div>
         </div>
     </div>
@@ -1856,6 +1587,7 @@
     let globalActiveFullMessage = "";
     let globalAllMessagesList = [];
 
+    // Switch Between Tabs
     function switchTab(tab) {
         const tabs = ['mail', '2fa', 'fake', 'photos', 'note'];
         tabs.forEach(t => {
@@ -1871,21 +1603,23 @@
         if(activeSec) activeSec.classList.add('active');
     }
 
+    // Platform Icon Helper
     function getPlatformBadge(senderOrText) {
-        const lower = (senderOrText || "").toLowerCase();
-        if (lower.includes('facebook') || lower.includes('fb') || lower.includes('notification@facebookmail.com')) {
-            return { name: 'FACEBOOK', svg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="#1877F2"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>` };
+        const lower = senderOrText.toLowerCase();
+        if (lower.includes('facebook') || lower.includes('fb')) {
+            return { name: 'FACEBOOK', svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="#1877F2"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>` };
+        } else if (lower.includes('twitter') || lower.includes('x.com') || lower.includes('x')) {
+            return { name: 'TWITTER / X', svg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="#000000"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>` };
         } else if (lower.includes('instagram')) {
-            return { name: 'INSTAGRAM', svg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>` };
-        } else if (lower.includes('twitter') || lower.includes('x.com') || lower.includes(' @x.com') || lower.includes('info@x.com') || lower.includes('x verification')) {
-            return { name: 'X / TWITTER', svg: `<svg width="20" height="20" viewBox="0 0 24 24" fill="#000000"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>` };
+            return { name: 'INSTAGRAM', svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>` };
         } else if (lower.includes('google') || lower.includes('gmail')) {
-            return { name: 'GOOGLE', svg: `<svg width="22" height="22" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.09C3.515 21.3 7.565 24 12.255 24z"/><path fill="#FBBC05" d="M5.525 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62h-3.98a11.86 11.86 0 000 10.76l3.98-3.09z"/><path fill="#EA4335" d="M12.255 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C18.205 1.19 15.495 0 12.255 0c-4.69 0-8.74 2.7-10.71 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>` };
+            return { name: 'GOOGLE', svg: `<svg width="24" height="24" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.09C3.515 21.3 7.565 24 12.255 24z"/><path fill="#FBBC05" d="M5.525 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62h-3.98a11.86 11.86 0 000 10.76l3.98-3.09z"/><path fill="#EA4335" d="M12.255 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C18.205 1.19 15.495 0 12.255 0c-4.69 0-8.74 2.7-10.71 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>` };
         } else {
-            return { name: 'MICROSOFT', svg: `<svg width="22" height="22" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>` };
+            return { name: 'MICROSOFT', svg: `<svg width="24" height="24" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>` };
         }
     }
 
+    // Fetch Mail Code & All Inbox Messages from Backend API
     function fetchMailCode() {
         const tokenInput = document.getElementById('mailTokenInput').value.trim();
         const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
@@ -1905,6 +1639,7 @@
         document.getElementById('mailCodeDisplay').innerText = "WAIT...";
         document.getElementById('mailResultCard').style.display = 'block';
 
+        // REAL RENDER BACKEND API CONNECTION
         fetch('https://twofa-tool-bucc.onrender.com/get-otp', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -1918,31 +1653,8 @@
             } else {
                 globalActiveFullMessage = data.full_message || "";
                 globalAllMessagesList = data.messages_list || [];
-                
-                // যদি ব্যাকএন্ড থেকে মেসেজ লিস্ট না এসে শুধু একটি মাত্র লেটেস্ট ওটিপি আসে
-                if (globalAllMessagesList.length === 0 && data.otp) {
-                    globalAllMessagesList.push({
-                        sender: data.sender || "Microsoft",
-                        email: "no-reply@microsoft.com",
-                        subject: data.subject || "Verification Code",
-                        otp: data.otp,
-                        time: "Just Now",
-                        full_message: data.full_message || ""
-                    });
-                }
 
-                // যদি ব্যাকএন্ডের লিস্টে প্রথম মেসেজটিতে এক্স/অন্যান্য প্ল্যাটফর্মের কোড বা সাবজেক্ট থাকে তবে তা টপ কার্ডে আপডেট হবে
-                let topSender = data.sender || "Microsoft";
-                let topSubject = data.subject || "Verification Code";
-                let topOtp = data.otp || "------";
-
-                if (globalAllMessagesList.length > 0) {
-                    topSender = globalAllMessagesList[0].sender || topSender;
-                    topSubject = globalAllMessagesList[0].subject || topSubject;
-                    topOtp = globalAllMessagesList[0].otp || topOtp;
-                }
-
-                updateMailUI(topSender, topSubject, topOtp, globalActiveFullMessage);
+                updateMailUI(data.sender, data.subject, data.otp, globalActiveFullMessage);
                 renderInboxList(globalAllMessagesList);
             }
         })
@@ -1959,123 +1671,42 @@
         document.getElementById('mailCodeDisplay').innerText = otp;
     }
 
+    // Render All Inbox Messages List
     function renderInboxList(messages) {
         const container = document.getElementById('inboxListContainer');
-        const countBadge = document.getElementById('inboxCountBadge');
         if (!container) return;
         container.innerHTML = "";
 
         if (!messages || messages.length === 0) {
-            countBadge.innerText = "0";
-            container.innerHTML = `<div class="inbox-empty-card">No other inbox messages found.</div>`;
+            container.innerHTML = "<p style='font-size:0.78rem; color:var(--text-muted); padding:6px;'>No other inbox messages found.</p>";
             return;
         }
 
-        countBadge.innerText = messages.length;
-
         messages.forEach((msg, idx) => {
-            const platform = getPlatformBadge((msg.sender || "") + " " + (msg.subject || "") + " " + (msg.email || ""));
-            const otpString = (msg.otp && msg.otp !== "------") ? msg.otp : "";
-            
-            let otpSectionHtml = '';
-            if (otpString && otpString.length >= 4) {
-                let digitsHtml = '';
-                for (let i = 0; i < 6; i++) {
-                    const char = otpString[i] || '-';
-                    digitsHtml += `<div class="otp-digit-box">${char}</div>`;
-                }
-                digitsHtml += `
-                    <button class="otp-box-copy-btn" onclick="copySpecificOtp('${otpString}', this)" title="Copy OTP">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    </button>
-                `;
-                otpSectionHtml = `<div class="otp-digit-boxes-row">${digitsHtml}</div><div class="email-card-divider"></div>`;
-            }
-
             container.innerHTML += `
-                <div class="email-card-box">
-                    <div class="email-card-header">
-                        <div class="email-sender-profile">
-                            <div class="email-app-icon">${platform.svg}</div>
-                            <div class="email-sender-info">
-                                <span class="email-sender-name">${msg.sender || 'System'}</span>
-                                <span class="email-sender-mail">${msg.email || 'no-reply@mail.com'}</span>
-                            </div>
-                        </div>
-                        <div class="email-time-tag">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                            ${msg.time || 'Just Now'}
-                        </div>
+                <div class="inbox-item-card">
+                    <div class="inbox-item-info">
+                        <div class="inbox-item-sender">${msg.sender}</div>
+                        <div class="inbox-item-subject">${msg.subject}</div>
+                        <div class="inbox-item-otp">OTP: ${msg.otp}</div>
                     </div>
-
-                    <div class="email-subject-highlight">${msg.subject || 'Verification Code'}</div>
-                    <div class="email-body-preview">${cleanHtmlText(msg.full_message || msg.subject)}</div>
-
-                    ${otpSectionHtml}
-
-                    <div class="email-card-footer-row">
-                        <div class="email-msg-num-tag">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                            Message #${idx + 1}
-                        </div>
-                        <button class="email-view-full-btn" onclick="viewSpecificInboxMessage(${idx})">
-                            View Full 
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                        </button>
-                    </div>
+                    <button class="inbox-view-btn" onclick="viewSpecificInboxMessage(${idx})">View</button>
                 </div>
             `;
         });
     }
 
-    function copySpecificOtp(otp, btnElement) {
-        if (otp && otp !== "------") {
-            navigator.clipboard.writeText(otp);
-            const orig = btnElement.innerHTML;
-            btnElement.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8c8574" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-            setTimeout(() => { btnElement.innerHTML = orig; }, 1500);
-        }
-    }
-
-    function cleanHtmlText(htmlStr) {
-        if (!htmlStr) return "";
-        let txt = document.createElement("textarea");
-        txt.innerHTML = htmlStr;
-        let decoded = txt.value;
-        return decoded.replace(/<[^>]*>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
-    }
-
+    // Open Modal with Specific Inbox Message
     function viewSpecificInboxMessage(index) {
         const msg = globalAllMessagesList[index];
         if (!msg) return;
-        
-        const modalBody = document.getElementById('modalFullBodyContent');
-        modalBody.innerHTML = `
-            <div style="background:var(--bg-subcard); border:1px solid var(--border-color); border-radius:12px; padding:14px; margin-bottom:12px;">
-                <div style="font-size:0.72rem; text-transform:uppercase; color:var(--teal-primary); font-weight:700; margin-bottom:4px;">Sender</div>
-                <div style="font-weight:700; font-size:0.9rem; color:var(--text-main);">${msg.sender || ''}</div>
-                <div style="font-size:0.75rem; color:var(--text-muted);">${msg.email || ''}</div>
-            </div>
-            <div style="background:var(--bg-subcard); border:1px solid var(--border-color); border-radius:12px; padding:14px; margin-bottom:12px;">
-                <div style="font-size:0.72rem; text-transform:uppercase; color:var(--teal-primary); font-weight:700; margin-bottom:4px;">Subject</div>
-                <div style="font-weight:700; font-size:0.95rem; color:var(--text-main);">${msg.subject || ''}</div>
-            </div>
-            <div style="background:var(--bg-subcard); border:1px solid var(--border-color); border-radius:12px; padding:14px;">
-                <div style="font-size:0.72rem; text-transform:uppercase; color:var(--teal-primary); font-weight:700; margin-bottom:6px;">Message Body</div>
-                <div style="font-size:0.86rem; color:var(--text-main); line-height:1.6; white-space:pre-wrap;">${cleanHtmlText(msg.full_message || '')}</div>
-            </div>
-        `;
+        document.getElementById('modalFullBodyContent').innerText = msg.full_message;
         document.getElementById('fullMsgModal').style.display = 'flex';
     }
 
+    // Open Modal for Main Latest Full Message
     function openFullMessageModal() {
-        const modalBody = document.getElementById('modalFullBodyContent');
-        modalBody.innerHTML = `
-            <div style="background:var(--bg-subcard); border:1px solid var(--border-color); border-radius:12px; padding:14px;">
-                <div style="font-size:0.72rem; text-transform:uppercase; color:var(--teal-primary); font-weight:700; margin-bottom:6px;">Full Message View</div>
-                <div style="font-size:0.88rem; color:var(--text-main); line-height:1.6; white-space:pre-wrap;">${cleanHtmlText(globalActiveFullMessage)}</div>
-            </div>
-        `;
+        document.getElementById('modalFullBodyContent').innerText = globalActiveFullMessage || "No full message available.";
         document.getElementById('fullMsgModal').style.display = 'flex';
     }
 
@@ -2093,7 +1724,7 @@
     function clearMailTab() {
         document.getElementById('mailTokenInput').value = '';
         document.getElementById('mailResultCard').style.display = 'none';
-        document.getElementById('inboxListContainer').innerHTML = `<div class="inbox-empty-card">No other inbox messages found.</div>`;
+        document.getElementById('inboxListContainer').innerHTML = '';
         document.getElementById('mailTokenInput').focus();
     }
 
@@ -2122,6 +1753,16 @@
         }
     }
 
+    function hashCode(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return hash;
+    }
+
+    // Populate Photo Gallery
     document.addEventListener("DOMContentLoaded", () => {
         const galleryGrid = document.getElementById('galleryGrid');
         if (galleryGrid) {
@@ -2207,6 +1848,7 @@
         });
     }
 
+    // Dark Mode Toggle
     function toggleDarkMode() {
         document.body.classList.toggle('dark-mode');
         const isDark = document.body.classList.contains('dark-mode');
@@ -2222,6 +1864,7 @@
         }
     }
 
+    // Language Switcher
     function changeLanguage() {
         const langSelect = document.getElementById('langSelect');
         if (!langSelect) return;
@@ -2243,6 +1886,7 @@
             setTxt('labelExtractedEmail', 'এক্সট্রাক্ট করা মেইল অ্যাড্রেস');
             setTxt('copyOtpText', 'ওটিপি কপি');
             setTxt('viewFullMsgText', 'ফুল মেসেজ');
+            setTxt('inboxListTitle', 'ইনবক্স মেসেজ সমূহ');
             setTxt('modalHeaderTitle', 'ইমেইল ভিউ');
             setTxt('title2fa', 'সিক্রেট কি');
             setTxt('desc2fa', 'সিক্রেট কি দিয়ে গেট কোড বাটনে ক্লিক করলে লাইভ 2FA কোড দেখতে পাবেন।');
@@ -2261,11 +1905,6 @@
             setTxt('btnDownload', 'ডাউনলোড');
             setTxt('btnClearNote', 'ক্লিয়ার');
             
-            setTxt('confirmTitleText', 'নোট মুছে ফেলতে চান?');
-            setTxt('confirmMsgText', 'আপনি কি নিশ্চিত যে আপনি নোটপ্যাডের সমস্ত লেখা মুছে ফেলতে চান?');
-            setTxt('confirmCancelBtnText', 'বাতিল');
-            setTxt('confirmOkBtnText', 'সব মুছুন');
-
             document.getElementById('mailTokenInput').placeholder = 'এখানে আপনার মেইল টোকেন পেস্ট করুন...';
             document.getElementById('secret').placeholder = 'এখানে আপনার সিক্রেট কি পেস্ট করুন...';
             document.getElementById('noteArea').placeholder = 'এখানে আপনার নোট পেস্ট বা টাইপ করুন...';
@@ -2293,6 +1932,7 @@
             setTxt('labelExtractedEmail', 'Extracted Email Address');
             setTxt('copyOtpText', 'Copy OTP');
             setTxt('viewFullMsgText', 'Full Message');
+            setTxt('inboxListTitle', 'Inbox Messages');
             setTxt('modalHeaderTitle', 'Email View');
             setTxt('title2fa', 'Secret Key');
             setTxt('desc2fa', 'Enter your Base32 secret key and click Get Code to generate your 2FA token.');
@@ -2310,11 +1950,6 @@
             setTxt('formatLabel', 'Select Format:');
             setTxt('btnDownload', 'Download');
             setTxt('btnClearNote', 'Clear');
-
-            setTxt('confirmTitleText', 'Clear Notes?');
-            setTxt('confirmMsgText', 'Are you sure you want to clear all text from the notepad?');
-            setTxt('confirmCancelBtnText', 'Cancel');
-            setTxt('confirmOkBtnText', 'Clear All');
             
             document.getElementById('mailTokenInput').placeholder = 'Paste your full Mail Token here...';
             document.getElementById('secret').placeholder = 'Paste your Secret Key here...';
@@ -2333,6 +1968,7 @@
         }
     }
 
+    // Live Active Users Counter
     setInterval(() => {
         const userEl = document.getElementById('active-users');
         if (userEl) {
@@ -2341,6 +1977,7 @@
         }
     }, 4000);
 
+    // 2FA 15s Countdown & Auto-Refresh Logic
     let totpInterval = null;
     let currentSecret = "";
 
@@ -2425,6 +2062,7 @@
         }
     }
 
+    // Notepad Logic
     const noteArea = document.getElementById('noteArea');
     const wordCount = document.getElementById('wordCount');
 
@@ -2447,20 +2085,8 @@
 
     function clearNote() {
         if (!noteArea) return;
-        const text = noteArea.value.trim();
         const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
-        
-        if (!text) {
-            alert(lang === 'bn' ? 'নোটপ্যাড ইতিমধ্যে খালি রয়েছে!' : 'Notepad is already empty!');
-            return;
-        }
-
-        document.getElementById('customConfirmModal').style.display = 'flex';
-    }
-
-    function closeCustomConfirm(isConfirmed) {
-        document.getElementById('customConfirmModal').style.display = 'none';
-        if (isConfirmed && noteArea) {
+        if(confirm(lang === 'bn' ? 'সব লেখা মুছে ফেলতে চান?' : 'Are you sure you want to clear all text?')) {
             noteArea.value = '';
             localStorage.removeItem('smart_notepad_data');
             updateNoteStats();
@@ -2505,56 +2131,17 @@
         document.body.removeChild(a);
     }
 
+    // Fake Identity Database & Generator
     const nameDatabase = {
-        american: { 
-            male: ["James A. Smith", "Robert J. Johnson", "William D. Brown"], 
-            female: ["Mary L. Davis", "Patricia K. Wilson", "Rebecca D. Munsey"] 
-        },
-        british: { 
-            male: ["Oliver T. Clarke", "George H. Smith"], 
-            female: ["Olivia S. Roberts", "Amelia L. Jones"] 
-        },
-        australian: { 
-            male: ["Lachlan M. Kelly", "Oliver J. O'Connor"], 
-            female: ["Charlotte E. Smith", "Olivia M. Kelly"] 
-        },
-        canadian: { 
-            male: ["Liam T. Tremblay", "Noah M. Gagnon"], 
-            female: ["Emma S. Gagnon", "Olivia L. Roy"] 
-        },
-        german: { 
-            male: ["Maximilian H. Müller", "Alexander K. Schmidt"], 
-            female: ["Mia A. Wagner", "Emma S. Becker"] 
-        },
-        french: { 
-            male: ["Gabriel L. Martin", "Léo M. Bernard"], 
-            female: ["Jade A. Durand", "Louise S. Leroy"] 
-        },
-        japanese: { 
-            male: ["Hiroshi T. Tanaka", "Kenji M. Sato"], 
-            female: ["Hina A. Yamamoto", "Yui S. Nakamura"] 
-        },
-        indian: { 
-            male: ["Aarav M. Sharma", "Vivaan R. Verma"], 
-            female: ["Diya A. Joshi", "Saanvi S. Mehta"] 
-        },
-        bangladeshi: { 
-            male: ["Tanvir A. Rahman", "Rakibul S. Islam"], 
-            female: ["Nusrat J. Mim", "Sadia K. Akter"] 
-        }
-    };
-
-    const avatarPool = {
-        male: [
-            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
-            "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=200&q=80",
-            "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80"
-        ],
-        female: [
-            "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80",
-            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
-            "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80"
-        ]
+        american: { male: ["James A. Smith", "Robert J. Johnson"], female: ["Mary L. Davis", "Patricia K. Wilson"] },
+        british: { male: ["Oliver T. Clarke", "George H. Smith"], female: ["Olivia S. Roberts", "Amelia L. Jones"] },
+        australian: { male: ["Lachlan M. Kelly", "Oliver J. O'Connor"], female: ["Charlotte E. Smith", "Olivia M. Kelly"] },
+        canadian: { male: ["Liam T. Tremblay", "Noah M. Gagnon"], female: ["Emma S. Gagnon", "Olivia L. Roy"] },
+        german: { male: ["Maximilian H. Müller", "Alexander K. Schmidt"], female: ["Mia A. Wagner", "Emma S. Becker"] },
+        french: { male: ["Gabriel L. Martin", "Léo M. Bernard"], female: ["Jade A. Durand", "Louise S. Leroy"] },
+        japanese: { male: ["Hiroshi T. Tanaka", "Kenji M. Sato"], female: ["Hina A. Yamamoto", "Yui S. Nakamura"] },
+        indian: { male: ["Aarav M. Sharma", "Vivaan R. Verma"], female: ["Diya A. Joshi", "Saanvi S. Mehta"] },
+        bangladeshi: { male: ["Tanvir A. Rahman", "Rakibul S. Islam"], female: ["Nusrat J. Mim", "Sadia K. Akter"] }
     };
 
     const detailedAddressDatabase = {
@@ -2576,9 +2163,6 @@
         
         const names = (nameDatabase[nameSet] || nameDatabase['american'])[gender];
         const addr = (detailedAddressDatabase[country] || detailedAddressDatabase["United States"])[0];
-        
-        const avatars = avatarPool[gender];
-        const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
 
         document.getElementById('resName').innerText = names[Math.floor(Math.random() * names.length)];
         document.getElementById('resDob').innerText = `${Math.floor(Math.random() * 28) + 1} July 1995`;
@@ -2590,24 +2174,15 @@
         document.getElementById('resCountry').innerText = country;
         document.getElementById('resLat').innerText = addr.lat;
         document.getElementById('resLng').innerText = addr.lng;
-        
-        document.getElementById('fakeAvatarImg').src = randomAvatar;
+        document.getElementById('fakeAvatarIcon').innerText = (gender === 'male') ? "👨" : "👩";
         document.getElementById('fakeResultCard').style.display = 'block';
     }
 
     function copyFakeText(elementId, btnElement) {
-        const textToCopy = document.getElementById(elementId).innerText;
-        navigator.clipboard.writeText(textToCopy);
-        
-        if(btnElement.classList.contains('copy-icon-btn')) {
-            const originalHTML = btnElement.innerHTML;
-            btnElement.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8c8574" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-            setTimeout(() => { btnElement.innerHTML = originalHTML; }, 1500);
-        } else {
-            const originalText = btnElement.innerText;
-            btnElement.innerText = 'Copied!';
-            setTimeout(() => { btnElement.innerText = originalText; }, 1500);
-        }
+        navigator.clipboard.writeText(document.getElementById(elementId).innerText);
+        const originalText = btnElement.innerText;
+        btnElement.innerText = 'Copied!';
+        setTimeout(() => { btnElement.innerText = originalText; }, 1500);
     }
 </script>
 
