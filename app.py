@@ -29,7 +29,7 @@ def get_otp():
         raw_input = data.get('token', '').strip()
         
         if not raw_input:
-            return jsonify({"error": "Token is missing"}), 400
+            return jsonify({"error": "Token is missing"}}, 400
 
         extracted_email = "Unknown"
         access_token = None
@@ -74,37 +74,37 @@ def get_otp():
                 "full_message": "No recent messages found in this inbox."
             })
             
-        # --- সুনির্দিষ্ট ওটিপি মেইল ফিল্টারিং লজিক ---
+        # --- অতি নিখুঁত ওটিপি এক্সট্রাকশন লজিক ---
         target_msg = messages_data[0]
         otp_code = "N/A"
         
-        # ১. প্রথমে এমন মেইল খোঁজা যাতে পরিষ্কারভাবে verification code বা is your লেখা আছে
-        found_otp_mail = False
         for msg in messages_data:
             subject = msg.get('subject', '')
             body_content = msg.get('body', {}).get('content', '')
             clean_text = re.sub('<[^<]+?>', ' ', body_content)
-            full_text = (subject + " " + clean_text).lower()
             
-            if 'verification code' in full_text or 'is your' in full_text or 'confirm' in full_text:
-                # মেইলের ভেতর থেকে ৪ থেকে ৮ ডিজিটের কোড বের করা
-                code_match = re.search(r'\b([0-9]{5,6})\b', clean_text)
-                if code_match:
+            # ১. প্রথমে সাবজেক্ট থেকে ৬ ডিজিটের কোড খোঁজা (যেমন: "872261 is your X verification code")
+            sub_match = re.search(r'\b([0-9]{6})\b', subject)
+            if sub_match:
+                target_msg = msg
+                otp_code = sub_match.group(1)
+                break
+            
+            # ২. বডি থেকে "is your ... verification code" অথবা কোডের নির্দিষ্ট প্যাটার্ন খোঁজা
+            body_match = re.search(r'\b([0-9]{6})\b(?:\s+is\s+your|\s+is\s+the|[\s\w\-]{0,25}verification)', clean_text, re.IGNORECASE)
+            if body_match:
+                target_msg = msg
+                otp_code = body_match.group(1)
+                break
+                
+            # ৩. যদি টুইটার বা এক্স এর মেইল হয় এবং সাবজেক্টে বা শুরুতে কোড থাকে
+            if 'x' in msg.get('from', {}).get('emailAddress', {}).get('address', '').lower() or 'twitter' in subject.lower():
+                # সাধারণ ৬ ডিজিটের সংখ্যা যা অ্যাড্রেসের মধ্যে নেই
+                all_6_digits = re.findall(r'\b([0-9]{6})\b', clean_text)
+                if all_6_digits:
+                    # প্রথম ৬ ডিজিটের সংখ্যাটিই সাধারণত মূল ওটিপি হয়
                     target_msg = msg
-                    otp_code = code_match.group(1)
-                    found_otp_mail = True
-                    break
-
-        # ২. যদি উপর্যুক্ত শর্তে মেইল না পাওয়া যায়, তবে লেটেস্ট মেসেজগুলো থেকে ৬ ডিজিটের ভ্যালিড কোড খোঁজা
-        if not found_otp_mail:
-            for msg in messages_data:
-                body_content = msg.get('body', {}).get('content', '')
-                clean_text = re.sub('<[^<]+?>', ' ', body_content)
-                # ওয়েলকাম মেইল বা অন্য সাধারণ টেক্সট বাদ দিয়ে যেখানে কোড থাকার সম্ভাবনা বেশি
-                digits = re.findall(r'\b[0-9]{6}\b', clean_text)
-                if digits:
-                    target_msg = msg
-                    otp_code = digits[0]
+                    otp_code = all_6_digits[0]
                     break
 
         sender = target_msg.get('from', {}).get('emailAddress', {}).get('address', 'Unknown Sender')
