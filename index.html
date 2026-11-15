@@ -501,7 +501,7 @@
             color: white;
         }
 
-        /* Popup Modal Styles (Like screenshot) */
+        /* Popup Modal Styles */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -578,7 +578,6 @@
             text-align: left;
             font-size: 0.88rem;
             line-height: 1.6;
-            white-space: pre-wrap;
             word-break: break-word;
         }
 
@@ -1567,7 +1566,7 @@
         </p>
     </div>
 
-    <!-- Full Message Popup Modal (Matches user screenshot) -->
+    <!-- Full Message Popup Modal -->
     <div id="fullMsgModal" class="modal-overlay" onclick="outsideCloseModal(event)">
         <div class="modal-card">
             <div class="modal-header">
@@ -1639,7 +1638,6 @@
         document.getElementById('mailCodeDisplay').innerText = "WAIT...";
         document.getElementById('mailResultCard').style.display = 'block';
 
-        // REAL RENDER BACKEND API CONNECTION
         fetch('https://twofa-tool-bucc.onrender.com/get-otp', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -1696,17 +1694,48 @@
         });
     }
 
-    // Open Modal with Specific Inbox Message
+    // Clean HTML Entities & Tags helper function for professional email card view
+    function cleanHtmlText(htmlStr) {
+        if (!htmlStr) return "";
+        let txt = document.createElement("textarea");
+        txt.innerHTML = htmlStr;
+        let decoded = txt.value;
+        return decoded.replace(/<[^>]*>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+
+    // Open Modal with Specific Inbox Message (Professional Email Card View)
     function viewSpecificInboxMessage(index) {
         const msg = globalAllMessagesList[index];
         if (!msg) return;
-        document.getElementById('modalFullBodyContent').innerText = msg.full_message;
+        
+        const modalBody = document.getElementById('modalFullBodyContent');
+        modalBody.innerHTML = `
+            <div style="background:var(--bg-subcard); border:1px solid var(--border-color); border-radius:12px; padding:14px; margin-bottom:12px;">
+                <div style="font-size:0.72rem; text-transform:uppercase; color:var(--teal-primary); font-weight:700; margin-bottom:4px;">Sender</div>
+                <div style="font-weight:700; font-size:0.9rem; color:var(--text-main);">${msg.sender}</div>
+                <div style="font-size:0.75rem; color:var(--text-muted);">${msg.email || ''}</div>
+            </div>
+            <div style="background:var(--bg-subcard); border:1px solid var(--border-color); border-radius:12px; padding:14px; margin-bottom:12px;">
+                <div style="font-size:0.72rem; text-transform:uppercase; color:var(--teal-primary); font-weight:700; margin-bottom:4px;">Subject</div>
+                <div style="font-weight:700; font-size:0.95rem; color:var(--text-main);">${msg.subject}</div>
+            </div>
+            <div style="background:var(--bg-subcard); border:1px solid var(--border-color); border-radius:12px; padding:14px;">
+                <div style="font-size:0.72rem; text-transform:uppercase; color:var(--teal-primary); font-weight:700; margin-bottom:6px;">Message Body</div>
+                <div style="font-size:0.86rem; color:var(--text-main); line-height:1.6; white-space:pre-wrap;">${cleanHtmlText(msg.full_message)}</div>
+            </div>
+        `;
         document.getElementById('fullMsgModal').style.display = 'flex';
     }
 
-    // Open Modal for Main Latest Full Message
+    // Open Modal for Main Latest Full Message (Professional Email Card View)
     function openFullMessageModal() {
-        document.getElementById('modalFullBodyContent').innerText = globalActiveFullMessage || "No full message available.";
+        const modalBody = document.getElementById('modalFullBodyContent');
+        modalBody.innerHTML = `
+            <div style="background:var(--bg-subcard); border:1px solid var(--border-color); border-radius:12px; padding:14px;">
+                <div style="font-size:0.72rem; text-transform:uppercase; color:var(--teal-primary); font-weight:700; margin-bottom:6px;">Full Message View</div>
+                <div style="font-size:0.88rem; color:var(--text-main); line-height:1.6; white-space:pre-wrap;">${cleanHtmlText(globalActiveFullMessage)}</div>
+            </div>
+        `;
         document.getElementById('fullMsgModal').style.display = 'flex';
     }
 
