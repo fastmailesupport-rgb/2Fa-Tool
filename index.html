@@ -702,6 +702,102 @@
             word-break: break-word;
         }
 
+        /* স্টাইলিশ কাস্টম কনফার্ম মডাল স্টাইল */
+        .custom-confirm-card {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            width: 100%;
+            max-width: 350px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            padding: 24px 20px;
+            text-align: center;
+            animation: modalFadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .confirm-icon-circle {
+            width: 56px;
+            height: 56px;
+            background-color: #fee2e2;
+            color: #dc2626;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px auto;
+            border: 2px solid #fecaca;
+        }
+
+        .confirm-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .confirm-message-box {
+            background-color: var(--bg-subcard);
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+            line-height: 1.45;
+            font-weight: 600;
+        }
+
+        .confirm-btn-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .confirm-cancel-btn {
+            flex: 1;
+            background-color: var(--bg-subcard);
+            color: var(--text-main);
+            border: 1.5px solid var(--border-color);
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .confirm-cancel-btn:hover {
+            border-color: var(--teal-primary);
+            color: var(--teal-primary);
+            background-color: var(--teal-light);
+        }
+
+        .confirm-ok-btn {
+            flex: 1;
+            background-color: #dc2626;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 3px 10px rgba(220, 38, 38, 0.3);
+            transition: all 0.2s;
+        }
+
+        .confirm-ok-btn:hover {
+            background-color: #b91c1c;
+        }
+
         .fake-row-wrapper {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -1733,6 +1829,29 @@
         </div>
     </div>
 
+    <!-- Custom Confirm Delete Modal -->
+    <div id="customConfirmModal" class="modal-overlay">
+        <div class="custom-confirm-card">
+            <div class="confirm-icon-circle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+            </div>
+            <div class="confirm-title" id="confirmTitleText">Clear Notes?</div>
+            <div class="confirm-message-box" id="confirmMsgText">
+                Are you sure you want to clear all text from the notepad?
+            </div>
+            <div class="confirm-btn-row">
+                <button class="confirm-cancel-btn" onclick="closeCustomConfirm(false)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    <span id="confirmCancelBtnText">Cancel</span>
+                </button>
+                <button class="confirm-ok-btn" onclick="closeCustomConfirm(true)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    <span id="confirmOkBtnText">Clear All</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
 <script>
     let globalActiveFullMessage = "";
     let globalAllMessagesList = [];
@@ -2129,6 +2248,11 @@
             setTxt('btnDownload', 'ডাউনলোড');
             setTxt('btnClearNote', 'ক্লিয়ার');
             
+            setTxt('confirmTitleText', 'নোট মুছে ফেলতে চান?');
+            setTxt('confirmMsgText', 'আপনি কি নিশ্চিত যে আপনি নোটপ্যাডের সমস্ত লেখা মুছে ফেলতে চান?');
+            setTxt('confirmCancelBtnText', 'বাতিল');
+            setTxt('confirmOkBtnText', 'সব মুছুন');
+
             document.getElementById('mailTokenInput').placeholder = 'এখানে আপনার মেইল টোকেন পেস্ট করুন...';
             document.getElementById('secret').placeholder = 'এখানে আপনার সিক্রেট কি পেস্ট করুন...';
             document.getElementById('noteArea').placeholder = 'এখানে আপনার নোট পেস্ট বা টাইপ করুন...';
@@ -2173,6 +2297,11 @@
             setTxt('formatLabel', 'Select Format:');
             setTxt('btnDownload', 'Download');
             setTxt('btnClearNote', 'Clear');
+
+            setTxt('confirmTitleText', 'Clear Notes?');
+            setTxt('confirmMsgText', 'Are you sure you want to clear all text from the notepad?');
+            setTxt('confirmCancelBtnText', 'Cancel');
+            setTxt('confirmOkBtnText', 'Clear All');
             
             document.getElementById('mailTokenInput').placeholder = 'Paste your full Mail Token here...';
             document.getElementById('secret').placeholder = 'Paste your Secret Key here...';
@@ -2303,10 +2432,24 @@
         wordCount.innerText = `${noteArea.value.length} ${lang === 'bn' ? 'অক্ষর' : 'Characters'}`;
     }
 
+    // কাস্টম কনফার্ম মডাল ট্রিগার করা
     function clearNote() {
         if (!noteArea) return;
+        const text = noteArea.value.trim();
         const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
-        if(confirm(lang === 'bn' ? 'সব লেখা মুছে ফেলতে চান?' : 'Are you sure you want to clear all text?')) {
+        
+        if (!text) {
+            alert(lang === 'bn' ? 'নোটপ্যাড ইতিমধ্যে খালি রয়েছে!' : 'Notepad is already empty!');
+            return;
+        }
+
+        // ব্রাউজারের ডিফল্ট কনফার্ম এর বদলে আমাদের স্টাইলিশ কাস্টম মডাল ওপেন হবে
+        document.getElementById('customConfirmModal').style.display = 'flex';
+    }
+
+    function closeCustomConfirm(isConfirmed) {
+        document.getElementById('customConfirmModal').style.display = 'none';
+        if (isConfirmed && noteArea) {
             noteArea.value = '';
             localStorage.removeItem('smart_notepad_data');
             updateNoteStats();
@@ -2441,7 +2584,7 @@
         document.getElementById('fakeResultCard').style.display = 'block';
     }
 
-    function copyFakeText(elementId, btnElement) {
+    function copyFakeTest(elementId, btnElement) {
         const textToCopy = document.getElementById(elementId).innerText;
         navigator.clipboard.writeText(textToCopy);
         
