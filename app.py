@@ -4,7 +4,7 @@ import requests
 import re
 
 app = Flask(__name__)
-CORS(app)  # ফন্টএন্ড থেকে রিকোয়েস্ট রিসিভ করার জন্য CORS এনাবল করা হলো
+CORS(app)
 
 @app.route('/get-otp', methods=['POST'])
 def get_otp():
@@ -13,29 +13,29 @@ def get_otp():
         raw_input = data.get('token', '').strip()
         
         if not raw_input:
-            return jsonify({"error": "Token is missing"}), 400
+            return jsonify({"error": "Token or credentials missing"}), 400
 
-        # ইনপুট থেকে আসল Access Token খুঁজে বের করার লজিক (EyJ... দিয়ে শুরু টোকেন)
-        token_match = re.search(r'(Ew[a-zA-Z0-9_\-\.]+|eyJ[a-zA-Z0-9_\-\.]+)', raw_input)
-        
-        if token_match:
-            token = token_match.group(0)
-        else:
-            # যদি সরাসরি টোকেন দেয় অথবা পাইপ (|) বা কোলন (:) দিয়ে আলাদা করা থাকে
-            parts = re.split(r'[\|\:\s]+', raw_input)
-            token = parts[-1] if len(parts) > 0 else raw_input
+        # ইনপুট থেকে টোকেন বা পাসওয়ার্ড আলাদা করার চেষ্টা
+        token = raw_input
+        # যদি পাইপ বা অন্য কিছু থাকে, শেষের অংশটি টোকেন হতে পারে
+        if '|' in raw_input:
+            parts = [p.strip() for p in raw_input.split('|')]
+            # সাধারণত শেষের বা বড় স্ট্রিংগুলো টোকেন হয়
+            for p in reversed(parts):
+                if len(p) > 20:
+                    token = p
+                    break
 
-        # মাইক্রোসফট গ্রাফ এপিআই (Microsoft Graph API) ব্যবহার করে ইনবক্সের মেসেজ ফেচ করা
+        # মাইক্রোসফট গ্রাফ এপিআই কল
         headers = {
             'Authorization': f'Bearer {token}',
             'Content-Type': 'application/json'
         }
         
-        # সাম্প্রতিক মেসেজগুলোর জন্য মাইক্রোসফট গ্রাফ এন্ডপয়েন্ট
         graph_url = 'https://graph.microsoft.com/v1.0/me/messages?$top=5&$orderby=receivedDateTime desc'
-        
         response = requests.get(graph_url, headers=headers)
         
+        # যদি সরাসরি অ্যাক্সেস টোকেন কাজ না করে এবং রিফ্রেশ টোকেন হ্যান্ডেল করতে হয়
         if response.status_code != 200:
             return jsonify({
                 "error": "Invalid or expired token", 
@@ -46,20 +46,18 @@ def get_otp():
         
         if not messages_data:
             return jsonify({
-                "email": "Connected",
                 "sender": "No Messages",
                 "subject": "Inbox is empty",
                 "otp": "------",
-                "full_message": "No recent messages found in this Outlook/Hotmail inbox."
+                "full_message": "No recent messages found in this inbox."
             })
             
-        # সবচেয়ে শেষের (লেটেস্ট) মেইলটি নেওয়া
         latest_msg = messages_data[0]
         sender = latest_msg.get('from', {}).get('emailAddress', {}).get('address', 'Unknown Sender')
         subject = latest_msg.get('subject', 'No Subject')
         body_content = latest_msg.get('body', {}).get('content', '')
         
-        # বডি থেকে ওটিপি বা কোড খুঁজে বের করার লজিক
+        # ওটিপি বা কোড খুঁজে বের করা (৪ থেকে ৬ ডিজিটের কোড)
         otp_match = re.search(r'\b\d{6}\b', body_content) or re.search(r'\b\d{4}\b', body_content)
         otp_code = otp_match.group(0) if otp_match else "N/A"
         
