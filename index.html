@@ -11,31 +11,31 @@
     
     <style>
         :root {
-            --bg-body: #f3f4f6;
+            --bg-body: #f4f1ea;
             --bg-card: #ffffff;
-            --bg-input: #f9fafb;
-            --bg-subcard: #f8fafc;
-            --tab-bg: #e2e8f0;
-            --text-main: #111827;
-            --text-muted: #64748b;
-            --border-color: #e5e7eb;
-            --teal-primary: #0d9488;
-            --teal-hover: #0f766e;
-            --teal-light: #e6f4f1;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --bg-input: #faf8f5;
+            --bg-subcard: #f9f6f0;
+            --tab-bg: #e6dfd3;
+            --text-main: #2c2421;
+            --text-muted: #7c726d;
+            --border-color: #dfd7cc;
+            --teal-primary: #8c533e;
+            --teal-hover: #734230;
+            --teal-light: #faece6;
+            --shadow: 0 4px 20px rgba(140, 83, 62, 0.08);
         }
 
         body.dark-mode {
-            --bg-body: #0f172a;
-            --bg-card: #1e293b;
-            --bg-input: #0f172a;
-            --bg-subcard: #0f172a;
-            --tab-bg: #0f172a;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
-            --teal-light: rgba(13, 148, 136, 0.15);
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --bg-body: #1a1614;
+            --bg-card: #26211e;
+            --bg-input: #1a1614;
+            --bg-subcard: #1a1614;
+            --tab-bg: #1a1614;
+            --text-main: #f5f2eb;
+            --text-muted: #a89f98;
+            --border-color: #3d3430;
+            --teal-light: rgba(140, 83, 62, 0.2);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
         * {
@@ -71,12 +71,12 @@
 
         @keyframes neonBoxGlow {
             0%, 100% {
-                border-color: rgba(13, 148, 136, 0.5);
-                box-shadow: 0 0 8px rgba(13, 148, 136, 0.2);
+                border-color: rgba(140, 83, 62, 0.5);
+                box-shadow: 0 0 8px rgba(140, 83, 62, 0.2);
             }
             50% {
-                border-color: rgba(10, 185, 129, 0.9);
-                box-shadow: 0 0 16px rgba(16, 185, 129, 0.4);
+                border-color: rgba(165, 106, 82, 0.9);
+                box-shadow: 0 0 16px rgba(165, 106, 82, 0.4);
             }
         }
 
@@ -99,7 +99,7 @@
         }
 
         .brand-logo {
-            background: linear-gradient(135deg, #10b981, #0d9488);
+            background: linear-gradient(135deg, #a56a52, #8c533e);
             color: white;
             width: 34px;
             height: 34px;
@@ -107,21 +107,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 6px rgba(13, 148, 136, 0.3);
+            box-shadow: 0 2px 6px rgba(140, 83, 62, 0.3);
         }
 
         .brand-name {
             font-size: 0.88rem;
             font-weight: 800;
             letter-spacing: -0.3px;
-            background: linear-gradient(135deg, #0d9488, #10b981);
+            background: linear-gradient(135deg, #8c533e, #a56a52);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
         }
 
         body.dark-mode .brand-name {
-            background: linear-gradient(135deg, #14b8a6, #34d399);
+            background: linear-gradient(135deg, #b87355, #d49379);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -286,15 +286,15 @@
         @keyframes pulseBorder {
             0% {
                 border-color: var(--teal-primary);
-                box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.4);
+                box-shadow: 0 0 0 0 rgba(140, 83, 62, 0.4);
             }
             70% {
-                border-color: #14b8a6;
-                box-shadow: 0 0 0 6px rgba(13, 148, 136, 0);
+                border-color: #a56a52;
+                box-shadow: 0 0 0 6px rgba(140, 83, 62, 0);
             }
             100% {
                 border-color: var(--teal-primary);
-                box-shadow: 0 0 0 0 rgba(13, 148, 136, 0);
+                box-shadow: 0 0 0 0 rgba(140, 83, 62, 0);
             }
         }
 
@@ -318,8 +318,8 @@
 
         #mailTokenInput:focus, #secret:focus {
             outline: none;
-            border-color: #0d9488;
-            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.25);
+            border-color: #734230;
+            box-shadow: 0 0 0 4px rgba(140, 83, 62, 0.25);
             animation: none;
         }
 
@@ -343,8 +343,8 @@
 
         #noteArea:focus {
             outline: none;
-            border-color: #0d9488;
-            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.25);
+            border-color: #734230;
+            box-shadow: 0 0 0 4px rgba(140, 83, 62, 0.25);
             animation: none;
         }
 
@@ -386,7 +386,7 @@
             color: var(--teal-primary);
         }
 
-        /* --- PREMIER INBOX CARD STYLING (Matching User Screenshot 5079.png) --- */
+        /* --- PREMIER INBOX CARD STYLING --- */
         .inbox-section-wrapper {
             margin-top: 16px;
             border-top: 1px solid var(--border-color);
@@ -441,7 +441,7 @@
             border-color: var(--teal-primary);
         }
 
-        /* Left Green Vertical Accent Bar */
+        /* Left Accent Bar */
         .email-card-box::before {
             content: '';
             position: absolute;
@@ -528,7 +528,7 @@
             overflow: hidden;
         }
 
-        /* Individual OTP Digit Boxes Grid (Screenshot Style) */
+        /* Individual OTP Digit Boxes Grid */
         .otp-digit-boxes-row {
             display: grid;
             grid-template-columns: repeat(6, 1fr) 1.2fr;
@@ -549,11 +549,11 @@
             font-weight: 800;
             color: var(--teal-primary);
             font-family: monospace;
-            box-shadow: 0 1px 3px rgba(13, 148, 136, 0.1);
+            box-shadow: 0 1px 3px rgba(140, 83, 62, 0.1);
         }
 
         body.dark-mode .otp-digit-box {
-            color: #2dd4bf;
+            color: #d49379;
             background-color: var(--bg-input);
         }
 
@@ -601,7 +601,7 @@
         .email-view-full-btn {
             background-color: var(--teal-light);
             color: var(--teal-primary);
-            border: 1px solid rgba(13, 148, 136, 0.3);
+            border: 1px solid rgba(140, 83, 62, 0.3);
             padding: 7px 12px;
             border-radius: 8px;
             font-size: 0.75rem;
@@ -709,7 +709,7 @@
             word-break: break-word;
         }
 
-        /* Fake Name 3-Item Inline Row Layout with Icons */
+        /* Fake Name Inline Row Layout */
         .fake-row-wrapper {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -794,7 +794,7 @@
             justify-content: center;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 3px 8px rgba(13, 148, 136, 0.25);
+            box-shadow: 0 3px 8px rgba(140, 83, 62, 0.25);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -823,7 +823,7 @@
             overflow: hidden;
             margin: 0 auto 10px auto;
             border: 3px solid var(--teal-primary);
-            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+            box-shadow: 0 4px 12px rgba(140, 83, 62, 0.25);
             background-color: var(--teal-light);
         }
 
@@ -866,7 +866,7 @@
             background: var(--teal-light);
             border: 2px solid var(--teal-primary);
             padding: 10px 12px;
-            box-shadow: 0 3px 10px rgba(13, 148, 136, 0.1);
+            box-shadow: 0 3px 10px rgba(140, 83, 62, 0.1);
             align-items: center;
         }
 
@@ -902,7 +902,7 @@
         }
 
         body.dark-mode .field-value.large-name-text {
-            color: #f8fafc;
+            color: #f5f2eb;
         }
 
         .copy-icon-btn {
@@ -965,7 +965,7 @@
             justify-content: center;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 3px 8px rgba(13, 148, 136, 0.25);
+            box-shadow: 0 3px 8px rgba(140, 83, 62, 0.25);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -1075,7 +1075,7 @@
             background-color: var(--teal-light);
         }
 
-        /* Professional Gallery Tab Styles & Neon Click Glow Effect */
+        /* Gallery Filter Styles */
         .gallery-filter-row {
             display: flex;
             gap: 6px;
@@ -1123,8 +1123,8 @@
         }
 
         .gallery-item.clicked {
-            border-color: #10b981 !important;
-            box-shadow: 0 0 16px rgba(16, 185, 129, 0.95), 0 0 6px rgba(13, 148, 136, 0.9);
+            border-color: #a56a52 !important;
+            box-shadow: 0 0 16px rgba(165, 106, 82, 0.95), 0 0 6px rgba(140, 83, 62, 0.9);
             transform: scale(0.96);
         }
 
@@ -1253,7 +1253,7 @@
             justify-content: center;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 3px 8px rgba(13, 148, 136, 0.25);
+            box-shadow: 0 3px 8px rgba(140, 83, 62, 0.25);
             transition: all 0.2s;
         }
 
@@ -1403,7 +1403,6 @@
             </div>
             
             <div class="mail-result-card" id="mailResultCard">
-                <!-- Extracted Email Copy Box -->
                 <div class="field-box name-highlight-box" style="margin-bottom: 10px;">
                     <div class="field-info" style="width: 100%; overflow: hidden;">
                         <span class="field-label" id="labelExtractedEmail">Extracted Email Address</span>
@@ -1412,14 +1411,12 @@
                     <button class="copy-sm-btn" onclick="copyMailText('resEmailAddress', this)">Copy</button>
                 </div>
 
-                <!-- OTP Card with Platform App Icon & Full Message Button -->
                 <div class="token-card" style="margin-top: 8px;">
                     <div class="token-header-row">
                         <div class="token-label" id="mailOtpLabel">OTP FROM: <span id="platformNameText" style="color: var(--teal-primary);">MICROSOFT</span></div>
                         <div id="mailTimerBadge" class="timer-badge">Just Now</div>
                     </div>
 
-                    <!-- App Icon on Left + OTP Display -->
                     <div class="otp-platform-display" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin: 12px 0; padding: 10px; background-color: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 12px;">
                         <div class="platform-icon-box" id="platformIconContainer" title="Sender Platform" style="width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background-color: var(--teal-light); flex-shrink: 0; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);">
                             <svg width="24" height="24" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>
@@ -1427,7 +1424,6 @@
                         <div class="otp-code-value" id="mailCodeDisplay" style="font-size: 1.85rem; font-weight: 800; letter-spacing: 3px; font-family: monospace; color: var(--teal-primary);">------</div>
                     </div>
 
-                    <!-- Copy OTP & View Full Message Buttons -->
                     <div class="mail-action-grid">
                         <button class="copy-btn" onclick="copyMailCodeText()">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
@@ -1439,7 +1435,6 @@
                         </button>
                     </div>
 
-                    <!-- INBOX ALL MESSAGES LIST SECTION (Matching Screenshot 5079.png Card UI) -->
                     <div class="inbox-section-wrapper">
                         <div class="inbox-top-badge-row">
                             <div class="inbox-badge-pill" id="inboxTitleBadge">
@@ -1448,9 +1443,7 @@
                             </div>
                             <div class="inbox-badge-count" id="inboxCountBadge">0</div>
                         </div>
-                        <div id="inboxListContainer">
-                            <!-- Dynamic preview message cards matching user screenshot will render here -->
-                        </div>
+                        <div id="inboxListContainer"></div>
                     </div>
 
                 </div>
@@ -1577,13 +1570,11 @@
             </button>
 
             <div class="result-card" id="fakeResultCard">
-                <!-- Premium AI Avatar Container -->
                 <div class="avatar-img-container" id="fakeAvatarContainer">
                     <img id="fakeAvatarImg" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80" alt="Avatar">
                 </div>
                 <div class="identity-title" id="resIdentityTitle">Your Randomly Generated Identity</div>
                 
-                <!-- Premium Large Name Box with Side Copy Icon Button -->
                 <div class="field-box name-highlight-box">
                     <div class="field-info">
                         <span class="field-label" id="resLabelName">Full Name</span>
@@ -1749,9 +1740,7 @@
                 </div>
                 <button class="modal-close-btn" onclick="closeFullMessageModal()">&times;</button>
             </div>
-            <div class="modal-body" id="modalFullBodyContent">
-                <!-- Dynamic full message content -->
-            </div>
+            <div class="modal-body" id="modalFullBodyContent"></div>
         </div>
     </div>
 
@@ -1759,7 +1748,6 @@
     let globalActiveFullMessage = "";
     let globalAllMessagesList = [];
 
-    // Switch Between Tabs
     function switchTab(tab) {
         const tabs = ['mail', '2fa', 'fake', 'photos', 'note'];
         tabs.forEach(t => {
@@ -1775,7 +1763,6 @@
         if(activeSec) activeSec.classList.add('active');
     }
 
-    // Platform Icon Helper
     function getPlatformBadge(senderOrText) {
         const lower = senderOrText.toLowerCase();
         if (lower.includes('facebook') || lower.includes('fb')) {
@@ -1791,7 +1778,6 @@
         }
     }
 
-    // Fetch Mail Code & All Inbox Messages from Backend API
     function fetchMailCode() {
         const tokenInput = document.getElementById('mailTokenInput').value.trim();
         const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
@@ -1823,7 +1809,6 @@
                 document.getElementById('mailCodeDisplay').innerText = "ERROR";
             } else {
                 globalActiveFullMessage = data.full_message || "";
-                // Handle both `messages_list` and fallback to single message if array is empty
                 globalAllMessagesList = data.messages_list || [];
                 if (globalAllMessagesList.length === 0 && data.otp) {
                     globalAllMessagesList.push({
@@ -1853,7 +1838,6 @@
         document.getElementById('mailCodeDisplay').innerText = otp;
     }
 
-    // Render Inbox List matching Screenshot 5079.png Card Layout exactly
     function renderInboxList(messages) {
         const container = document.getElementById('inboxListContainer');
         const countBadge = document.getElementById('inboxCountBadge');
@@ -1927,7 +1911,7 @@
         if (otp && otp !== "------") {
             navigator.clipboard.writeText(otp);
             const orig = btnElement.innerHTML;
-            btnElement.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+            btnElement.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#a56a52" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
             setTimeout(() => { btnElement.innerHTML = orig; }, 1500);
         }
     }
@@ -2017,7 +2001,6 @@
         }
     }
 
-    // Populate Photo Gallery
     document.addEventListener("DOMContentLoaded", () => {
         const galleryGrid = document.getElementById('galleryGrid');
         if (galleryGrid) {
@@ -2103,7 +2086,6 @@
         });
     }
 
-    // Dark Mode Toggle
     function toggleDarkMode() {
         document.body.classList.toggle('dark-mode');
         const isDark = document.body.classList.contains('dark-mode');
@@ -2119,7 +2101,6 @@
         }
     }
 
-    // Language Switcher
     function changeLanguage() {
         const langSelect = document.getElementById('langSelect');
         if (!langSelect) return;
@@ -2221,7 +2202,6 @@
         }
     }
 
-    // Live Active Users Counter
     setInterval(() => {
         const userEl = document.getElementById('active-users');
         if (userEl) {
@@ -2230,7 +2210,6 @@
         }
     }, 4000);
 
-    // 2FA 15s Countdown & Auto-Refresh Logic
     let totpInterval = null;
     let currentSecret = "";
 
@@ -2315,7 +2294,6 @@
         }
     }
 
-    // Notepad Logic
     const noteArea = document.getElementById('noteArea');
     const wordCount = document.getElementById('wordCount');
 
@@ -2384,7 +2362,6 @@
         document.body.removeChild(a);
     }
 
-    // Fake Identity Database & Generator with AI Avatars
     const nameDatabase = {
         american: { 
             male: ["James A. Smith", "Robert J. Johnson", "William D. Brown"], 
@@ -2441,7 +2418,7 @@
         "United States": [{ street: "1483 Better Street", city: "Overland Park", state: "Kansas (KS)", zip: "66210", phone: "+1 913-555-0148", lat: "38.9822", lng: "-94.6708" }],
         "United Kingdom": [{ street: "12 Baker Street", city: "London", state: "Greater London", zip: "W1U 3BW", phone: "+44 20 7946 0912", lat: "51.5223", lng: "-0.1578" }],
         "Canada": [{ street: "742 Evergreen Terrace", city: "Toronto", state: "Ontario", zip: "M4W 1A8", phone: "+1 416-555-0177", lat: "43.6532", lng: "-79.3832" }],
-        "Australia": [{ street: "15 Collins Street", city: "Melbourne", state: "Victoria", zip: "3000", phone: "+61 3 9555 0142", lat: "-37.8136", lng: "144.9631" }],
+        "Australia": [{: "15 Collins Street", city: "Melbourne", state: "Victoria", zip: "3000", phone: "+61 3 9555 0142", lat: "-37.8136", lng: "144.9631" }],
         "Germany": [{ street: "Hauptstraße 45", city: "Berlin", state: "Berlin", zip: "10117", phone: "+49 30 123456", lat: "52.5200", lng: "13.4050" }],
         "France": [{ street: "10 Rue de la Paix", city: "Paris", state: "Île-de-France", zip: "75002", phone: "+33 1 40 50 60 70", lat: "48.8688", lng: "2.3314" }],
         "Japan": [{ street: "2-11-1 Nagata-cho", city: "Tokyo", state: "Chiyoda-ku", zip: "100-0014", phone: "+81 3 5555 0123", lat: "35.6762", lng: "139.6503" }],
@@ -2481,7 +2458,7 @@
         
         if(btnElement.classList.contains('copy-icon-btn')) {
             const originalHTML = btnElement.innerHTML;
-            btnElement.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+            btnElement.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a56a52" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
             setTimeout(() => { btnElement.innerHTML = originalHTML; }, 1500);
         } else {
             const originalText = btnElement.innerText;
