@@ -11,30 +11,30 @@
     
     <style>
         :root {
-            --bg-body: #f4f1ea;
+            --bg-body: #f8fafc;
             --bg-card: #ffffff;
-            --bg-input: #faf8f5;
-            --bg-subcard: #f9f6f0;
-            --tab-bg: #e6dfd3;
-            --text-main: #2c2421;
-            --text-muted: #7c726d;
-            --border-color: #dfd7cc;
-            --teal-primary: #8c533e;
-            --teal-hover: #734230;
-            --teal-light: #faece6;
-            --shadow: 0 4px 20px rgba(140, 83, 62, 0.08);
+            --bg-input: #f1f5f9;
+            --bg-subcard: #f8fafc;
+            --tab-bg: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #cbd5e1;
+            --teal-primary: #0284c7;
+            --teal-hover: #0369a1;
+            --teal-light: #e0f2fe;
+            --shadow: 0 4px 20px rgba(2, 132, 199, 0.08);
         }
 
         body.dark-mode {
-            --bg-body: #1a1614;
-            --bg-card: #26211e;
-            --bg-input: #1a1614;
-            --bg-subcard: #1a1614;
-            --tab-bg: #1a1614;
-            --text-main: #f5f2eb;
-            --text-muted: #a89f98;
-            --border-color: #3d3430;
-            --teal-light: rgba(140, 83, 62, 0.2);
+            --bg-body: #090d16;
+            --bg-card: #111827;
+            --bg-input: #090d16;
+            --bg-subcard: #090d16;
+            --tab-bg: #090d16;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1f2937;
+            --teal-light: rgba(2, 132, 199, 0.15);
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
@@ -71,12 +71,12 @@
 
         @keyframes neonBoxGlow {
             0%, 100% {
-                border-color: rgba(140, 83, 62, 0.5);
-                box-shadow: 0 0 8px rgba(140, 83, 62, 0.2);
+                border-color: rgba(2, 132, 199, 0.5);
+                box-shadow: 0 0 8px rgba(2, 132, 199, 0.2);
             }
             50% {
-                border-color: rgba(165, 106, 82, 0.9);
-                box-shadow: 0 0 16px rgba(165, 106, 82, 0.4);
+                border-color: rgba(56, 189, 248, 0.9);
+                box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
             }
         }
 
@@ -99,7 +99,7 @@
         }
 
         .brand-logo {
-            background: linear-gradient(135deg, #a56a52, #8c533e);
+            background: linear-gradient(135deg, #0284c7, #38bdf8);
             color: white;
             width: 34px;
             height: 34px;
@@ -107,21 +107,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 6px rgba(140, 83, 62, 0.3);
+            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);
         }
 
         .brand-name {
             font-size: 0.88rem;
             font-weight: 800;
             letter-spacing: -0.3px;
-            background: linear-gradient(135deg, #8c533e, #a56a52);
+            background: linear-gradient(135deg, #0284c7, #38bdf8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
         }
 
         body.dark-mode .brand-name {
-            background: linear-gradient(135deg, #b87355, #d49379);
+            background: linear-gradient(135deg, #38bdf8, #7dd3fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -286,19 +286,18 @@
         @keyframes pulseBorder {
             0% {
                 border-color: var(--teal-primary);
-                box-shadow: 0 0 0 0 rgba(140, 83, 62, 0.4);
+                box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.4);
             }
             70% {
-                border-color: #a56a52;
-                box-shadow: 0 0 0 6px rgba(140, 83, 62, 0);
+                border-color: #38bdf8;
+                box-shadow: 0 0 0 6px rgba(2, 132, 199, 0);
             }
             100% {
                 border-color: var(--teal-primary);
-                box-shadow: 0 0 0 0 rgba(140, 83, 62, 0);
+                box-shadow: 0 0 0 0 rgba(2, 132, 199, 0);
             }
         }
 
-        /* Mail Code & 2FA Textareas */
         #mailTokenInput, #secret {
             width: 100%;
             height: 95px;
@@ -318,12 +317,11 @@
 
         #mailTokenInput:focus, #secret:focus {
             outline: none;
-            border-color: #734230;
-            box-shadow: 0 0 0 4px rgba(140, 83, 62, 0.25);
+            border-color: #0369a1;
+            box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.25);
             animation: none;
         }
 
-        /* Notepad Box */
         #noteArea {
             width: 100%;
             height: 250px;
@@ -343,12 +341,11 @@
 
         #noteArea:focus {
             outline: none;
-            border-color: #734230;
-            box-shadow: 0 0 0 4px rgba(140, 83, 62, 0.25);
+            border-color: #0369a1;
+            box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.25);
             animation: none;
         }
 
-        /* Mail Code Output Result Card & Platform Icon Row */
         .mail-result-card {
             margin-top: 1.2rem;
             background-color: var(--bg-subcard);
@@ -386,7 +383,7 @@
             color: var(--teal-primary);
         }
 
-        /* --- PREMIER INBOX CARD STYLING --- */
+        /* Inbox Section Wrapper */
         .inbox-section-wrapper {
             margin-top: 16px;
             border-top: 1px solid var(--border-color);
@@ -424,7 +421,6 @@
             font-weight: 800;
         }
 
-        /* Individual Premium Email Message Card */
         .email-card-box {
             background-color: var(--bg-card);
             border: 1.5px solid var(--border-color);
@@ -441,7 +437,6 @@
             border-color: var(--teal-primary);
         }
 
-        /* Left Accent Bar */
         .email-card-box::before {
             content: '';
             position: absolute;
@@ -528,7 +523,6 @@
             overflow: hidden;
         }
 
-        /* Individual OTP Digit Boxes Grid */
         .otp-digit-boxes-row {
             display: grid;
             grid-template-columns: repeat(6, 1fr) 1.2fr;
@@ -549,11 +543,11 @@
             font-weight: 800;
             color: var(--teal-primary);
             font-family: monospace;
-            box-shadow: 0 1px 3px rgba(140, 83, 62, 0.1);
+            box-shadow: 0 1px 3px rgba(2, 132, 199, 0.1);
         }
 
         body.dark-mode .otp-digit-box {
-            color: #d49379;
+            color: #38bdf8;
             background-color: var(--bg-input);
         }
 
@@ -601,7 +595,7 @@
         .email-view-full-btn {
             background-color: var(--teal-light);
             color: var(--teal-primary);
-            border: 1px solid rgba(140, 83, 62, 0.3);
+            border: 1px solid rgba(2, 132, 199, 0.3);
             padding: 7px 12px;
             border-radius: 8px;
             font-size: 0.75rem;
@@ -629,7 +623,6 @@
             font-weight: 600;
         }
 
-        /* Popup Modal Styles */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -709,7 +702,6 @@
             word-break: break-word;
         }
 
-        /* Fake Name Inline Row Layout */
         .fake-row-wrapper {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -794,7 +786,7 @@
             justify-content: center;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 3px 8px rgba(140, 83, 62, 0.25);
+            box-shadow: 0 3px 8px rgba(2, 132, 199, 0.25);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -823,7 +815,7 @@
             overflow: hidden;
             margin: 0 auto 10px auto;
             border: 3px solid var(--teal-primary);
-            box-shadow: 0 4px 12px rgba(140, 83, 62, 0.25);
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
             background-color: var(--teal-light);
         }
 
@@ -866,7 +858,7 @@
             background: var(--teal-light);
             border: 2px solid var(--teal-primary);
             padding: 10px 12px;
-            box-shadow: 0 3px 10px rgba(140, 83, 62, 0.1);
+            box-shadow: 0 3px 10px rgba(2, 132, 199, 0.1);
             align-items: center;
         }
 
@@ -902,7 +894,7 @@
         }
 
         body.dark-mode .field-value.large-name-text {
-            color: #f5f2eb;
+            color: #f8fafc;
         }
 
         .copy-icon-btn {
@@ -965,7 +957,7 @@
             justify-content: center;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 3px 8px rgba(140, 83, 62, 0.25);
+            box-shadow: 0 3px 8px rgba(2, 132, 199, 0.25);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -993,7 +985,6 @@
             color: #991b1b;
         }
 
-        /* 2FA Token Card */
         .token-card {
             background-color: var(--bg-subcard);
             border-radius: 12px;
@@ -1075,7 +1066,6 @@
             background-color: var(--teal-light);
         }
 
-        /* Gallery Filter Styles */
         .gallery-filter-row {
             display: flex;
             gap: 6px;
@@ -1123,8 +1113,8 @@
         }
 
         .gallery-item.clicked {
-            border-color: #a56a52 !important;
-            box-shadow: 0 0 16px rgba(165, 106, 82, 0.95), 0 0 6px rgba(140, 83, 62, 0.9);
+            border-color: #38bdf8 !important;
+            box-shadow: 0 0 16px rgba(56, 189, 248, 0.95), 0 0 6px rgba(2, 132, 199, 0.9);
             transform: scale(0.96);
         }
 
@@ -1178,7 +1168,6 @@
             color: white;
         }
 
-        /* Notepad Toolbar */
         .notepad-toolbar {
             display: flex;
             justify-content: space-between;
@@ -1253,7 +1242,7 @@
             justify-content: center;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 3px 8px rgba(140, 83, 62, 0.25);
+            box-shadow: 0 3px 8px rgba(2, 132, 199, 0.25);
             transition: all 0.2s;
         }
 
@@ -1911,7 +1900,7 @@
         if (otp && otp !== "------") {
             navigator.clipboard.writeText(otp);
             const orig = btnElement.innerHTML;
-            btnElement.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#a56a52" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+            btnElement.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
             setTimeout(() => { btnElement.innerHTML = orig; }, 1500);
         }
     }
@@ -2418,7 +2407,7 @@
         "United States": [{ street: "1483 Better Street", city: "Overland Park", state: "Kansas (KS)", zip: "66210", phone: "+1 913-555-0148", lat: "38.9822", lng: "-94.6708" }],
         "United Kingdom": [{ street: "12 Baker Street", city: "London", state: "Greater London", zip: "W1U 3BW", phone: "+44 20 7946 0912", lat: "51.5223", lng: "-0.1578" }],
         "Canada": [{ street: "742 Evergreen Terrace", city: "Toronto", state: "Ontario", zip: "M4W 1A8", phone: "+1 416-555-0177", lat: "43.6532", lng: "-79.3832" }],
-        "Australia": [{: "15 Collins Street", city: "Melbourne", state: "Victoria", zip: "3000", phone: "+61 3 9555 0142", lat: "-37.8136", lng: "144.9631" }],
+        "Australia": [{ street: "15 Collins Street", city: "Melbourne", state: "Victoria", zip: "3000", phone: "+61 3 9555 0142", lat: "-37.8136", lng: "144.9631" }],
         "Germany": [{ street: "Hauptstraße 45", city: "Berlin", state: "Berlin", zip: "10117", phone: "+49 30 123456", lat: "52.5200", lng: "13.4050" }],
         "France": [{ street: "10 Rue de la Paix", city: "Paris", state: "Île-de-France", zip: "75002", phone: "+33 1 40 50 60 70", lat: "48.8688", lng: "2.3314" }],
         "Japan": [{ street: "2-11-1 Nagata-cho", city: "Tokyo", state: "Chiyoda-ku", zip: "100-0014", phone: "+81 3 5555 0123", lat: "35.6762", lng: "139.6503" }],
@@ -2458,7 +2447,7 @@
         
         if(btnElement.classList.contains('copy-icon-btn')) {
             const originalHTML = btnElement.innerHTML;
-            btnElement.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a56a52" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+            btnElement.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
             setTimeout(() => { btnElement.innerHTML = originalHTML; }, 1500);
         } else {
             const originalText = btnElement.innerText;
