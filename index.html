@@ -358,42 +358,6 @@
             display: none;
         }
 
-        .otp-platform-display {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin: 12px 0;
-            padding: 10px;
-            background-color: var(--bg-card);
-            border: 1.5px solid var(--border-color);
-            border-radius: 12px;
-        }
-
-        .platform-icon-box {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--teal-light);
-            flex-shrink: 0;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-        }
-
-        .otp-code-value {
-            font-size: 1.85rem;
-            font-weight: 800;
-            letter-spacing: 3px;
-            font-family: monospace;
-            color: var(--teal-primary);
-        }
-
-        body.dark-mode .otp-code-value {
-            color: #2dd4bf;
-        }
-
         .mail-action-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -422,83 +386,248 @@
             color: var(--teal-primary);
         }
 
-        /* Inbox All Messages List Styles */
-        .inbox-list-section {
-            margin-top: 15px;
+        /* --- PREMIER INBOX CARD STYLING (Matching User Screenshot 5078.png) --- */
+        .inbox-section-wrapper {
+            margin-top: 16px;
             border-top: 1px solid var(--border-color);
-            padding-top: 12px;
+            padding-top: 14px;
             text-align: left;
         }
 
-        .inbox-header-title {
-            font-size: 0.82rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            text-transform: uppercase;
+        .inbox-top-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
         }
 
-        .inbox-item-card {
+        .inbox-badge-pill {
             background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 10px 12px;
-            margin-bottom: 8px;
+            border: 1.5px solid var(--border-color);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--text-main);
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+
+        .inbox-badge-count {
+            background-color: var(--tab-bg);
+            color: var(--text-main);
+            padding: 1px 6px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+
+        /* Individual Premium Email Message Card */
+        .email-card-box {
+            background-color: var(--bg-card);
+            border: 1.5px solid var(--border-color);
+            border-radius: 16px;
+            padding: 14px;
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
             transition: border-color 0.2s;
         }
 
-        .inbox-item-card:hover {
+        .email-card-box:hover {
             border-color: var(--teal-primary);
         }
 
-        .inbox-item-info {
-            font-size: 0.78rem;
-            overflow: hidden;
-            padding-right: 6px;
+        /* Left Green Vertical Accent Bar */
+        .email-card-box::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 12px;
+            bottom: 12px;
+            width: 4px;
+            background-color: var(--teal-primary);
+            border-radius: 0 4px 4px 0;
         }
 
-        .inbox-item-sender {
-            font-weight: 700;
+        .email-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-left: 6px;
+        }
+
+        .email-sender-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .email-app-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background-color: var(--teal-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+            border: 1px solid var(--border-color);
+        }
+
+        .email-sender-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .email-sender-name {
+            font-size: 0.95rem;
+            font-weight: 800;
             color: var(--text-main);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            letter-spacing: -0.2px;
         }
 
-        .inbox-item-subject {
+        .email-sender-mail {
+            font-size: 0.72rem;
             color: var(--text-muted);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-top: 2px;
+            font-weight: 500;
         }
 
-        .inbox-item-otp {
+        .email-time-tag {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .email-subject-highlight {
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            padding-left: 6px;
+            letter-spacing: -0.2px;
+        }
+
+        .email-body-preview {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            padding-left: 6px;
+            line-height: 1.45;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Individual OTP Digit Boxes Container (Screenshot Style) */
+        .otp-digit-boxes-row {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr) 1.2fr;
+            gap: 4px;
+            margin: 10px 0 12px 6px;
+            align-items: center;
+        }
+
+        .otp-digit-box {
+            background-color: var(--bg-card);
+            border: 1.5px solid var(--teal-primary);
+            border-radius: 8px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
             font-weight: 800;
             color: var(--teal-primary);
             font-family: monospace;
-            margin-top: 2px;
+            box-shadow: 0 1px 3px rgba(13, 148, 136, 0.1);
         }
 
-        .inbox-view-btn {
+        body.dark-mode .otp-digit-box {
+            color: #2dd4bf;
+            background-color: var(--bg-input);
+        }
+
+        .otp-box-copy-btn {
+            background-color: var(--bg-card);
+            border: 1.5px dashed var(--teal-primary);
+            border-radius: 8px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--teal-primary);
+            transition: all 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+
+        .otp-box-copy-btn:hover {
+            background-color: var(--teal-light);
+            border-style: solid;
+        }
+
+        .email-card-divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 12px 0 10px 6px;
+        }
+
+        .email-card-footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 6px;
+        }
+
+        .email-msg-num-tag {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .email-view-full-btn {
             background-color: var(--teal-light);
             color: var(--teal-primary);
-            border: none;
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 0.72rem;
+            border: 1px solid rgba(13, 148, 136, 0.3);
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
             font-weight: 700;
             cursor: pointer;
-            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
             transition: all 0.2s;
         }
 
-        .inbox-view-btn:hover {
+        .email-view-full-btn:hover {
             background-color: var(--teal-primary);
             color: white;
+        }
+
+        /* Empty state styling */
+        .inbox-empty-card {
+            background-color: var(--bg-card);
+            border: 1px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            font-weight: 600;
         }
 
         /* Popup Modal Styles */
@@ -689,7 +818,6 @@
             display: block;
         }
 
-        /* Premium AI Avatar Styling matching user screenshot */
         .avatar-img-container {
             width: 88px;
             height: 88px;
@@ -717,7 +845,6 @@
             font-weight: 700;
         }
 
-        /* Enhanced Highlighted Field Boxes with Side Copy Icon Button */
         .field-box {
             display: flex;
             justify-content: space-between;
@@ -780,7 +907,6 @@
             color: #f8fafc;
         }
 
-        /* Modern Square Icon Copy Button matching screenshot style */
         .copy-icon-btn {
             background: var(--bg-card);
             border: 1.5px solid var(--border-color);
@@ -821,7 +947,6 @@
             color: #fff;
         }
 
-        /* Button Rows */
         .btn-row {
             display: flex;
             gap: 8px;
@@ -1297,11 +1422,11 @@
                     </div>
 
                     <!-- App Icon on Left + OTP Display -->
-                    <div class="otp-platform-display">
-                        <div class="platform-icon-box" id="platformIconContainer" title="Sender Platform">
+                    <div class="otp-platform-display" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin: 12px 0; padding: 10px; background-color: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 12px;">
+                        <div class="platform-icon-box" id="platformIconContainer" title="Sender Platform" style="width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background-color: var(--teal-light); flex-shrink: 0; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);">
                             <svg width="24" height="24" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>
                         </div>
-                        <div class="otp-code-value" id="mailCodeDisplay">------</div>
+                        <div class="otp-code-value" id="mailCodeDisplay" style="font-size: 1.85rem; font-weight: 800; letter-spacing: 3px; font-family: monospace; color: var(--teal-primary);">------</div>
                     </div>
 
                     <!-- Copy OTP & View Full Message Buttons -->
@@ -1316,11 +1441,17 @@
                         </button>
                     </div>
 
-                    <!-- Inbox All Messages List Section -->
-                    <div class="inbox-list-section">
-                        <div class="inbox-header-title" id="inboxListTitle">Inbox Messages</div>
+                    <!-- INBOX ALL MESSAGES LIST SECTION (Updated to Screenshot 5078.png Card UI) -->
+                    <div class="inbox-section-wrapper">
+                        <div class="inbox-top-badge-row">
+                            <div class="inbox-badge-pill" id="inboxTitleBadge">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                <span id="inboxHeaderTitleText">INBOX</span>
+                            </div>
+                            <div class="inbox-badge-count" id="inboxCountBadge">0</div>
+                        </div>
                         <div id="inboxListContainer">
-                            <!-- Dynamic inbox items will render here -->
+                            <!-- Dynamic preview message cards matching user screenshot will render here -->
                         </div>
                     </div>
 
@@ -1650,15 +1781,15 @@
     function getPlatformBadge(senderOrText) {
         const lower = senderOrText.toLowerCase();
         if (lower.includes('facebook') || lower.includes('fb')) {
-            return { name: 'FACEBOOK', svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="#1877F2"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>` };
-        } else if (lower.includes('twitter') || lower.includes('x.com') || lower.includes('x')) {
-            return { name: 'TWITTER / X', svg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="#000000"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>` };
+            return { name: 'FACEBOOK', svg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="#1877F2"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>` };
         } else if (lower.includes('instagram')) {
-            return { name: 'INSTAGRAM', svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>` };
+            return { name: 'INSTAGRAM', svg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>` };
+        } else if (lower.includes('twitter') || lower.includes('x.com') || lower.includes('x')) {
+            return { name: 'TWITTER', svg: `<svg width="20" height="20" viewBox="0 0 24 24" fill="#000000"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>` };
         } else if (lower.includes('google') || lower.includes('gmail')) {
-            return { name: 'GOOGLE', svg: `<svg width="24" height="24" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.09C3.515 21.3 7.565 24 12.255 24z"/><path fill="#FBBC05" d="M5.525 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62h-3.98a11.86 11.86 0 000 10.76l3.98-3.09z"/><path fill="#EA4335" d="M12.255 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C18.205 1.19 15.495 0 12.255 0c-4.69 0-8.74 2.7-10.71 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>` };
+            return { name: 'GOOGLE', svg: `<svg width="22" height="22" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.09C3.515 21.3 7.565 24 12.255 24z"/><path fill="#FBBC05" d="M5.525 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62h-3.98a11.86 11.86 0 000 10.76l3.98-3.09z"/><path fill="#EA4335" d="M12.255 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C18.205 1.19 15.495 0 12.255 0c-4.69 0-8.74 2.7-10.71 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>` };
         } else {
-            return { name: 'MICROSOFT', svg: `<svg width="24" height="24" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>` };
+            return { name: 'MICROSOFT', svg: `<svg width="22" height="22" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>` };
         }
     }
 
@@ -1713,29 +1844,86 @@
         document.getElementById('mailCodeDisplay').innerText = otp;
     }
 
-    // Render All Inbox Messages List
+    // Render Inbox List matching Screenshot 5078.png Card Layout exactly
     function renderInboxList(messages) {
         const container = document.getElementById('inboxListContainer');
+        const countBadge = document.getElementById('inboxCountBadge');
         if (!container) return;
         container.innerHTML = "";
 
         if (!messages || messages.length === 0) {
-            container.innerHTML = "<p style='font-size:0.78rem; color:var(--text-muted); padding:6px;'>No other inbox messages found.</p>";
+            countBadge.innerText = "0";
+            container.innerHTML = `<div class="inbox-empty-card">No other inbox messages found.</div>`;
             return;
         }
 
+        countBadge.innerText = messages.length;
+
         messages.forEach((msg, idx) => {
+            const platform = getPlatformBadge(msg.sender + " " + msg.subject);
+            const otpString = (msg.otp && msg.otp !== "------") ? msg.otp : "------";
+            
+            // Generate individual digit boxes for OTP
+            let digitsHtml = '';
+            for (let i = 0; i < 6; i++) {
+                const char = otpString[i] || '-';
+                digitsHtml += `<div class="otp-digit-box">${char}</div>`;
+            }
+            // Add copy icon button in the 7th column matching screenshot
+            digitsHtml += `
+                <button class="otp-box-copy-btn" onclick="copySpecificOtp('${otpString}', this)" title="Copy OTP">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
+            `;
+
             container.innerHTML += `
-                <div class="inbox-item-card">
-                    <div class="inbox-item-info">
-                        <div class="inbox-item-sender">${msg.sender}</div>
-                        <div class="inbox-item-subject">${msg.subject}</div>
-                        <div class="inbox-item-otp">OTP: ${msg.otp}</div>
+                <div class="email-card-box">
+                    <div class="email-card-header">
+                        <div class="email-sender-profile">
+                            <div class="email-app-icon">${platform.svg}</div>
+                            <div class="email-sender-info">
+                                <span class="email-sender-name">${msg.sender}</span>
+                                <span class="email-sender-mail">${msg.email || 'no-reply@mail.com'}</span>
+                            </div>
+                        </div>
+                        <div class="email-time-tag">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            ${msg.time || '15 Nov 2026, 4:30 pm'}
+                        </div>
                     </div>
-                    <button class="inbox-view-btn" onclick="viewSpecificInboxMessage(${idx})">View</button>
+
+                    <div class="email-subject-highlight">${msg.subject}</div>
+                    <div class="email-body-preview">${cleanHtmlText(msg.full_message)}</div>
+
+                    <!-- OTP Digit Boxes Grid -->
+                    <div class="otp-digit-boxes-row">
+                        ${digitsHtml}
+                    </div>
+
+                    <div class="email-card-divider"></div>
+
+                    <div class="email-card-footer-row">
+                        <div class="email-msg-num-tag">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            Message #${idx + 1}
+                        </div>
+                        <button class="email-view-full-btn" onclick="viewSpecificInboxMessage(${idx})">
+                            View Full 
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        </button>
+                    </div>
                 </div>
             `;
         });
+    }
+
+    function copySpecificOtp(otp, btnElement) {
+        if (otp && otp !== "------") {
+            navigator.clipboard.writeText(otp);
+            const orig = btnElement.innerHTML;
+            btnElement.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+            setTimeout(() => { btnElement.innerHTML = orig; }, 1500);
+        }
     }
 
     // Clean HTML Entities & Tags helper function for professional email card view
@@ -1797,7 +1985,7 @@
     function clearMailTab() {
         document.getElementById('mailTokenInput').value = '';
         document.getElementById('mailResultCard').style.display = 'none';
-        document.getElementById('inboxListContainer').innerHTML = '';
+        document.getElementById('inboxListContainer').innerHTML = `<div class="inbox-empty-card">No other inbox messages found.</div>`;
         document.getElementById('mailTokenInput').focus();
     }
 
@@ -1824,15 +2012,6 @@
                 if (copyText) copyText.innerText = lang === 'bn' ? "ওটিপি কপি" : "Copy OTP";
             }, 1500);
         }
-    }
-
-    function hashCode(str) {
-        let hash = 0;
-        for (let i = 0; i < str.length; i++) {
-            hash = ((hash << 5) - hash) + str.charCodeAt(i);
-            hash |= 0;
-        }
-        return hash;
     }
 
     // Populate Photo Gallery
@@ -1959,7 +2138,6 @@
             setTxt('labelExtractedEmail', 'এক্সট্রাক্ট করা মেইল অ্যাড্রেস');
             setTxt('copyOtpText', 'ওটিপি কপি');
             setTxt('viewFullMsgText', 'ফুল মেসেজ');
-            setTxt('inboxListTitle', 'ইনবক্স মেসেজ সমূহ');
             setTxt('modalHeaderTitle', 'ইমেইল ভিউ');
             setTxt('title2fa', 'সিক্রেট কি');
             setTxt('desc2fa', 'সিক্রেট কি দিয়ে গেট কোড বাটনে ক্লিক করলে লাইভ 2FA কোড দেখতে পাবেন।');
@@ -2005,7 +2183,6 @@
             setTxt('labelExtractedEmail', 'Extracted Email Address');
             setTxt('copyOtpText', 'Copy OTP');
             setTxt('viewFullMsgText', 'Full Message');
-            setTxt('inboxListTitle', 'Inbox Messages');
             setTxt('modalHeaderTitle', 'Email View');
             setTxt('title2fa', 'Secret Key');
             setTxt('desc2fa', 'Enter your Base32 secret key and click Get Code to generate your 2FA token.');
@@ -2244,7 +2421,6 @@
         }
     };
 
-    // Unsplash professional AI portrait avatar pool for male and female
     const avatarPool = {
         male: [
             "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
@@ -2278,7 +2454,6 @@
         const names = (nameDatabase[nameSet] || nameDatabase['american'])[gender];
         const addr = (detailedAddressDatabase[country] || detailedAddressDatabase["United States"])[0];
         
-        // Pick random AI avatar based on gender
         const avatars = avatarPool[gender];
         const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
 
@@ -2293,7 +2468,6 @@
         document.getElementById('resLat').innerText = addr.lat;
         document.getElementById('resLng').innerText = addr.lng;
         
-        // Update avatar image
         document.getElementById('fakeAvatarImg').src = randomAvatar;
         document.getElementById('fakeResultCard').style.display = 'block';
     }
@@ -2302,7 +2476,6 @@
         const textToCopy = document.getElementById(elementId).innerText;
         navigator.clipboard.writeText(textToCopy);
         
-        // If it's the square copy icon button next to name
         if(btnElement.classList.contains('copy-icon-btn')) {
             const originalHTML = btnElement.innerHTML;
             btnElement.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
