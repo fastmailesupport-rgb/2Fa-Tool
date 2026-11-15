@@ -1872,13 +1872,13 @@
     }
 
     function getPlatformBadge(senderOrText) {
-        const lower = senderOrText.toLowerCase();
-        if (lower.includes('facebook') || lower.includes('fb')) {
+        const lower = (senderOrText || "").toLowerCase();
+        if (lower.includes('facebook') || lower.includes('fb') || lower.includes('notification@facebookmail.com')) {
             return { name: 'FACEBOOK', svg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="#1877F2"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>` };
         } else if (lower.includes('instagram')) {
             return { name: 'INSTAGRAM', svg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>` };
-        } else if (lower.includes('twitter') || lower.includes('x.com') || lower.includes('x')) {
-            return { name: 'TWITTER', svg: `<svg width="20" height="20" viewBox="0 0 24 24" fill="#000000"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>` };
+        } else if (lower.includes('twitter') || lower.includes('x.com') || lower.includes(' @x.com') || lower.includes('info@x.com') || lower.includes('x verification')) {
+            return { name: 'X / TWITTER', svg: `<svg width="20" height="20" viewBox="0 0 24 24" fill="#000000"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>` };
         } else if (lower.includes('google') || lower.includes('gmail')) {
             return { name: 'GOOGLE', svg: `<svg width="22" height="22" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.09C3.515 21.3 7.565 24 12.255 24z"/><path fill="#FBBC05" d="M5.525 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62h-3.98a11.86 11.86 0 000 10.76l3.98-3.09z"/><path fill="#EA4335" d="M12.255 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C18.205 1.19 15.495 0 12.255 0c-4.69 0-8.74 2.7-10.71 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>` };
         } else {
@@ -1918,6 +1918,8 @@
             } else {
                 globalActiveFullMessage = data.full_message || "";
                 globalAllMessagesList = data.messages_list || [];
+                
+                // যদি ব্যাকএন্ড থেকে মেসেজ লিস্ট না এসে শুধু একটি মাত্র লেটেস্ট ওটিপি আসে
                 if (globalAllMessagesList.length === 0 && data.otp) {
                     globalAllMessagesList.push({
                         sender: data.sender || "Microsoft",
@@ -1929,7 +1931,18 @@
                     });
                 }
 
-                updateMailUI(data.sender, data.subject, data.otp, globalActiveFullMessage);
+                // যদি ব্যাকএন্ডের লিস্টে প্রথম মেসেজটিতে এক্স/অন্যান্য প্ল্যাটফর্মের কোড বা সাবজেক্ট থাকে তবে তা টপ কার্ডে আপডেট হবে
+                let topSender = data.sender || "Microsoft";
+                let topSubject = data.subject || "Verification Code";
+                let topOtp = data.otp || "------";
+
+                if (globalAllMessagesList.length > 0) {
+                    topSender = globalAllMessagesList[0].sender || topSender;
+                    topSubject = globalAllMessagesList[0].subject || topSubject;
+                    topOtp = globalAllMessagesList[0].otp || topOtp;
+                }
+
+                updateMailUI(topSender, topSubject, topOtp, globalActiveFullMessage);
                 renderInboxList(globalAllMessagesList);
             }
         })
@@ -1961,7 +1974,7 @@
         countBadge.innerText = messages.length;
 
         messages.forEach((msg, idx) => {
-            const platform = getPlatformBadge(msg.sender + " " + msg.subject);
+            const platform = getPlatformBadge((msg.sender || "") + " " + (msg.subject || "") + " " + (msg.email || ""));
             const otpString = (msg.otp && msg.otp !== "------") ? msg.otp : "";
             
             let otpSectionHtml = '';
@@ -1985,18 +1998,18 @@
                         <div class="email-sender-profile">
                             <div class="email-app-icon">${platform.svg}</div>
                             <div class="email-sender-info">
-                                <span class="email-sender-name">${msg.sender}</span>
+                                <span class="email-sender-name">${msg.sender || 'System'}</span>
                                 <span class="email-sender-mail">${msg.email || 'no-reply@mail.com'}</span>
                             </div>
                         </div>
                         <div class="email-time-tag">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                            ${msg.time || '15 Nov 2026, 4:48 pm'}
+                            ${msg.time || 'Just Now'}
                         </div>
                     </div>
 
-                    <div class="email-subject-highlight">${msg.subject}</div>
-                    <div class="email-body-preview">${cleanHtmlText(msg.full_message)}</div>
+                    <div class="email-subject-highlight">${msg.subject || 'Verification Code'}</div>
+                    <div class="email-body-preview">${cleanHtmlText(msg.full_message || msg.subject)}</div>
 
                     ${otpSectionHtml}
 
@@ -2040,16 +2053,16 @@
         modalBody.innerHTML = `
             <div style="background:var(--bg-subcard); border:1px solid var(--border-color); border-radius:12px; padding:14px; margin-bottom:12px;">
                 <div style="font-size:0.72rem; text-transform:uppercase; color:var(--teal-primary); font-weight:700; margin-bottom:4px;">Sender</div>
-                <div style="font-weight:700; font-size:0.9rem; color:var(--text-main);">${msg.sender}</div>
+                <div style="font-weight:700; font-size:0.9rem; color:var(--text-main);">${msg.sender || ''}</div>
                 <div style="font-size:0.75rem; color:var(--text-muted);">${msg.email || ''}</div>
             </div>
             <div style="background:var(--bg-subcard); border:1px solid var(--border-color); border-radius:12px; padding:14px; margin-bottom:12px;">
                 <div style="font-size:0.72rem; text-transform:uppercase; color:var(--teal-primary); font-weight:700; margin-bottom:4px;">Subject</div>
-                <div style="font-weight:700; font-size:0.95rem; color:var(--text-main);">${msg.subject}</div>
+                <div style="font-weight:700; font-size:0.95rem; color:var(--text-main);">${msg.subject || ''}</div>
             </div>
             <div style="background:var(--bg-subcard); border:1px solid var(--border-color); border-radius:12px; padding:14px;">
                 <div style="font-size:0.72rem; text-transform:uppercase; color:var(--teal-primary); font-weight:700; margin-bottom:6px;">Message Body</div>
-                <div style="font-size:0.86rem; color:var(--text-main); line-height:1.6; white-space:pre-wrap;">${cleanHtmlText(msg.full_message)}</div>
+                <div style="font-size:0.86rem; color:var(--text-main); line-height:1.6; white-space:pre-wrap;">${cleanHtmlText(msg.full_message || '')}</div>
             </div>
         `;
         document.getElementById('fullMsgModal').style.display = 'flex';
