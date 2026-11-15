@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import requests
+import re
 
 app = Flask(__name__)
 CORS(app)  # ফন্টএন্ড থেকে রিকোয়েস্ট রিসিভ করার জন্য CORS এনাবল করা হলো
@@ -9,10 +10,20 @@ CORS(app)  # ফন্টএন্ড থেকে রিকোয়েস্�
 def get_otp():
     try:
         data = request.json
-        token = data.get('token')
+        raw_input = data.get('token', '').strip()
         
-        if not token:
+        if not raw_input:
             return jsonify({"error": "Token is missing"}), 400
+
+        # ইনপুট থেকে আসল Access Token খুঁজে বের করার লজিক (EyJ... দিয়ে শুরু টোকেন)
+        token_match = re.search(r'(Ew[a-zA-Z0-9_\-\.]+|eyJ[a-zA-Z0-9_\-\.]+)', raw_input)
+        
+        if token_match:
+            token = token_match.group(0)
+        else:
+            # যদি সরাসরি টোকেন দেয় অথবা পাইপ (|) বা কোলন (:) দিয়ে আলাদা করা থাকে
+            parts = re.split(r'[\|\:\s]+', raw_input)
+            token = parts[-1] if len(parts) > 0 else raw_input
 
         # মাইক্রোসফট গ্রাফ এপিআই (Microsoft Graph API) ব্যবহার করে ইনবক্সের মেসেজ ফেচ করা
         headers = {
@@ -48,8 +59,7 @@ def get_otp():
         subject = latest_msg.get('subject', 'No Subject')
         body_content = latest_msg.get('body', {}).get('content', '')
         
-        # বডি থেকে ওটিপি বা কোড খুঁজে বের করার জন্য সিম্পল লজিক (বা রেজেক্স)
-        import re
+        # বডি থেকে ওটিপি বা কোড খুঁজে বের করার লজিক
         otp_match = re.search(r'\b\d{6}\b', body_content) or re.search(r'\b\d{4}\b', body_content)
         otp_code = otp_match.group(0) if otp_match else "N/A"
         
