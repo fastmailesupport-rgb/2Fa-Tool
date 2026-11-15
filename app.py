@@ -48,7 +48,7 @@ def get_otp():
         if not access_token:
             access_token = raw_input
 
-        # মাইক্রোসফট গ্রাফ এপিআই থেকে লেটেস্ট মেসেজগুলো আনা
+        # মাইক্রোসফট গ্রাফ এপিআই থেকে ইনবক্সের সমস্ত সাম্প্রতিক মেসেজগুলো আনা
         headers = {
             'Authorization': f'Bearer {access_token}',
             'Content-Type': 'application/json'
@@ -71,51 +71,59 @@ def get_otp():
                 "sender": "No Messages",
                 "subject": "Inbox is empty",
                 "otp": "------",
-                "full_message": "No recent messages found in this inbox."
+                "full_message": "No recent messages found in this inbox.",
+                "messages_list": []
             })
             
-        # সবচেয়ে লেটেস্ট এবং রিয়েল সার্ভিস মেইলটি খুঁজে বের করা (যেমন Twitter/X)
-        target_msg = messages_data[0]
-        for msg in messages_data:
-            sender_name = msg.get('from', {}).get('emailAddress', {}).get('name', '').lower()
-            sender_email = msg.get('from', {}).get('emailAddress', {}).get('address', '').lower()
-            subject = msg.get('subject', '').lower()
+        formatted_messages = []
+        latest_otp = "------"
+        
+        # ইনবক্সের প্রতিটি মেইল প্রসেস করা
+        for idx, msg in enumerate(messages_data):
+            sender_email = msg.get('from', {}).get('emailAddress', {}).get('address', 'Unknown')
+            sender_name = msg.get('from', {}).get('emailAddress', {}).get('name', sender_email)
+            subject = msg.get('subject', 'No Subject')
+            received_time = msg.get('receivedDateTime', '')
+            body_content = msg.get('body', {}).get('content', '')
             
-            if any(k in sender_name or k in sender_email or k in subject for k in ['twitter', 'x', 'verification', 'code', 'otp', 'confirm', 'security', 'login']):
-                target_msg = msg
-                break
+            # HTML ট্যাগ রিমুভ করে ক্লিন টেক্সট তৈরি
+            clean_text = re.sub('<[^<]+?>', ' ', body_content)
+            
+            # প্রতিটি মেইল থেকে কোড খোঁজা
+            msg_otp = "N/A"
+            numbers = re.findall(r'\b[0-9]{4,8}\b', clean_text)
+            valid_nums = [n for n in numbers if not n.startswith('2026') and len(n) >= 4]
+            if valid_nums:
+                msg_otp = valid_nums[0]
+            
+            # যদি প্রথম বা সবচেয়ে লেটেস্ট মেইলে ওটিপি থাকে, সেটি মূল ওটিপি হিসেবে ধরা
+            if idx == 0 and msg_otp != "N/A":
+                latest_otp = msg_otp
+            elif latest_otp == "------" and msg_otp != "N/A":
+                latest_otp = msg_otp
 
-        sender = target_msg.get('from', {}).get('emailAddress', {}).get('address', 'Unknown Sender')
-        subject = target_msg.get('subject', 'No Subject')
-        body_content = target_msg.get('body', {}).get('content', '')
-        
-        # HTML ট্যাগ রিমুভ করে ক্লিন টেক্সট তৈরি
-        clean_text = re.sub('<[^<]+?>', ' ', body_content)
-        
-        otp_code = "N/A"
-        
-        # ১. প্রথমে সাবজেক্ট বা নির্দিষ্ট কীওয়ার্ডের (مثل code, is, pin) আশেপাশের ৪ থেকে ৮ ডিজিটের কোড খোঁজা
-        context_match = re.search(r'(?:code|pin|otp|verification|is)[:\s]+([0-9]{4,8})', clean_text, re.IGNORECASE)
-        if context_match:
-            otp_code = context_match.group(1)
-        else:
-            # ২. যদি সরাসরি বডিতে আলাদা কোনো ৪ থেকে ৮ ডিজিটের সংখ্যা থাকে (যেমন টুইটারের মূল ওটিপি)
-            # এটি এমনভাবে ফিল্টার করা হয়েছে যাতে কোনো স্টাইল বা বড় আইডি কোড না ধরে শুধু ওটিপি ধরে
-            all_numbers = re.findall(r'\b[0-9]{4,8}\b', clean_text)
-            if all_numbers:
-                # সাধারণ দীর্ঘ ট্র্যাকিং বা সিএসএস কোড (৬-৮ ডিজিটের বেশি বা অদ্ভুত সংখ্যা) বাদ দিয়ে সঠিক ওটিপি পিক করা
-                valid_otps = [num for num in all_numbers if len(num) in [4, 5, 6, 7, 8] and not num.startswith('2026') and not num.startswith('000')]
-                if valid_otps:
-                    otp_code = valid_otps[0] # সবচেয়ে প্রথম পাওয়া রিয়েল ওটিপি
-                else:
-                    otp_code = all_numbers[0]
+            formatted_messages.append({
+                "sender": sender_name,
+                "email": sender_email,
+                "subject": subject,
+                "time": received_time,
+                "otp": msg_otp,
+                "full_message": clean_text.strip()
+            })
+
+        # সবচেয়ে লেটেস্ট মেইলের তথ্য
+        primary_msg = messages_data[0]
+        primary_sender = primary_msg.get('from', {}).get('emailAddress', {}).get('address', 'Unknown Sender')
+        primary_subject = primary_msg.get('subject', 'No Subject')
+        primary_body = re.sub('<[^<]+?>', ' ', primary_msg.get('body', {}).get('content', ''))
 
         return jsonify({
             "email": extracted_email,
-            "sender": sender,
-            "subject": subject,
-            "otp": otp_code,
-            "full_message": clean_text.strip()
+            "sender": primary_sender,
+            "subject": primary_subject,
+            "otp": latest_otp,
+            "full_message": primary_body.strip(),
+            "messages_list": formatted_messages  # ইনবক্সের সব মেইলের তালিকা একসাথে
         })
 
     except Exception as e:
