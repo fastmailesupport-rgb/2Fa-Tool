@@ -74,39 +74,37 @@ def get_otp():
                 "full_message": "No recent messages found in this inbox."
             })
             
-        # --- অত্যন্ত শক্তিশালী রিয়েল ওটিপি ডিটেকশন লজিক ---
+        # --- সুনির্দিষ্ট ওটিপি মেইল ফিল্টারিং লজিক ---
         target_msg = messages_data[0]
         otp_code = "N/A"
         
-        # প্রথমে চেক করা যাক কোনো মেইলে Twitter/X বা Verification Code এর রিয়েল মেইল আছে কি না
+        # ১. প্রথমে এমন মেইল খোঁজা যাতে পরিষ্কারভাবে verification code বা is your লেখা আছে
+        found_otp_mail = False
         for msg in messages_data:
             subject = msg.get('subject', '')
-            sender_name = msg.get('from', {}).get('emailAddress', {}).get('name', '')
-            sender_email = msg.get('from', {}).get('emailAddress', {}).get('address', '')
             body_content = msg.get('body', {}).get('content', '')
             clean_text = re.sub('<[^<]+?>', ' ', body_content)
+            full_text = (subject + " " + clean_text).lower()
             
-            full_content = (subject + " " + sender_name + " " + sender_email + " " + clean_text).lower()
-            
-            # যদি টুইটার বা ভেরিফিকেশন কোডের মেইল হয়
-            if 'twitter' in full_content or 'x' in full_content or 'verification code' in full_content or 'is your' in full_content:
-                # কোড খোঁজার প্যাটার্ন (যেমন: 872261 is your...)
+            if 'verification code' in full_text or 'is your' in full_text or 'confirm' in full_text:
+                # মেইলের ভেতর থেকে ৪ থেকে ৮ ডিজিটের কোড বের করা
                 code_match = re.search(r'\b([0-9]{5,6})\b', clean_text)
                 if code_match:
                     target_msg = msg
                     otp_code = code_match.group(1)
+                    found_otp_mail = True
                     break
 
-        # যদি ওপরের শর্তে সরাসরি না মেলে, তবে লেটেস্ট মেইলগুলো থেকে সবচেয়ে নিখুঁত ৬ ডিজিটের কোডটি বের করা
-        if otp_code == "N/A":
+        # ২. যদি উপর্যুক্ত শর্তে মেইল না পাওয়া যায়, তবে লেটেস্ট মেসেজগুলো থেকে ৬ ডিজিটের ভ্যালিড কোড খোঁজা
+        if not found_otp_mail:
             for msg in messages_data:
                 body_content = msg.get('body', {}).get('content', '')
                 clean_text = re.sub('<[^<]+?>', ' ', body_content)
-                # ৬ ডিজিটের সংখ্যা খোঁজা (যেগুলো সাধারণত ওটিপি হয়)
-                digits_6 = re.findall(r'\b[0-9]{6}\b', clean_text)
-                if digits_6:
+                # ওয়েলকাম মেইল বা অন্য সাধারণ টেক্সট বাদ দিয়ে যেখানে কোড থাকার সম্ভাবনা বেশি
+                digits = re.findall(r'\b[0-9]{6}\b', clean_text)
+                if digits:
                     target_msg = msg
-                    otp_code = digits_6[0]
+                    otp_code = digits[0]
                     break
 
         sender = target_msg.get('from', {}).get('emailAddress', {}).get('address', 'Unknown Sender')
