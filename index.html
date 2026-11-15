@@ -3,282 +3,363 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090d19">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
 <title>Advanced Tools Hub</title>
-<script src="https://unpkg.com/otpauth/dist/otpauth.umd.min.js"></script>
+<script src="https://unpkg.com/otpauth@9.3.6/dist/otpauth.umd.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
 <style>
 :root {
-  --bg:#090d19;--panel:#111a2c;--card:#172238;
-  --text:#f1f5ff;--muted:#91a0ba;--line:#273650;
-  --accent:#7c6cff;--cyan:#20d5d2;
+ --orange:#f47721;--orange2:#ff9b50;--bg:#fff;
+ --surface:#fffaf6;--text:#292522;--muted:#91877f;
+ --line:#f0e7df;--shadow:0 5px 22px #75401a0d;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;min-height:100vh}
-button,input,textarea{font:inherit}
+body{font-family:Inter,Arial,sans-serif;background:#fff;color:var(--text);min-height:100vh}
+button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-.app{max-width:520px;margin:auto;min-height:100vh;padding-bottom:85px}
-header{padding:23px 19px 17px;display:flex;align-items:center;justify-content:space-between}
-.brand{display:flex;align-items:center;gap:11px}
-.logo{width:43px;height:43px;border-radius:14px;background:linear-gradient(135deg,#7966ff,#20d5d2);display:grid;place-items:center;font-size:23px}
-.brand h1{font-size:17px;font-weight:850}
-.brand p{font-size:10px;color:var(--muted);margin-top:4px;letter-spacing:1.4px}
-.iconbtn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:12px;padding:11px}
-.hero{margin:0 16px 20px;padding:22px;border:1px solid #5144a2;border-radius:22px;background:linear-gradient(130deg,#282057,#152d46 75%,#123e49);position:relative;overflow:hidden}
-.hero:after{content:"✦";position:absolute;right:18px;top:12px;font-size:70px;color:#ffffff15}
-.hero small{color:#b9b3ff;letter-spacing:2px;font-size:10px}
-.hero h2{font-size:25px;margin:12px 0 7px}
-.hero p{color:#c3c9df;font-size:12px;line-height:1.6}
-.status{display:inline-flex;align-items:center;gap:7px;margin-top:15px;font-size:11px;color:#a7f4dd}
-.dot{width:7px;height:7px;border-radius:50%;background:#35e6a3}
-.section{padding:0 17px}
-.section-title{font-size:14px;font-weight:800;margin:18px 0 12px}
-.tools{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
-.tool{border:1px solid var(--line);background:var(--panel);border-radius:17px;padding:16px 13px;text-align:left;color:var(--text);transition:.2s}
-.tool:active{transform:scale(.97)}
-.tool.active{border-color:var(--accent);background:#211d43}
-.tool-icon{width:39px;height:39px;border-radius:12px;display:grid;place-items:center;font-size:21px;background:#7667ff24;margin-bottom:13px}
-.tool strong{display:block;font-size:13px}
-.tool span:last-child{display:block;font-size:10px;color:var(--muted);margin-top:5px}
-.panel{display:none;background:var(--panel);border:1px solid var(--line);border-radius:19px;padding:18px;margin-top:15px}
-.panel.active{display:block;animation:show .25s ease}
-@keyframes show{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.panel h3{font-size:17px;margin-bottom:7px}
-.desc{font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:17px}
-.field{width:100%;padding:13px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--text);outline:none;margin-bottom:11px;font-size:13px}
-.field:focus{border-color:var(--accent)}
-textarea.field{resize:vertical;min-height:115px}
-.btn{border:0;border-radius:12px;padding:13px 15px;background:linear-gradient(100deg,#7965ff,#397de9);color:white;font-weight:750;font-size:12px;width:100%;margin-bottom:9px}
-.btn.secondary{background:var(--card);border:1px solid var(--line);color:var(--text)}
-.btnrow{display:flex;gap:9px}
+.app{width:100%;max-width:650px;margin:auto;padding:18px 15px 45px}
+header{height:55px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:42px;height:42px;background:linear-gradient(145deg,#ff9b50,#ed6413);border-radius:13px;display:grid;place-items:center;color:white;box-shadow:0 5px 12px #f4772140}
+.brand h1{font-size:16px;font-weight:850;letter-spacing:.3px}
+.brand p{font-size:9px;color:var(--muted);letter-spacing:1.5px;margin-top:4px}
+.settings{width:40px;height:40px;border:1px solid var(--line);background:#fff;border-radius:12px;color:var(--orange);display:grid;place-items:center}
+.settings:active,.tool:active{transform:scale(.95)}
+.tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:8px 0 22px}
+.tool{min-width:0;border:1px solid var(--line);background:#fff;border-radius:15px;padding:12px 3px 11px;display:flex;align-items:center;flex-direction:column;gap:8px;box-shadow:var(--shadow);transition:.2s}
+.tool.active{border-color:#f6a36b;background:#fff6ef;box-shadow:0 4px 15px #f4772117}
+.tool-icon{width:39px;height:39px;border-radius:13px;background:linear-gradient(145deg,#fff0e4,#ffe0c8);display:grid;place-items:center;color:#e96c1b;box-shadow:inset 0 2px 4px #fff,0 3px 7px #b65b2014}
+.tool-icon svg{width:21px;height:21px;stroke-width:2}
+.tool span{font-size:10px;font-weight:750;text-align:center;line-height:1.3}
+.panel{display:none;border:1px solid var(--line);border-radius:19px;padding:18px;background:white;box-shadow:var(--shadow);animation:appear .25s ease}
+.panel.active{display:block}
+@keyframes appear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.panel-head{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.panel-head .mini{width:38px;height:38px;border-radius:12px;background:#fff0e5;color:var(--orange);display:grid;place-items:center}
+.panel-head h2{font-size:17px}
+.desc{font-size:12px;color:var(--muted);line-height:1.6;margin:8px 0 17px}
+.field{width:100%;padding:13px 14px;border:1px solid var(--line);background:#fffdfa;color:var(--text);border-radius:11px;outline:none;font-size:13px;margin-bottom:11px}
+.field:focus{border-color:var(--orange);box-shadow:0 0 0 3px #f4772112}
+select.field{appearance:auto}
+textarea.field{min-height:190px;resize:vertical;line-height:1.6}
+.btn{border:0;background:linear-gradient(110deg,#ff923f,#ed6817);color:white;border-radius:11px;padding:13px 16px;font-weight:750;font-size:12px;box-shadow:0 4px 10px #f4772125}
+.btn:active{transform:scale(.98)}
+.btn.full{width:100%}
+.btn.light{background:#fff4eb;color:#df681d;border:1px solid #ffdfc6;box-shadow:none}
+.btnrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
 .btnrow .btn{flex:1}
-.result{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:17px;margin-top:12px;overflow-wrap:anywhere}
-.otp{font-size:33px;letter-spacing:7px;text-align:center;font-weight:850;color:var(--cyan);padding:14px}
-.muted{text-align:center;font-size:11px;color:var(--muted)}
-.progress{height:5px;background:var(--line);border-radius:9px;margin-top:12px;overflow:hidden}
-.progress div{height:100%;width:100%;background:linear-gradient(90deg,#7965ff,#20d5d2);transition:width 1s}
-.identity{display:grid;gap:10px}
-.identity div{background:var(--bg);padding:12px;border-radius:10px;border:1px solid var(--line);font-size:12px}
-.identity b{color:var(--muted);display:block;font-size:10px;margin-bottom:5px}
-.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px}
-.gallery img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px;border:1px solid var(--line)}
-.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:#10182aee;backdrop-filter:blur(15px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:12px 5px calc(12px + env(safe-area-inset-bottom));z-index:5}
-.bottom button{border:0;background:none;color:var(--muted);font-size:10px;display:grid;gap:4px;justify-items:center}
-.bottom button span{font-size:19px}
-.bottom button.active{color:#a99dff}
-footer{text-align:center;padding:23px 10px;color:var(--muted);font-size:10px}
-body.light{--bg:#f2f4fb;--panel:#fff;--card:#edf0fa;--text:#17213b;--muted:#69758d;--line:#dce2ef}
-body.light .bottom{background:#ffffffed}
-@media(min-width:600px){.app{margin:20px auto;border:1px solid var(--line);border-radius:25px;overflow:hidden;min-height:calc(100vh - 40px)}}
+.result{margin-top:14px;border:1px solid var(--line);background:#fffaf6;border-radius:13px;padding:15px}
+.otp{font-size:34px;font-weight:850;letter-spacing:8px;color:var(--orange);text-align:center;padding:10px}
+.muted{text-align:center;color:var(--muted);font-size:11px}
+.progress{height:5px;border-radius:10px;background:#f3e8df;overflow:hidden;margin-top:12px}
+.progress div{height:100%;width:100%;background:var(--orange);transition:width .5s}
+.gender{display:flex;gap:9px;margin-bottom:12px}
+.gender label{flex:1;border:1px solid var(--line);padding:12px;border-radius:11px;text-align:center;font-size:12px;font-weight:700;cursor:pointer}
+.gender input{accent-color:var(--orange)}
+.identity{display:grid;gap:9px;margin-top:13px}
+.identity-item{border:1px solid var(--line);background:#fffaf6;border-radius:11px;padding:12px;font-size:12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.identity-item small{display:block;color:var(--muted);font-size:10px;margin-bottom:5px}
+.copy{border:0;background:#fff0e5;color:#e96c1b;border-radius:8px;padding:8px;display:grid;place-items:center}
+.gallery-tabs{display:flex;gap:8px;margin-bottom:13px}
+.gallery-tabs button{flex:1;padding:10px 5px;border-radius:10px;border:1px solid var(--line);background:white;color:var(--muted);font-size:11px;font-weight:700}
+.gallery-tabs button.active{background:#fff1e6;border-color:#f5b27f;color:#e66c20}
+.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.photo{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:white}
+.photo img{width:100%;height:175px;object-fit:cover;display:block;background:#f8eee7}
+.photo-info{padding:9px}
+.photo-info p{font-size:11px;font-weight:700;margin-bottom:8px}
+.photo-info button{width:100%;padding:9px;border:0;border-radius:8px;background:#fff0e5;color:#e66c20;font-size:11px;font-weight:750}
+.status{font-size:10px;color:#26946b;margin-top:8px}
+.note-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.note-tools button{flex:1;min-width:65px}
+.settings-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);font-size:12px}
+footer{text-align:center;padding:25px 0 5px;color:#b2a49a;font-size:10px}
+@media(max-width:360px){
+ .app{padding-left:10px;padding-right:10px}
+ .tools{gap:5px}
+ .tool{padding:10px 1px}
+ .tool span{font-size:9px}
+ .tool-icon{width:35px;height:35px}
+ .photo img{height:145px}
+}
 </style>
 </head>
 <body>
 <div class="app">
 <header>
  <div class="brand">
-  <div class="logo">⚡</div>
-  <div><h1>TOOLS HUB</h1><p>ADVANCED WORKSPACE</p></div>
+  <div class="logo"><i data-lucide="zap"></i></div>
+  <div>
+   <h1>ADVANCED TOOLS</h1>
+   <p>SMART TOOLS WORKSPACE</p>
+  </div>
  </div>
- <button class="iconbtn" onclick="toggleTheme()">◐</button>
+ <button class="settings" onclick="openTool('settings')" aria-label="Settings">
+  <i data-lucide="settings"></i>
+ </button>
 </header>
 
-<div class="hero">
- <small>WELCOME TO YOUR WORKSPACE</small>
- <h2>Everything in<br>One Place.</h2>
- <p>Your smart digital workspace with powerful tools and a beautiful experience.</p>
- <div class="status"><i class="dot"></i> All local tools ready</div>
-</div>
-
-<main class="section">
- <div class="section-title">Explore Tools</div>
- <div class="tools">
-  <button class="tool active" onclick="openTool('twofa',this)">
-   <div class="tool-icon">🔐</div><strong>2FA Generator</strong><span>Authenticator codes</span>
-  </button>
-  <button class="tool" onclick="openTool('identity',this)">
-   <div class="tool-icon">👤</div><strong>Identity Studio</strong><span>Demo identities</span>
-  </button>
-  <button class="tool" onclick="openTool('image',this)">
-   <div class="tool-icon">🖼️</div><strong>Image Studio</strong><span>Upload & preview</span>
-  </button>
-  <button class="tool" onclick="openTool('notes',this)">
-   <div class="tool-icon">📝</div><strong>Smart Notepad</strong><span>Automatic saving</span>
-  </button>
-  <button class="tool" onclick="openTool('settings',this)">
-   <div class="tool-icon">⚙️</div><strong>Settings</strong><span>Customize workspace</span>
-  </button>
- </div>
-
- <section class="panel active" id="twofa">
-  <h3>🔐 2FA Authenticator</h3>
-  <p class="desc">Enter your own authenticator secret to generate a time-based code.</p>
-  <input id="secret" class="field" placeholder="Enter Base32 secret key" autocomplete="off">
-  <button class="btn" onclick="generate2FA()">Generate Code</button>
-  <div class="result">
-   <div class="otp" id="otp">------</div>
-   <div class="muted" id="timer">Waiting for secret</div>
-   <div class="progress"><div id="bar"></div></div>
-   <button class="btn secondary" style="margin-top:14px" onclick="copyOTP()">Copy Code</button>
-  </div>
-  <p class="desc" style="margin-top:12px">Keep your secret private. Codes are generated locally in your browser.</p>
- </section>
-
- <section class="panel" id="identity">
-  <h3>👤 Identity Studio</h3>
-  <p class="desc">Generate fictional demo information for testing and design purposes.</p>
-  <button class="btn" onclick="makeIdentity()">Generate Demo Identity</button>
-  <div class="identity" id="identityResult">
-   <div class="muted">Your demo identity will appear here.</div>
-  </div>
- </section>
-
- <section class="panel" id="image">
-  <h3>🖼️ Image Studio</h3>
-  <p class="desc">Select images from your device to preview them.</p>
-  <input class="field" type="file" id="imageInput" accept="image/*" multiple onchange="previewImages(event)">
-  <div class="gallery" id="gallery"></div>
-  <button class="btn secondary" onclick="clearImages()">Clear Gallery</button>
- </section>
-
- <section class="panel" id="notes">
-  <h3>📝 Smart Notepad</h3>
-  <p class="desc">Your notes are automatically saved in this browser.</p>
-  <textarea class="field" id="noteArea" placeholder="Start writing your notes..."></textarea>
-  <div class="muted" id="noteStatus">Auto-save enabled</div>
-  <div class="btnrow" style="margin-top:13px">
-   <button class="btn" onclick="downloadNote()">Download TXT</button>
-   <button class="btn secondary" onclick="clearNote()">Clear</button>
-  </div>
- </section>
-
- <section class="panel" id="settings">
-  <h3>⚙️ Settings</h3>
-  <p class="desc">Personalize your workspace.</p>
-  <button class="btn" onclick="toggleTheme()">Switch Light / Dark Theme</button>
-  <button class="btn secondary" onclick="resetSettings()">Reset Theme</button>
-  <div class="result"><p class="muted">Advanced Tools Hub · Version 1.0</p></div>
- </section>
-</main>
-<footer>POWERED BY ADVANCED TOOLS HUB<br><br>Made for your productivity ✦</footer>
-</div>
-
-<nav class="bottom">
- <button class="active" onclick="goHome()"><span>⌂</span>Home</button>
- <button onclick="openTool('twofa')"><span>🔐</span>2FA</button>
- <button onclick="openTool('image')"><span>▧</span>Images</button>
- <button onclick="openTool('notes')"><span>▤</span>Notes</button>
+<nav class="tools" aria-label="Tools">
+ <button class="tool active" onclick="openTool('twofa',this)">
+  <div class="tool-icon"><i data-lucide="shield-check"></i></div>
+  <span>2FA Generator</span>
+ </button>
+ <button class="tool" onclick="openTool('identity',this)">
+  <div class="tool-icon"><i data-lucide="user-round"></i></div>
+  <span>Fake Name</span>
+ </button>
+ <button class="tool" onclick="openTool('gallery',this)">
+  <div class="tool-icon"><i data-lucide="images"></i></div>
+  <span>Photo Gallery</span>
+ </button>
+ <button class="tool" onclick="openTool('notes',this)">
+  <div class="tool-icon"><i data-lucide="notebook-pen"></i></div>
+  <span>Notepad</span>
+ </button>
 </nav>
 
+<section class="panel active" id="twofa">
+ <div class="panel-head"><div class="mini"><i data-lucide="shield-check"></i></div><h2>2FA Authenticator</h2></div>
+ <p class="desc">Generate secure time-based verification codes using your own authenticator secret.</p>
+ <input id="secret" class="field" placeholder="Enter Base32 Secret Key" autocomplete="off">
+ <button class="btn full" onclick="generate2FA()">Generate Code</button>
+ <div class="result">
+  <div class="otp" id="otp">------</div>
+  <div class="muted" id="timer">Waiting for secret key</div>
+  <div class="progress"><div id="bar"></div></div>
+  <button class="btn light full" style="margin-top:14px" onclick="copyText(document.getElementById('otp').textContent)"> <i data-lucide="copy" style="width:14px;vertical-align:middle"></i> Copy Code</button>
+ </div>
+ <p class="desc">Your secret stays in your browser. Never share it with anyone.</p>
+</section>
+
+<section class="panel" id="identity">
+ <div class="panel-head"><div class="mini"><i data-lucide="user-round"></i></div><h2>Fake Name Generator</h2></div>
+ <p class="desc">Generate fictional identity details for testing and demo purposes.</p>
+ <label class="desc">Select Gender</label>
+ <div class="gender">
+  <label><input type="radio" name="gender" value="male" checked> <i data-lucide="user" style="width:15px;vertical-align:middle"></i> Male</label>
+  <label><input type="radio" name="gender" value="female"> <i data-lucide="user-round" style="width:15px;vertical-align:middle"></i> Female</label>
+ </div>
+ <label class="desc">Select Country</label>
+ <select class="field" id="country">
+  <option value="USA">United States</option>
+  <option value="UK">United Kingdom</option>
+  <option value="Canada">Canada</option>
+  <option value="Australia">Australia</option>
+  <option value="Bangladesh">Bangladesh</option>
+  <option value="India">India</option>
+  <option value="Germany">Germany</option>
+  <option value="France">France</option>
+ </select>
+ <button class="btn full" onclick="makeIdentity()">Generate Fake Name</button>
+ <div id="identityResult" class="identity">
+  <p class="muted">Select gender and country, then generate.</p>
+ </div>
+</section>
+
+<section class="panel" id="gallery">
+ <div class="panel-head"><div class="mini"><i data-lucide="images"></i></div><h2>Photo Gallery</h2></div>
+ <p class="desc">Browse sample stock portraits and download images for lawful demo and design use.</p>
+ <div class="gallery-tabs">
+  <button class="active" onclick="showGallery('male',this)">USA Male</button>
+  <button onclick="showGallery('female',this)">USA Female</button>
+ </div>
+ <div class="gallery" id="photos"></div>
+ <p class="status">Stock photo samples. Internet connection is required to load images.</p>
+</section>
+
+<section class="panel" id="notes">
+ <div class="panel-head"><div class="mini"><i data-lucide="notebook-pen"></i></div><h2>Smart Notepad</h2></div>
+ <p class="desc">Write your notes. They are automatically saved in this browser.</p>
+ <input id="noteTitle" class="field" placeholder="Note title">
+ <textarea id="noteArea" class="field" placeholder="Start writing your notes..."></textarea>
+ <div class="muted" id="noteStatus">Auto-save enabled</div>
+ <div class="note-tools">
+  <button class="btn" onclick="downloadNote('txt')">TXT</button>
+  <button class="btn" onclick="downloadNote('html')">HTML</button>
+  <button class="btn" onclick="downloadNote('pdf')">PDF</button>
+ </div>
+ <button class="btn light full" style="margin-top:10px" onclick="clearNote()">Clear Notes</button>
+</section>
+
+<section class="panel" id="settings">
+ <div class="panel-head"><div class="mini"><i data-lucide="settings"></i></div><h2>Settings</h2></div>
+ <p class="desc">Workspace information and preferences.</p>
+ <div class="settings-row"><span>Appearance</span><strong>Official Light Mode</strong></div>
+ <div class="settings-row"><span>Theme Color</span><strong style="color:#ed741e">Orange</strong></div>
+ <div class="settings-row"><span>Version</span><strong>2.0</strong></div>
+ <button class="btn light full" style="margin-top:16px" onclick="openTool('twofa')">Back to Tools</button>
+</section>
+
+<footer>ADVANCED TOOLS HUB · ALL RIGHTS RESERVED</footer>
+</div>
+
 <script>
-let totp = null;
-let tick = null;
-let imageUrls = [];
+if(window.lucide) lucide.createIcons();
+
+const $=id=>document.getElementById(id);
+let totp=null,totpTimer=null,saveTimer=null;
 
 function openTool(id,button){
  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
- document.getElementById(id).classList.add('active');
+ $(id).classList.add('active');
  document.querySelectorAll('.tool').forEach(t=>t.classList.remove('active'));
- if(button && button.classList.contains('tool')) button.classList.add('active');
- document.querySelectorAll('.bottom button').forEach(b=>b.classList.remove('active'));
+ if(button)button.classList.add('active');
  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function goHome(){
- document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
- document.querySelectorAll('.tool').forEach(t=>t.classList.remove('active'));
- document.querySelectorAll('.bottom button').forEach(b=>b.classList.remove('active'));
- document.querySelector('.bottom button').classList.add('active');
-}
-
-function toggleTheme(){
- document.body.classList.toggle('light');
- localStorage.setItem('hubTheme',document.body.classList.contains('light')?'light':'dark');
-}
-if(localStorage.getItem('hubTheme')==='light') document.body.classList.add('light');
-
 function generate2FA(){
  try{
-  const secret=document.getElementById('secret').value.replace(/\s/g,'').toUpperCase();
-  if(!secret) return alert('Please enter a secret key.');
-  totp=new OTPAuth.TOTP({secret:OTPAuth.Secret.fromBase32(secret),digits:6,period:30,algorithm:'SHA1'});
+  const key=$('secret').value.replace(/\s/g,'').toUpperCase();
+  if(!key) return alert('Enter your Base32 secret key.');
+  const secret=OTPAuth.Secret.fromBase32(key);
+  totp=new OTPAuth.TOTP({secret,digits:6,period:30,algorithm:'SHA1'});
+  if(totpTimer)clearInterval(totpTimer);
   updateOTP();
-  if(tick) clearInterval(tick);
-  tick=setInterval(updateOTP,1000);
- }catch(e){alert('Invalid Base32 secret. Please check your key.');}
+  totpTimer=setInterval(updateOTP,1000);
+ }catch(e){alert('Invalid secret key. Please check the Base32 value.');}
 }
-
 function updateOTP(){
  if(!totp)return;
  const now=Math.floor(Date.now()/1000);
- const remaining=30-(now%30);
- document.getElementById('otp').textContent=totp.generate();
- document.getElementById('timer').textContent='New code in '+remaining+' seconds';
- document.getElementById('bar').style.width=(remaining/30*100)+'%';
+ const left=30-now%30;
+ $('otp').textContent=totp.generate();
+ $('timer').textContent='New code in '+left+' seconds';
+ $('bar').style.width=(left/30*100)+'%';
+}
+async function copyText(value){
+ if(!value||value==='------')return alert('Nothing to copy.');
+ try{
+  await navigator.clipboard.writeText(value);
+  alert('Copied successfully!');
+ }catch(e){alert('Clipboard unavailable. Please copy manually.');}
 }
 
-async function copyOTP(){
- const code=document.getElementById('otp').textContent;
- if(!/^\d{6}$/.test(code))return alert('Generate a code first.');
- try{await navigator.clipboard.writeText(code);alert('Code copied!');}
- catch(e){alert('Clipboard permission unavailable.');}
-}
+const names={
+ USA:{male:['James','William','Oliver','Henry','Lucas','Benjamin','Elijah','Mason'],female:['Olivia','Emma','Charlotte','Amelia','Sophia','Mia','Ava','Isabella'],last:['Smith','Johnson','Brown','Davis','Wilson','Miller','Taylor','Anderson']},
+ UK:{male:['Oliver','George','Harry','Arthur','Jack','Leo'],female:['Olivia','Amelia','Isla','Ava','Emily','Grace'],last:['Smith','Jones','Taylor','Brown','Wilson']},
+ Canada:{male:['Liam','Noah','Theodore','Lucas','Jack','Benjamin'],female:['Olivia','Charlotte','Emma','Amelia','Sophia','Chloe'],last:['Smith','Brown','Martin','Wilson','Roy']},
+ Australia:{male:['Oliver','Noah','Leo','Henry','Charlie','Jack'],female:['Charlotte','Olivia','Amelia','Mia','Isla','Matilda'],last:['Smith','Jones','Williams','Brown','Wilson']},
+ Bangladesh:{male:['Arif','Rahim','Sakib','Hasan','Nabil','Imran'],female:['Ayesha','Nusrat','Mim','Sadia','Nabila','Tania'],last:['Ahmed','Hossain','Rahman','Islam','Khan']},
+ India:{male:['Aarav','Arjun','Rohan','Vivaan','Aditya','Kabir'],female:['Aadhya','Ananya','Diya','Isha','Meera','Saanvi'],last:['Sharma','Patel','Singh','Kumar','Verma']},
+ Germany:{male:['Lukas','Leon','Paul','Felix','Ben','Jonas'],female:['Mia','Emma','Emilia','Hannah','Lina','Clara'],last:['Müller','Schmidt','Schneider','Fischer']},
+ France:{male:['Louis','Gabriel','Raphaël','Arthur','Jules','Lucas'],female:['Jade','Louise','Emma','Alice','Chloé','Léa'],last:['Martin','Bernard','Dubois','Thomas']}
+};
 
 function makeIdentity(){
- const first=['Alex','Jordan','Taylor','Morgan','Casey','Riley','Jamie','Avery'];
- const last=['Smith','Johnson','Brown','Wilson','Martin','Davis','Clark','Lee'];
+ const gender=document.querySelector('input[name="gender"]:checked').value;
+ const country=$('country').value;
+ const d=names[country];
  const pick=a=>a[Math.floor(Math.random()*a.length)];
- const data={
-  'Full Name':pick(first)+' '+pick(last),
-  'Demo Email':'demo'+Math.floor(Math.random()*90000+10000)+'@example.com',
-  'Demo ID':'TEST-'+Math.random().toString(36).slice(2,9).toUpperCase(),
-  'Birth Date':new Date(1985+Math.floor(Math.random()*20),Math.floor(Math.random()*12),1+Math.floor(Math.random()*28)).toLocaleDateString(),
-  'Country':'United States (Demo)',
-  'Purpose':'Fictional testing data'
- };
- document.getElementById('identityResult').innerHTML=Object.entries(data).map(([k,v])=>'<div><b>'+k+'</b>'+v+'</div>').join('');
+ const data=[
+  ['Full Name',pick(d[gender])+' '+pick(d.last)],
+  ['Gender',gender==='male'?'Male':'Female'],
+  ['Country',country],
+  ['Email (Demo)', 'demo'+Math.floor(10000+Math.random()*90000)+'@example.com'],
+  ['Demo ID','DEMO-'+Math.random().toString(36).slice(2,9).toUpperCase()],
+  ['Date of Birth',new Date(1985+Math.floor(Math.random()*20),Math.floor(Math.random()*12),1+Math.floor(Math.random()*28)).toLocaleDateString()]
+ ];
+ $('identityResult').innerHTML=data.map(([k,v])=>
+  `<div class="identity-item"><div><small>${k}</small><strong>${escapeHTML(v)}</strong></div><button class="copy" aria-label="Copy ${k}" onclick="copyText(${JSON.stringify(v).replace(/</g,'\\u003c')})"><i data-lucide="copy"></i></button></div>`
+ ).join('');
+ if(window.lucide)lucide.createIcons();
+}
+function escapeHTML(s){
+ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
-function previewImages(event){
- clearImages();
- const files=Array.from(event.target.files||[]);
- files.filter(f=>f.type.startsWith('image/')).slice(0,20).forEach(file=>{
-  const url=URL.createObjectURL(file);imageUrls.push(url);
-  const img=document.createElement('img');img.src=url;img.alt='Uploaded image preview';
-  document.getElementById('gallery').appendChild(img);
- });
+const galleryData={
+ male:[
+  ['Male Portrait 1','https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=700'],
+  ['Male Portrait 2','https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=700'],
+  ['Male Portrait 3','https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=700'],
+  ['Male Portrait 4','https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=700'],
+  ['Male Portrait 5','https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=700'],
+  ['Male Portrait 6','https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=700']
+ ],
+ female:[
+  ['Female Portrait 1','https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=700'],
+  ['Female Portrait 2','https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=700'],
+  ['Female Portrait 3','https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=700'],
+  ['Female Portrait 4','https://images.unsplash.com/photo-1517841905240-472988babdf9?w=700'],
+  ['Female Portrait 5','https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=700'],
+  ['Female Portrait 6','https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=700']
+ ]
+};
+function showGallery(type,button){
+ document.querySelectorAll('.gallery-tabs button').forEach(b=>b.classList.remove('active'));
+ button.classList.add('active');
+ $('photos').innerHTML=galleryData[type].map(([name,url])=>
+  `<article class="photo"><img loading="lazy" src="${url}" alt="${name}"><div class="photo-info"><p>${name}</p><button onclick="downloadPhoto('${url}','${type}-portrait.jpg')"><i data-lucide="download" style="width:13px;vertical-align:middle"></i> Download</button></div></article>`
+ ).join('');
+ if(window.lucide)lucide.createIcons();
 }
-function clearImages(){
- imageUrls.forEach(URL.revokeObjectURL);imageUrls=[];
- document.getElementById('gallery').innerHTML='';
- document.getElementById('imageInput').value='';
-}
-
-const noteArea=document.getElementById('noteArea');
-noteArea.value=localStorage.getItem('hubNotes')||'';
-let saveTimeout;
-noteArea.addEventListener('input',()=>{
- document.getElementById('noteStatus').textContent='Saving...';
- clearTimeout(saveTimeout);
- saveTimeout=setTimeout(()=>{
-  localStorage.setItem('hubNotes',noteArea.value);
-  document.getElementById('noteStatus').textContent='✓ Saved automatically';
- },300);
-});
-function downloadNote(){
- const blob=new Blob([noteArea.value],{type:'text/plain;charset=utf-8'});
- const url=URL.createObjectURL(blob);
- const a=document.createElement('a');a.href=url;a.download='my-notes.txt';a.click();
- URL.revokeObjectURL(url);
-}
-function clearNote(){
- if(confirm('Delete all notes?')){
-  noteArea.value='';localStorage.removeItem('hubNotes');
-  document.getElementById('noteStatus').textContent='Notes cleared';
+async function downloadPhoto(url,name){
+ try{
+  const response=await fetch(url);
+  if(!response.ok)throw Error();
+  const blob=await response.blob();
+  const link=document.createElement('a');
+  const objectURL=URL.createObjectURL(blob);
+  link.href=objectURL;link.download=name;link.click();
+  setTimeout(()=>URL.revokeObjectURL(objectURL),1000);
+ }catch(e){
+  window.open(url,'_blank','noopener');
+  alert('Direct download was unavailable. The image has been opened in a new tab; use Save Image.');
  }
 }
-function resetSettings(){
- document.body.classList.remove('light');
- localStorage.setItem('hubTheme','dark');
+showGallery('male',document.querySelector('.gallery-tabs button'));
+
+$('noteTitle').value=localStorage.getItem('hubNoteTitle')||'';
+$('noteArea').value=localStorage.getItem('hubNotes')||'';
+function saveNotes(){
+ $('noteStatus').textContent='Saving...';
+ clearTimeout(saveTimer);
+ saveTimer=setTimeout(()=>{
+  localStorage.setItem('hubNotes',$('noteArea').value);
+  localStorage.setItem('hubNoteTitle',$('noteTitle').value);
+  $('noteStatus').textContent='✓ Saved automatically';
+ },350);
+}
+$('noteArea').addEventListener('input',saveNotes);
+$('noteTitle').addEventListener('input',saveNotes);
+
+function downloadNote(type){
+ const title=$('noteTitle').value.trim()||'My Notes';
+ const content=$('noteArea').value;
+ if(!content.trim())return alert('Write something first.');
+ if(type==='txt'){
+  downloadBlob(new Blob([content],{type:'text/plain;charset=utf-8'}),title+'.txt');
+ }else if(type==='html'){
+  const html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+escapeHTML(title)+'</title></head><body><h1>'+escapeHTML(title)+'</h1><pre style="white-space:pre-wrap;font-family:Arial">'+escapeHTML(content)+'</pre></body></html>';
+  downloadBlob(new Blob([html],{type:'text/html;charset=utf-8'}),title+'.html');
+ }else if(type==='pdf'){
+  if(!window.jspdf)return alert('PDF library did not load. Check your internet connection.');
+  const {jsPDF}=window.jspdf;
+  const pdf=new jsPDF();
+  pdf.setFont('helvetica','bold');pdf.setFontSize(18);pdf.text(title,15,20);
+  pdf.setFont('helvetica','normal');pdf.setFontSize(11);
+  const lines=pdf.splitTextToSize(content,180);
+  let y=32;
+  lines.forEach(line=>{
+   if(y>280){pdf.addPage();y=20;}
+   pdf.text(line,15,y);y+=6;
+  });
+  pdf.save(title+'.pdf');
+ }
+}
+function downloadBlob(blob,name){
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');a.href=url;a.download=name;a.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function clearNote(){
+ if(!confirm('Are you sure you want to clear your notes?'))return;
+ $('noteArea').value='';$('noteTitle').value='';
+ localStorage.removeItem('hubNotes');localStorage.removeItem('hubNoteTitle');
+ $('noteStatus').textContent='Notes cleared';
 }
 </script>
 </body>
