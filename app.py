@@ -15,8 +15,9 @@ def home():
 def health():
     return jsonify({
         "status": "success",
-        "message": "Advanced Tools Hub is running",
-        "version": "1.0"
+        "app": "Advanced Tools Hub",
+        "version": "2.0",
+        "message": "Application is running"
     })
 
 @app.errorhandler(404)
