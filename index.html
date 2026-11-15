@@ -669,73 +669,42 @@
             gap: 6px;
             box-shadow: 0 3px 8px rgba(13, 148, 136, 0.25);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-bottom: 1rem;
         }
 
         .generate-id-btn:hover {
             background-color: var(--teal-hover);
         }
 
-        /* Screenshot Matching Profile & Result Card Layout */
         .result-card {
+            margin-top: 1.2rem;
             background-color: var(--bg-subcard);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 1.1rem;
+            padding: 1rem;
             text-align: center;
-            display: block; /* Always visible on load */
+            display: none;
         }
 
-        .avatar-container {
-            width: 85px;
-            height: 85px;
-            margin: 0 auto 8px auto;
+        .avatar-placeholder {
+            width: 50px;
+            height: 50px;
+            background-color: var(--teal-light);
+            color: var(--teal-primary);
             border-radius: 50%;
-            border: 2px solid var(--teal-primary);
-            padding: 3px;
-            background: var(--teal-light);
-            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.2);
-        }
-
-        .avatar-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 6px auto;
+            font-size: 1.3rem;
         }
 
         .identity-title {
             font-size: 0.68rem;
             text-transform: uppercase;
             color: var(--text-muted);
-            letter-spacing: 0.8px;
+            letter-spacing: 0.6px;
             margin-bottom: 8px;
             font-weight: 700;
-        }
-
-        .name-row-box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            background: var(--bg-card);
-            border: 1.5px solid var(--border-color);
-            padding: 10px 14px;
-            border-radius: 10px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-        }
-
-        .large-name-text {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--text-main);
-            letter-spacing: -0.3px;
-        }
-
-        body.dark-mode .large-name-text {
-            color: #f8fafc;
         }
 
         .field-box {
@@ -745,10 +714,10 @@
             background: var(--bg-card);
             border: 1.5px solid var(--border-color);
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-            padding: 8px 12px;
+            padding: 7px 10px;
             border-radius: 8px;
-            margin-bottom: 7px;
-            font-size: 0.82rem;
+            margin-bottom: 6px;
+            font-size: 0.8rem;
             text-align: left;
             transition: border-color 0.2s;
         }
@@ -757,12 +726,19 @@
             border-color: var(--teal-primary);
         }
 
+        .field-box.name-highlight-box {
+            background: var(--teal-light);
+            border: 2px solid var(--teal-primary);
+            padding: 9px 12px;
+            box-shadow: 0 3px 10px rgba(13, 148, 136, 0.1);
+        }
+
         .field-info span {
             display: block;
         }
 
         .field-label {
-            font-size: 0.65rem;
+            font-size: 0.63rem;
             color: var(--text-muted);
             font-weight: 600;
         }
@@ -771,7 +747,17 @@
             font-weight: 600;
             color: var(--text-main);
             word-break: break-all;
-            margin-top: 1px;
+        }
+
+        .field-value.large-name-text {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--teal-primary);
+            margin-top: 2px;
+        }
+
+        body.dark-mode .field-value.large-name-text {
+            color: #2dd4bf;
         }
 
         .copy-sm-btn {
@@ -1226,7 +1212,7 @@
     <!-- Main Container -->
     <div class="container">
         
-        <!-- TAB 1: EDO MAIL CODE -->
+        <!-- TAB 1: EDO MAIL CODE (Hotmail Removed & Replaced) -->
         <div id="sectionMail" class="tab-content active">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1251,10 +1237,10 @@
             
             <div class="mail-result-card" id="mailResultCard">
                 <!-- Extracted Email Copy Box -->
-                <div class="field-box" style="margin-bottom: 10px; background: var(--teal-light); border: 2px solid var(--teal-primary);">
+                <div class="field-box name-highlight-box" style="margin-bottom: 10px;">
                     <div class="field-info" style="width: 100%; overflow: hidden;">
                         <span class="field-label" id="labelExtractedEmail">Target Email Address</span>
-                        <span class="field-value" style="font-size: 1.05rem; font-weight: 800; color: var(--teal-primary);" id="resEmailAddress">user@edo.com</span>
+                        <span class="field-value large-name-text" id="resEmailAddress">user@edo.com</span>
                     </div>
                     <button class="copy-sm-btn" onclick="copyMailText('resEmailAddress', this)">Copy</button>
                 </div>
@@ -1337,7 +1323,7 @@
             </div>
         </div>
 
-        <!-- TAB 3: FAKE NAME (Updated to match screenshot layout with auto-loaded random identity) -->
+        <!-- TAB 3: FAKE NAME -->
         <div id="sectionFake" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1417,30 +1403,30 @@
                 <span id="btnGenerateFake">Generate Identity</span>
             </button>
 
-            <!-- Screenshot Matching Output Card -->
             <div class="result-card" id="fakeResultCard">
-                <div class="avatar-container">
-                    <img id="resAvatarImg" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" alt="Avatar" class="avatar-img">
-                </div>
-                <div class="identity-title" id="resIdentityTitle">Your Generated Sample Identity</div>
+                <div class="avatar-placeholder" id="fakeAvatarIcon">👨</div>
+                <div class="identity-title" id="resIdentityTitle">Your Randomly Generated Identity</div>
                 
-                <div class="name-row-box">
-                    <span class="large-name-text" id="resName">Lawrence Coleman</span>
+                <div class="field-box name-highlight-box">
+                    <div class="field-info">
+                        <span class="field-label" id="resLabelName">Full Name</span>
+                        <span class="field-value large-name-text" id="resName">Matthew T. Gonzales</span>
+                    </div>
                     <button class="copy-sm-btn" onclick="copyFakeText('resName', this)">Copy</button>
                 </div>
 
                 <div class="field-box">
                     <div class="field-info">
-                        <span class="field-label">Gender</span>
-                        <span class="field-value" id="resGender">male</span>
+                        <span class="field-label" id="resLabelDob">Date of Birth</span>
+                        <span class="field-value" id="resDob">15 July 1995</span>
                     </div>
-                    <button class="copy-sm-btn" onclick="copyFakeText('resGender', this)">Copy</button>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resDob', this)">Copy</button>
                 </div>
 
                 <div class="field-box">
                     <div class="field-info">
                         <span class="field-label">Street</span>
-                        <span class="field-value" id="resStreet">4550 Valley View Ln</span>
+                        <span class="field-value" id="resStreet">1483 Better Street</span>
                     </div>
                     <button class="copy-sm-btn" onclick="copyFakeText('resStreet', this)">Copy</button>
                 </div>
@@ -1448,7 +1434,7 @@
                 <div class="field-box">
                     <div class="field-info">
                         <span class="field-label">City/Town</span>
-                        <span class="field-value" id="resCity">Ironville</span>
+                        <span class="field-value" id="resCity">Overland Park</span>
                     </div>
                     <button class="copy-sm-btn" onclick="copyFakeText('resCity', this)">Copy</button>
                 </div>
@@ -1456,15 +1442,15 @@
                 <div class="field-box">
                     <div class="field-info">
                         <span class="field-label">State/Province/Region</span>
-                        <span class="field-value" id="resState">Kansas</span>
+                        <span class="field-value" id="resState">Kansas (KS)</span>
                     </div>
                     <button class="copy-sm-btn" onclick="copyFakeText('resState', this)">Copy</button>
                 </div>
 
                 <div class="field-box">
                     <div class="field-info">
-                        <span class="field-label">ZIP/Postal Code</span>
-                        <span class="field-value" id="resZip">54794</span>
+                        <span class="field-label">Zip/Postal Code</span>
+                        <span class="field-value" id="resZip">66210</span>
                     </div>
                     <button class="copy-sm-btn" onclick="copyFakeText('resZip', this)">Copy</button>
                 </div>
@@ -1472,33 +1458,9 @@
                 <div class="field-box">
                     <div class="field-info">
                         <span class="field-label">Phone Number</span>
-                        <span class="field-value" id="resPhone">(692) 997-2575</span>
+                        <span class="field-value" id="resPhone">+1 913-555-0148</span>
                     </div>
                     <button class="copy-sm-btn" onclick="copyFakeText('resPhone', this)">Copy</button>
-                </div>
-
-                <div class="field-box">
-                    <div class="field-info">
-                        <span class="field-label">Email</span>
-                        <span class="field-value" id="resEmail">lawrence.coleman@example.com</span>
-                    </div>
-                    <button class="copy-sm-btn" onclick="copyFakeText('resEmail', this)">Copy</button>
-                </div>
-
-                <div class="field-box">
-                    <div class="field-info">
-                        <span class="field-label">Date of Birth</span>
-                        <span class="field-value" id="resDob">20/08/1995</span>
-                    </div>
-                    <button class="copy-sm-btn" onclick="copyFakeText('resDob', this)">Copy</button>
-                </div>
-
-                <div class="field-box">
-                    <div class="field-info">
-                        <span class="field-label">Age</span>
-                        <span class="field-value" id="resAge">31</span>
-                    </div>
-                    <button class="copy-sm-btn" onclick="copyFakeText('resAge', this)">Copy</button>
                 </div>
 
                 <div class="field-box">
@@ -1507,6 +1469,22 @@
                         <span class="field-value" id="resCountry">United States</span>
                     </div>
                     <button class="copy-sm-btn" onclick="copyFakeText('resCountry', this)">Copy</button>
+                </div>
+
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label">Latitude</span>
+                        <span class="field-value" id="resLat">38.9822</span>
+                    </div>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resLat', this)">Copy</button>
+                </div>
+
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label">Longitude</span>
+                        <span class="field-value" id="resLng">-94.6708</span>
+                    </div>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resLng', this)">Copy</button>
                 </div>
             </div>
         </div>
@@ -1626,4 +1604,594 @@
         } else if (lower.includes('twitter') || lower.includes('x.com') || lower.includes('x')) {
             return { name: 'TWITTER / X', svg: `<svg width="22" height="22" viewBox="0 0 24 24" fill="#000000"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>` };
         } else if (lower.includes('instagram')) {
-            return { name: 'INSTAGRAM', svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.79
+            return { name: 'INSTAGRAM', svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>` };
+        } else if (lower.includes('google') || lower.includes('gmail')) {
+            return { name: 'GOOGLE', svg: `<svg width="24" height="24" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.09C3.515 21.3 7.565 24 12.255 24z"/><path fill="#FBBC05" d="M5.525 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62h-3.98a11.86 11.86 0 000 10.76l3.98-3.09z"/><path fill="#EA4335" d="M12.255 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C18.205 1.19 15.495 0 12.255 0c-4.69 0-8.74 2.7-10.71 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>` };
+        } else {
+            return { name: 'EDO MAIL', svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>` };
+        }
+    }
+
+    // Fetch Edo Mail Code & Inbox Messages using new API
+    function fetchMailCode() {
+        const emailInput = document.getElementById('edoEmailInput').value.trim();
+        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
+
+        if (!emailInput) {
+            alert(lang === 'bn' ? 'দয়া করে আগে আপনার ইডো মেইল অ্যাড্রেসটি দিন!' : 'Please enter your Edo Mail address first!');
+            return;
+        }
+
+        document.getElementById('resEmailAddress').innerText = emailInput;
+        document.getElementById('mailCodeDisplay').innerText = "WAIT...";
+        document.getElementById('mailResultCard').style.display = 'block';
+
+        // NEW EDO MAIL API CONNECTION
+        const apiUrl = `https://api.vf9p.us/v1.php?email=${encodeURIComponent(emailInput)}`;
+
+        fetch(apiUrl)
+        .then(res => res.json())
+        .then(data => {
+            // ধরে নিচ্ছি এপিআই থেকে ডেটা অ্যারে বা অবজেক্ট আকারে আসতে পারে
+            let messages = [];
+            if (Array.isArray(data)) {
+                messages = data;
+            } else if (data && data.messages) {
+                messages = data.messages;
+            } else if (data && typeof data === 'object') {
+                messages = [data];
+            }
+
+            globalAllMessagesList = messages;
+
+            if (messages.length === 0) {
+                document.getElementById('mailCodeDisplay').innerText = "NO MAIL";
+                globalActiveFullMessage = "No messages found in inbox.";
+                renderInboxList([]);
+                return;
+            }
+
+            // লেটেস্ট মেসেজটি পিক করা
+            const latestMsg = messages[0];
+            const sender = latestMsg.sender || latestMsg.from || "System";
+            const subject = latestMsg.subject || "Verification Code";
+            
+            // মেসেজ বডি বা সাবজেক্ট থেকে ওটিপি কোড এক্সট্রাক্ট করা (4 থেকে 8 ডিজিট)
+            const fullText = (latestMsg.body || latestMsg.text || latestMsg.html || "") + " " + subject;
+            const otpMatch = fullText.match(/\b\d{4,8}\b/);
+            const otp = otpMatch ? otpMatch[0] : "------";
+
+            globalActiveFullMessage = latestMsg.body || latestMsg.text || latestMsg.html || JSON.stringify(latestMsg, null, 2);
+
+            updateMailUI(sender, subject, otp, globalActiveFullMessage);
+            
+            // ইনবক্স লিস্ট রেন্ডার করা
+            const formattedList = messages.map(m => ({
+                sender: m.sender || m.from || "System",
+                subject: m.subject || "Verification Code",
+                otp: (m.body || m.text || "").match(/\b\d{4,8}\b/) ? (m.body || m.text || "").match(/\b\d{4,8}\b/)[0] : "Code",
+                full_message: m.body || m.text || m.html || JSON.stringify(m, null, 2)
+            }));
+            renderInboxList(formattedList);
+        })
+        .catch(err => {
+            alert(lang === 'bn' ? 'মেইল ডাটা ফেচ করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।' : 'Failed to fetch mail. Please try again.');
+            document.getElementById('mailCodeDisplay').innerText = "ERROR";
+        });
+    }
+
+    function updateMailUI(sender, subject, otp, fullBody) {
+        const platform = getPlatformBadge(sender + " " + subject);
+        document.getElementById('platformNameText').innerText = platform.name;
+        document.getElementById('platformIconContainer').innerHTML = platform.svg;
+        document.getElementById('mailCodeDisplay').innerText = otp;
+    }
+
+    // Render All Inbox Messages List
+    function renderInboxList(messages) {
+        const container = document.getElementById('inboxListContainer');
+        if (!container) return;
+        container.innerHTML = "";
+
+        if (!messages || messages.length === 0) {
+            container.innerHTML = "<p style='font-size:0.78rem; color:var(--text-muted); padding:6px;'>No other inbox messages found.</p>";
+            return;
+        }
+
+        messages.forEach((msg, idx) => {
+            container.innerHTML += `
+                <div class="inbox-item-card">
+                    <div class="inbox-item-info">
+                        <div class="inbox-item-sender">${msg.sender}</div>
+                        <div class="inbox-item-subject">${msg.subject}</div>
+                        <div class="inbox-item-otp">OTP: ${msg.otp}</div>
+                    </div>
+                    <button class="inbox-view-btn" onclick="viewSpecificInboxMessage(${idx})">View</button>
+                </div>
+            `;
+        });
+    }
+
+    // Open Modal with Specific Inbox Message
+    function viewSpecificInboxMessage(index) {
+        const msg = globalAllMessagesList[index];
+        if (!msg) return;
+        document.getElementById('modalFullBodyContent').innerText = msg.body || msg.text || msg.html || JSON.stringify(msg, null, 2);
+        document.getElementById('fullMsgModal').style.display = 'flex';
+    }
+
+    // Open Modal for Main Latest Full Message
+    function openFullMessageModal() {
+        document.getElementById('modalFullBodyContent').innerText = globalActiveFullMessage || "No full message available.";
+        document.getElementById('fullMsgModal').style.display = 'flex';
+    }
+
+    function closeFullMessageModal() {
+        document.getElementById('fullMsgModal').style.display = 'none';
+    }
+
+    function outsideCloseModal(event) {
+        const modal = document.getElementById('fullMsgModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    function clearMailTab() {
+        document.getElementById('edoEmailInput').value = '';
+        document.getElementById('mailResultCard').style.display = 'none';
+        document.getElementById('inboxListContainer').innerHTML = '';
+        document.getElementById('edoEmailInput').focus();
+    }
+
+    function copyMailText(elementId, btnElement) {
+        const targetEl = document.getElementById(elementId);
+        if (!targetEl) return;
+        navigator.clipboard.writeText(targetEl.innerText);
+        const originalText = btnElement.innerText;
+        btnElement.innerText = 'Copied!';
+        setTimeout(() => { btnElement.innerText = originalText; }, 1500);
+    }
+
+    function copyMailCodeText() {
+        const codeDisplay = document.getElementById('mailCodeDisplay');
+        if (!codeDisplay) return;
+        const code = codeDisplay.innerText;
+        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
+
+        if(code !== "------" && code !== "WAIT..." && code !== "ERROR" && code !== "FAILED" && code !== "NO MAIL") {
+            navigator.clipboard.writeText(code);
+            const copyText = document.getElementById('copyOtpText');
+            if (copyText) copyText.innerText = lang === 'bn' ? "কপি হয়েছে!" : "Copied!";
+            setTimeout(() => {
+                if (copyText) copyText.innerText = lang === 'bn' ? "ওটিপি কপি" : "Copy OTP";
+            }, 1500);
+        }
+    }
+
+    // Populate Photo Gallery
+    document.addEventListener("DOMContentLoaded", () => {
+        const galleryGrid = document.getElementById('galleryGrid');
+        if (galleryGrid) {
+            galleryGrid.innerHTML = '';
+            const usaMaleIds = ["1507003211169-0a1dd7228f2d", "1500648767791-00dcc994a43e", "1492562080023-ab3db95bfbce", "1519085360753-af0119f7cbe7", "1506794778202-cad84cf45f1d", "1534528741775-53994a69daeb"];
+            const usaFemaleIds = ["1534528741775-53994a69daeb", "1494790108377-be9c29b29330", "1517841905240-472988babdf9", "1544005313-94ddf0286df2", "1573496359142-b8d87734a5a2", "1580489944761-15a19d654956"];
+
+            for (let i = 1; i <= 30; i++) {
+                const isMale = i % 2 === 0;
+                const gender = isMale ? 'male' : 'female';
+                const idArray = isMale ? usaMaleIds : usaFemaleIds;
+                const unsplashId = idArray[(i - 1) % idArray.length];
+                const imageUrl = `https://images.unsplash.com/photo-${unsplashId}?auto=format&fit=crop&w=400&q=80`;
+                
+                const item = document.createElement('div');
+                item.className = `gallery-item ${gender}`;
+                
+                item.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
+                    item.classList.add('clicked');
+                    setTimeout(() => item.classList.remove('clicked'), 500);
+                    downloadImage(imageUrl, `USA_Professional_${gender}_${i}.jpg`);
+                });
+
+                item.innerHTML = `
+                    <div class="gallery-img-wrapper">
+                        <span class="gender-badge ${isMale ? 'badge-male' : 'badge-female'}">${isMale ? 'USA Pro Man' : 'USA Pro Woman'}</span>
+                        <img src="${imageUrl}" alt="USA Professional photo ${i}" class="gallery-img" loading="lazy">
+                    </div>
+                    <button class="download-img-btn" onclick="triggerGlowAndDownload(this, '${imageUrl}', 'USA_Professional_${gender}_${i}.jpg')">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download
+                    </button>
+                `;
+                galleryGrid.appendChild(item);
+            }
+        }
+    });
+
+    function triggerGlowAndDownload(btnElement, url, filename) {
+        const card = btnElement.closest('.gallery-item');
+        if (card) {
+            card.classList.add('clicked');
+            setTimeout(() => card.classList.remove('clicked'), 500);
+        }
+        downloadImage(url, filename);
+    }
+
+    function downloadImage(url, filename) {
+        fetch(url, { mode: 'cors' })
+            .then(response => response.blob())
+            .then(blob => {
+                const blobUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(blobUrl);
+                document.body.removeChild(a);
+            })
+            .catch(() => {
+                const a = document.createElement('a');
+                a.href = url;
+                a.target = '_blank';
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+    }
+
+    function filterGallery(type, btnElement) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btnElement.classList.add('active');
+
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            if (type === 'all' || item.classList.contains(type)) {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+
+    // Dark Mode Toggle
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        const moonIcon = document.getElementById('moonIcon');
+        if (!moonIcon) return;
+        
+        if (isDark) {
+            moonIcon.innerHTML = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 0 0 0-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>';
+            moonIcon.style.color = '#facc15';
+        } else {
+            moonIcon.innerHTML = '<path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>';
+            moonIcon.style.color = 'var(--text-muted)';
+        }
+    }
+
+    // Language Switcher
+    function changeLanguage() {
+        const langSelect = document.getElementById('langSelect');
+        if (!langSelect) return;
+        const lang = langSelect.value;
+        
+        const setTxt = (id, text) => { const el = document.getElementById(id); if(el) el.innerText = text; };
+        const setHtml = (id, html) => { const el = document.getElementById(id); if(el) el.innerHTML = html; };
+
+        if (lang === 'bn') {
+            setTxt('tabTextMail', 'মেইল কোড');
+            setTxt('tabText2fa', '২এফএ কি');
+            setTxt('tabTextFake', 'ফেক নেম');
+            setTxt('tabTextPhotos', 'ফটোস');
+            setTxt('tabTextNote', 'নোটপ্যাড');
+            setTxt('titleMail', 'ইডো মেইল কোড');
+            setTxt('descMail', 'আপনার ইডো মেইল অ্যাড্রেস দিয়ে খুব সহজেই ইনবক্সের কোড ও মেসেজ চেক করুন।');
+            setTxt('btnFetchMail', 'মেইল ও ওটিপি আনুন');
+            setTxt('btnClearMail', 'ক্লিয়ার');
+            setTxt('labelExtractedEmail', 'টার্গেট মেইল অ্যাড্রেস');
+            setTxt('copyOtpText', 'ওটিপি কপি');
+            setTxt('viewFullMsgText', 'ফুল মেসেজ');
+            setTxt('inboxListTitle', 'ইনবক্স মেসেজ সমূহ');
+            setTxt('modalHeaderTitle', 'ইমেইল ভিউ');
+            setTxt('title2fa', 'সিক্রেট কি');
+            setTxt('desc2fa', 'সিক্রেট কি দিয়ে গেট কোড বাটনে ক্লিক করলে লাইভ 2FA কোড দেখতে পাবেন।');
+            setTxt('btn2fa', 'গেট কোড');
+            setTxt('btnClear', 'ক্লিয়ার');
+            setTxt('activeTokenText', 'অ্যাক্টিভ টোকেন');
+            setTxt('copyText', 'কোড কপি করুন');
+            setTxt('titlePhotos', 'ইউএসএ প্রফেশনাল ফটোস');
+            setTxt('descPhotos', 'আমেরিকান কর্পোরেট প্রফেশনাল পোর্ট্রেট ছবি ব্রাউজ করুন।');
+            setTxt('filterAll', 'সব ছবি');
+            setTxt('filterMale', '👨 ইউএসএ প্রফেশনাল ম্যান');
+            setTxt('filterFemale', '👩 ইউএসএ প্রফেশনাল উইম্যান');
+            setTxt('titleNote', 'স্মার্ট নোটপ্যাড');
+            setTxt('descNote', 'আপনার নোট বা টেক্সট এখানে লিখে সরাসরি ফাইল ডাউনলোড করুন।');
+            setTxt('formatLabel', 'ফরম্যাট সিলেক্ট করুন:');
+            setTxt('btnDownload', 'ডাউনলোড');
+            setTxt('btnClearNote', 'ক্লিয়ার');
+            
+            document.getElementById('edoEmailInput').placeholder = 'ইডো মেইল অ্যাড্রেস লিখুন (যেমন: user@edo.com)';
+            document.getElementById('secret').placeholder = 'এখানে আপনার সিক্রেট কি পেস্ট করুন...';
+            document.getElementById('noteArea').placeholder = 'এখানে আপনার নোট পেস্ট বা টাইপ করুন...';
+            
+            setTxt('titleFake', 'ফেক আইডি জেনারেটর');
+            setTxt('descFake', 'খুব সহজেই রেন্ডম নাম, জন্মতারিখ এবং পূর্ণাঙ্গ আন্তর্জাতিক ঠিকানা জেনারেট করুন।');
+            setTxt('labelGender', 'লিঙ্গ');
+            setTxt('labelNameSet', 'সেট');
+            setTxt('labelCountry', 'দেশ');
+            setTxt('btnGenerateFake', 'আইডেন্টিটি জেনারেট করুন');
+            setTxt('resIdentityTitle', 'আপনার রেন্ডমলি জেনারেটেড আইডি');
+            setTxt('resLabelName', 'পূর্ণ নাম');
+            setTxt('resLabelDob', 'জন্মতারিখ');
+            setHtml('footerText', 'অ্যাকাউন্টের নিরাপত্তা বাড়াতে <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a>-এর অনলাইন টুলস ব্যবহার করুন।');
+        } else {
+            setTxt('tabTextMail', 'Mail Code');
+            setTxt('tabText2fa', '2FA Key');
+            setTxt('tabTextFake', 'Fake Name');
+            setTxt('tabTextPhotos', 'Photos');
+            setTxt('tabTextNote', 'Note');
+            setTxt('titleMail', 'Edo Mail Code');
+            setTxt('descMail', 'Enter your Edo Mail address to check incoming verification codes and full inbox messages instantly.');
+            setTxt('btnFetchMail', 'Get Mail & OTP');
+            setTxt('btnClearMail', 'Clear');
+            setTxt('labelExtractedEmail', 'Target Email Address');
+            setTxt('copyOtpText', 'Copy OTP');
+            setTxt('viewFullMsgText', 'Full Message');
+            setTxt('inboxListTitle', 'Inbox Messages');
+            setTxt('modalHeaderTitle', 'Email View');
+            setTxt('title2fa', 'Secret Key');
+            setTxt('desc2fa', 'Enter your Base32 secret key and click Get Code to generate your 2FA token.');
+            setTxt('btn2fa', 'Get Code');
+            setTxt('btnClear', 'Clear');
+            setTxt('activeTokenText', 'Active Token');
+            setTxt('copyText', 'Copy Code');
+            setTxt('titlePhotos', 'USA Professional Photos');
+            setTxt('descPhotos', 'Browse official American professional corporate headshots with tap lighting and instant download.');
+            setTxt('filterAll', 'All Photos');
+            setTxt('filterMale', '👨 USA Pro Man');
+            setTxt('filterFemale', '👩 USA Pro Woman');
+            setTxt('titleNote', 'Smart Notepad');
+            setTxt('descNote', 'Write or paste your notes, codes, or credentials and download them instantly.');
+            setTxt('formatLabel', 'Select Format:');
+            setTxt('btnDownload', 'Download');
+            setTxt('btnClearNote', 'Clear');
+            
+            document.getElementById('edoEmailInput').placeholder = 'Enter Edo Mail Address (e.g. user@edo.com)';
+            document.getElementById('secret').placeholder = 'Paste your Secret Key here...';
+            document.getElementById('noteArea').placeholder = 'Paste or type your notes here...';
+            
+            setTxt('titleFake', 'Fake Identity Generator');
+            setTxt('descFake', 'Generate random names, dates of birth, and comprehensive international addresses instantly.');
+            setTxt('labelGender', 'Gender');
+            setTxt('labelNameSet', 'Name Set');
+            setTxt('labelCountry', 'Country');
+            setTxt('btnGenerateFake', 'Generate Identity');
+            setTxt('resIdentityTitle', 'Your Randomly Generated Identity');
+            setTxt('resLabelName', 'Full Name');
+            setTxt('resLabelDob', 'Date of Birth');
+            setHtml('footerText', 'Use <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a> online tools to enhance account security and productivity.');
+        }
+    }
+
+    // Live Active Users Counter
+    setInterval(() => {
+        const userEl = document.getElementById('active-users');
+        if (userEl) {
+            let current = parseInt(userEl.innerText);
+            userEl.innerText = current + (Math.floor(Math.random() * 5) - 2);
+        }
+    }, 4000);
+
+    // 2FA 15s Countdown & Auto-Refresh Logic
+    let totpInterval = null;
+    let currentSecret = "";
+
+    function start2FA() {
+        const secretInputEl = document.getElementById('secret');
+        if (!secretInputEl) return;
+        const secretInput = secretInputEl.value.replace(/\s+/g, '');
+        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
+
+        if (!secretInput) {
+            alert(lang === 'bn' ? 'দয়া করে আগে সিক্রেট কি (Secret Key) দিন!' : 'Please enter your Secret Key first!');
+            return;
+        }
+
+        currentSecret = secretInput;
+        if (totpInterval) clearInterval(totpInterval);
+
+        const progContainer = document.getElementById('progressContainer');
+        if (progContainer) progContainer.style.display = 'block';
+
+        generateAndDisplayCode();
+        totpInterval = setInterval(generateAndDisplayCode, 1000);
+    }
+
+    function clear2FA() {
+        if (totpInterval) clearInterval(totpInterval);
+        const secretEl = document.getElementById('secret');
+        const codeDisplay = document.getElementById('code-display');
+        const timerDisplay = document.getElementById('timer-display');
+        const progContainer = document.getElementById('progressContainer');
+
+        if (secretEl) secretEl.value = '';
+        if (codeDisplay) codeDisplay.innerText = '000000';
+        if (timerDisplay) timerDisplay.innerText = '15s';
+        if (progContainer) progContainer.style.display = 'none';
+        currentSecret = '';
+        if (secretEl) secretEl.focus();
+    }
+
+    function generateAndDisplayCode() {
+        const display = document.getElementById('code-display');
+        const timerDisplay = document.getElementById('timer-display');
+        const progressBar = document.getElementById('progressBar');
+        if (!display || !timerDisplay || !progressBar) return;
+
+        try {
+            let totp = new OTPAuth.TOTP({
+                issuer: "ACME",
+                label: "User",
+                algorithm: "SHA1",
+                digits: 6,
+                period: 30,
+                secret: OTPAuth.Secret.fromBase32(currentSecret)
+            });
+
+            display.innerText = totp.generate();
+            const epoch = Math.floor(Date.now() / 1000);
+            const remaining = 15 - (epoch % 15);
+            timerDisplay.innerText = `${remaining}s`;
+            progressBar.style.width = `${(remaining / 15) * 100}%`;
+        } catch (e) {
+            display.innerText = "Error";
+            timerDisplay.innerText = "--";
+        }
+    }
+
+    function copyCode() {
+        const codeDisplay = document.getElementById('code-display');
+        if (!codeDisplay) return;
+        const code = codeDisplay.innerText;
+        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
+
+        if(code !== "000000" && code !== "Error") {
+            navigator.clipboard.writeText(code);
+            const copyText = document.getElementById('copyText');
+            if (copyText) copyText.innerText = lang === 'bn' ? "কপি হয়েছে!" : "Copied!";
+            codeDisplay.style.transform = 'scale(1.08)';
+            setTimeout(() => codeDisplay.style.transform = 'none', 200);
+            setTimeout(() => {
+                if (copyText) copyText.innerText = lang === 'bn' ? "কোড কপি করুন" : "Copy Code";
+            }, 1500);
+        }
+    }
+
+    // Notepad Logic
+    const noteArea = document.getElementById('noteArea');
+    const wordCount = document.getElementById('wordCount');
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (noteArea) {
+            const saved = localStorage.getItem('smart_notepad_data');
+            if (saved) {
+                noteArea.value = saved;
+                updateNoteStats();
+            }
+        }
+    });
+
+    function updateNoteStats() {
+        if (!noteArea || !wordCount) return;
+        localStorage.setItem('smart_notepad_data', noteArea.value);
+        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
+        wordCount.innerText = `${noteArea.value.length} ${lang === 'bn' ? 'অক্ষর' : 'Characters'}`;
+    }
+
+    function clearNote() {
+        if (!noteArea) return;
+        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
+        if(confirm(lang === 'bn' ? 'সব লেখা মুছে ফেলতে চান?' : 'Are you sure you want to clear all text?')) {
+            noteArea.value = '';
+            localStorage.removeItem('smart_notepad_data');
+            updateNoteStats();
+            noteArea.focus();
+        }
+    }
+
+    function downloadNoteFile() {
+        if (!noteArea) return;
+        const text = noteArea.value.trim();
+        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
+        
+        if (!text) {
+            alert(lang === 'bn' ? 'ডাউনলোড করার আগে নোটপ্যাডে কিছু লিখুন!' : 'Please write something in the notepad before downloading!');
+            return;
+        }
+
+        const format = document.querySelector('input[name="fileFormat"]:checked').value;
+        const fileName = `Note_${new Date().toISOString().slice(0,10)}`;
+
+        if (format === 'txt') {
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            triggerDownload(URL.createObjectURL(blob), `${fileName}.txt`);
+        } else if (format === 'pdf') {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text(doc.splitTextToSize(text, 180), 15, 20);
+            doc.save(`${fileName}.pdf`);
+        } else if (format === 'docx') {
+            const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'></head><body>";
+            const blob = new Blob(['\ufeff', header + text.replace(/\n/g, "<br>") + "</body></html>"], { type: 'application/msword' });
+            triggerDownload(URL.createObjectURL(blob), `${fileName}.docx`);
+        }
+    }
+
+    function triggerDownload(url, filename) {
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+    // Fake Identity Database & Generator
+    const nameDatabase = {
+        american: { male: ["James A. Smith", "Robert J. Johnson"], female: ["Mary L. Davis", "Patricia K. Wilson"] },
+        british: { male: ["Oliver T. Clarke", "George H. Smith"], female: ["Olivia S. Roberts", "Amelia L. Jones"] },
+        australian: { male: ["Lachlan M. Kelly", "Oliver J. O'Connor"], female: ["Charlotte E. Smith", "Olivia M. Kelly"] },
+        canadian: { male: ["Liam T. Tremblay", "Noah M. Gagnon"], female: ["Emma S. Gagnon", "Olivia L. Roy"] },
+        german: { male: ["Maximilian H. Müller", "Alexander K. Schmidt"], female: ["Mia A. Wagner", "Emma S. Becker"] },
+        french: { male: ["Gabriel L. Martin", "Léo M. Bernard"], female: ["Jade A. Durand", "Louise S. Leroy"] },
+        japanese: { male: ["Hiroshi T. Tanaka", "Kenji M. Sato"], female: ["Hina A. Yamamoto", "Yui S. Nakamura"] },
+        indian: { male: ["Aarav M. Sharma", "Vivaan R. Verma"], female: ["Diya A. Joshi", "Saanvi S. Mehta"] },
+        bangladeshi: { male: ["Tanvir A. Rahman", "Rakibul S. Islam"], female: ["Nusrat J. Mim", "Sadia K. Akter"] }
+    };
+
+    const detailedAddressDatabase = {
+        "United States": [{ street: "1483 Better Street", city: "Overland Park", state: "Kansas (KS)", zip: "66210", phone: "+1 913-555-0148", lat: "38.9822", lng: "-94.6708" }],
+        "United Kingdom": [{ street: "12 Baker Street", city: "London", state: "Greater London", zip: "W1U 3BW", phone: "+44 20 7946 0912", lat: "51.5223", lng: "-0.1578" }],
+        "Canada": [{ street: "742 Evergreen Terrace", city: "Toronto", state: "Ontario", zip: "M4W 1A8", phone: "+1 416-555-0177", lat: "43.6532", lng: "-79.3832" }],
+        "Australia": [{ street: "15 Collins Street", city: "Melbourne", state: "Victoria", zip: "3000", phone: "+61 3 9555 0142", lat: "-37.8136", lng: "144.9631" }],
+        "Germany": [{ street: "Hauptstraße 45", city: "Berlin", state: "Berlin", zip: "10117", phone: "+49 30 123456", lat: "52.5200", lng: "13.4050" }],
+        "France": [{ street: "10 Rue de la Paix", city: "Paris", state: "Île-de-France", zip: "75002", phone: "+33 1 40 50 60 70", lat: "48.8688", lng: "2.3314" }],
+        "Japan": [{ street: "2-11-1 Nagata-cho", city: "Tokyo", state: "Chiyoda-ku", zip: "100-0014", phone: "+81 3 5555 0123", lat: "35.6762", lng: "139.6503" }],
+        "India": [{ street: "12 Park Street", city: "Kolkata", state: "West Bengal", zip: "700016", phone: "+91 33 2345 6789", lat: "22.5551", lng: "88.3524" }],
+        "Bangladesh": [{ street: "Station Road, Sadar", city: "Sirajganj", state: "Rajshahi Division", zip: "6700", phone: "+880 1811-987654", lat: "24.4533", lng: "89.7006" }]
+    };
+
+    function generateFakeIdentity() {
+        const gender = document.getElementById('fakeGender').value === 'random' ? (Math.random() > 0.5 ? 'male' : 'female') : document.getElementById('fakeGender').value;
+        const nameSet = document.getElementById('fakeNameSet').value;
+        const country = document.getElementById('fakeCountry').value;
+        
+        const names = (nameDatabase[nameSet] || nameDatabase['american'])[gender];
+        const addr = (detailedAddressDatabase[country] || detailedAddressDatabase["United States"])[0];
+
+        document.getElementById('resName').innerText = names[Math.floor(Math.random() * names.length)];
+        document.getElementById('resDob').innerText = `${Math.floor(Math.random() * 28) + 1} July 1995`;
+        document.getElementById('resStreet').innerText = addr.street;
+        document.getElementById('resCity').innerText = addr.city;
+        document.getElementById('resState').innerText = addr.state;
+        document.getElementById('resZip').innerText = addr.zip;
+        document.getElementById('resPhone').innerText = addr.phone;
+        document.getElementById('resCountry').innerText = country;
+        document.getElementById('resLat').innerText = addr.lat;
+        document.getElementById('resLng').innerText = addr.lng;
+        document.getElementById('fakeAvatarIcon').innerText = (gender === 'male') ? "👨" : "👩";
+        document.getElementById('fakeResultCard').style.display = 'block';
+    }
+
+    function copyFakeText(elementId, btnElement) {
+        navigator.clipboard.writeText(document.getElementById(elementId).innerText);
+        const originalText = btnElement.innerText;
+        btnElement.innerText = 'Copied!';
+        setTimeout(() => { btnElement.innerText = originalText; }, 1500);
+    }
+</script>
+
+</body>
+</html>
