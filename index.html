@@ -607,7 +607,7 @@
             </div>
         </div>
 
-        <!-- TAB 3: HOTMAIL TOKEN SPLITTER & SHEET PREVIEW (UPDATED) -->
+        <!-- TAB 3: HOTMAIL TOKEN SPLITTER & SHEET PREVIEW (FLEXIBLE FORMAT FIXED) -->
         <div id="sectionSplit" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -615,9 +615,9 @@
                 </div>
                 <h2 id="titleSplit">Hotmail Token Splitter</h2>
             </div>
-            <p class="sub-desc" id="descSplit">Paste full Hotmail tokens (Email:Password:Token) to preview in Column A (Email), Column B (Password) and Column C (Extra Tokens) below.</p>
+            <p class="sub-desc" id="descSplit">Paste full Hotmail accounts to preview in Column A (Email), Column B (Password) and Column C (Extra Tokens) below.</p>
             
-            <textarea id="tokenInput" placeholder="Paste full Hotmail lines here... (e.g. user@hotmail.com:Pass123:TokenXYZ...)"></textarea>
+            <textarea id="tokenInput" placeholder="Paste hotmail lines here... (e.g. email:pass:token or email pass token)"></textarea>
             
             <div class="format-selector" style="margin-bottom: 10px;">
                 <span class="format-label" id="splitFormatLabel">Select Download Format:</span>
@@ -639,7 +639,7 @@
                 </button>
             </div>
 
-            <!-- Spreadsheet Live Preview Section (As Requested) -->
+            <!-- Spreadsheet Live Preview Section -->
             <div class="sheet-preview-card" id="sheetPreviewCard">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                     <span style="font-size: 0.78rem; font-weight: 700; color: var(--teal-primary);" id="previewTableTitle">Spreadsheet Preview (Cols A, B, C)</span>
@@ -654,9 +654,7 @@
                                 <th>Col C (Token / Rest)</th>
                             </tr>
                         </thead>
-                        <tbody id="sheetPreviewBody">
-                            <!-- Dynamic rows injected here -->
-                        </tbody>
+                        <tbody id="sheetPreviewBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -900,7 +898,7 @@
         }
     }
 
-    // HOTMAIL TOKEN SPLITTER & SHEET PREVIEW LOGIC
+    // FLEXIBLE HOTMAIL TOKEN SPLITTER & SHEET PREVIEW LOGIC
     function previewAndProcessTokens() {
         const inputData = document.getElementById('tokenInput').value.trim();
         const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
@@ -917,12 +915,23 @@
             const cleanLine = line.trim();
             if (!cleanLine) return;
 
-            // Split by colon (Email:Password:Token...)
-            const parts = cleanLine.split(':');
+            // Flexible parser: supports colon (:), pipe (|), tab, comma (,) or multiple spaces as separator
+            let parts = [];
+            if (cleanLine.includes(':')) {
+                parts = cleanLine.split(':');
+            } else if (cleanLine.includes('|')) {
+                parts = cleanLine.split('|');
+            } else if (cleanLine.includes('\t')) {
+                parts = cleanLine.split('\t');
+            } else if (cleanLine.includes(',')) {
+                parts = cleanLine.split(',');
+            } else {
+                parts = cleanLine.split(/\s+/); // space separated
+            }
+
             if (parts.length >= 2) {
                 const email = parts[0].trim();
                 const password = parts[1].trim();
-                // Everything else combined for Column C
                 const tokenRest = parts.slice(2).join(':').trim() || '';
 
                 if (email && password) {
@@ -932,7 +941,7 @@
         });
 
         if (globalProcessedRows.length === 0) {
-            alert(lang === 'bn' ? 'সঠিক ফরম্যাটে কোনো ডাটা পাওয়া যায়নি! (যেমন: email:pass:token)' : 'No valid data found in correct format! (e.g. email:pass:token)');
+            alert(lang === 'bn' ? 'সঠিক ফরম্যাটে কোনো ডাটা পাওয়া যায়নি! (যেমন: email:pass:token)' : 'No valid data found! Please ensure each line has email and password.');
             return;
         }
 
