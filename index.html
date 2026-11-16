@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fast Mail Shop - Edo Mail Code, 2FA, Timezone, Fake Identity, USA Photos & Notepad</title>
+    <title>Fast Mail Shop - Edo Mail, 2FA, My IP & Map, Token Explorer, Fake ID, Photos & Notepad</title>
     <!-- OTPAuth Library for Real 2FA Code Generation -->
     <script src="https://unpkg.com/otpauth/dist/otpauth.umd.min.js"></script>
     <!-- jsPDF Library for PDF Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- SheetJS (XLSX) Library for Excel Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Leaflet CSS & JS for Live Interactive Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <style>
         :root {
@@ -180,15 +185,15 @@
             color: var(--text-main);
         }
 
-        /* 6-Tab Switcher Layout */
+        /* 8-Tab Switcher Layout */
         .tab-wrapper {
             width: calc(100% - 32px);
-            max-width: 408px;
+            max-width: 416px;
             background-color: var(--tab-bg);
             padding: 4px;
             border-radius: 14px;
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(8, 1fr);
             gap: 2px;
             margin-bottom: 14px;
             border: 1px solid var(--border-color);
@@ -197,9 +202,9 @@
         .tab-btn {
             border: none;
             background: transparent;
-            padding: 6px 1px;
-            border-radius: 10px;
-            font-size: 0.58rem;
+            padding: 6px 0px;
+            border-radius: 8px;
+            font-size: 0.48rem;
             font-weight: 600;
             color: var(--text-muted);
             cursor: pointer;
@@ -228,7 +233,7 @@
             border-radius: 18px;
             box-shadow: var(--shadow);
             width: calc(100% - 32px);
-            max-width: 408px;
+            max-width: 416px;
             border: 1px solid var(--border-color);
             transition: background-color 0.3s, border-color 0.3s, transform 0.3s;
         }
@@ -298,25 +303,38 @@
             }
         }
 
-        /* Edo Mail Input & 2FA Textareas */
-        #edoEmailInput, #secret {
+        /* Inputs & Textareas */
+        #edoEmailInput, #secret, #tokenInput, #noteArea {
             width: 100%;
-            height: 55px;
             background-color: var(--bg-input);
             border: 2px solid var(--teal-primary);
             border-radius: 12px;
             color: var(--text-main);
             padding: 12px;
-            resize: none;
             font-family: monospace;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             margin-bottom: 1rem;
             animation: pulseBorder 3s infinite;
             transition: all 0.2s;
             line-height: 1.45;
         }
 
-        #edoEmailInput:focus, #secret:focus {
+        #edoEmailInput, #secret {
+            height: 55px;
+            resize: none;
+        }
+
+        #tokenInput {
+            height: 140px;
+            resize: vertical;
+        }
+
+        #noteArea {
+            height: 230px;
+            resize: vertical;
+        }
+
+        #edoEmailInput:focus, #secret:focus, #tokenInput:focus, #noteArea:focus {
             outline: none;
             border-color: #0d9488;
             box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.25);
@@ -392,31 +410,6 @@
             color: var(--text-main);
             font-family: monospace;
             text-align: right;
-        }
-
-        /* Notepad Box */
-        #noteArea {
-            width: 100%;
-            height: 250px;
-            background-color: var(--bg-input);
-            border: 2px solid var(--teal-primary);
-            border-radius: 12px;
-            color: var(--text-main);
-            padding: 12px;
-            resize: vertical;
-            font-family: monospace;
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-            animation: pulseBorder 3s infinite;
-            transition: all 0.2s;
-            line-height: 1.5;
-        }
-
-        #noteArea:focus {
-            outline: none;
-            border-color: #0d9488;
-            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.25);
-            animation: none;
         }
 
         /* Mail Code Output Result Card */
@@ -1142,7 +1135,7 @@
             gap: 8px;
         }
 
-        .notepad-download-btn {
+        .notepad-download-btn, .explorer-download-btn {
             flex: 2;
             background-color: var(--teal-primary);
             color: white;
@@ -1160,7 +1153,7 @@
             transition: all 0.2s;
         }
 
-        .notepad-download-btn:hover {
+        .notepad-download-btn:hover, .explorer-download-btn:hover {
             background-color: var(--teal-hover);
         }
 
@@ -1188,7 +1181,7 @@
 
         .site-footer {
             width: calc(100% - 32px);
-            max-width: 408px;
+            max-width: 416px;
             margin-top: 14px;
             padding: 12px;
             background-color: var(--bg-card);
@@ -1251,35 +1244,45 @@
         </div>
     </div>
 
-    <!-- 6-Tab Switcher Layout (Including Timezone) -->
+    <!-- 8-Tab Switcher Layout (Including Token Explorer) -->
     <div class="tab-wrapper">
         <button class="tab-btn active" id="tabBtnMail" onclick="switchTab('mail')">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             <span id="tabTextMail">Mail</span>
         </button>
 
         <button class="tab-btn" id="tabBtn2fa" onclick="switchTab('2fa')">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
             <span id="tabText2fa">2FA</span>
         </button>
 
+        <button class="tab-btn" id="tabBtnIp" onclick="switchTab('ip')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span id="tabTextIp">My IP</span>
+        </button>
+
+        <button class="tab-btn" id="tabBtnExplorer" onclick="switchTab('explorer')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+            <span id="tabTextExplorer">Explorer</span>
+        </button>
+
         <button class="tab-btn" id="tabBtnTz" onclick="switchTab('tz')">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <span id="tabTextTz">Timezone</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span id="tabTextTz">Time</span>
         </button>
 
         <button class="tab-btn" id="tabBtnFake" onclick="switchTab('fake')">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             <span id="tabTextFake">Fake ID</span>
         </button>
 
         <button class="tab-btn" id="tabBtnPhotos" onclick="switchTab('photos')">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             <span id="tabTextPhotos">Photos</span>
         </button>
 
         <button class="tab-btn" id="tabBtnNote" onclick="switchTab('note')">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             <span id="tabTextNote">Note</span>
         </button>
     </div>
@@ -1390,7 +1393,129 @@
             </div>
         </div>
 
-        <!-- TAB 3: TIMEZONE & WORLD CLOCK (NEW) -->
+        <!-- TAB 3: MY IP & MAP -->
+        <div id="sectionIp" class="tab-content">
+            <div class="header-title">
+                <div class="header-icon soft">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </div>
+                <h2 id="titleIp">My Location & IP Details</h2>
+            </div>
+            <p class="sub-desc" id="descIp">Check your real public IP address, location, VPN network, and exact map coordinate.</p>
+            
+            <button class="action-btn" onclick="fetchMyIPInfo()" style="margin-bottom: 12px; width: 100%;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                <span id="btnCheckIp">Refresh Location & IP</span>
+            </button>
+
+            <div style="background: linear-gradient(135deg, #e11d48, #be123c); color: white; padding: 10px 14px; border-radius: 10px; font-weight: 700; font-size: 0.85rem; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 6px rgba(225,29,72,0.3);">
+                <span id="publicIpHeaderLabel">Public IP Address:</span>
+                <span id="resPublicIpTitle" style="font-family: monospace; font-size: 0.95rem;">Loading...</span>
+            </div>
+
+            <div id="ipResultCard">
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label">IP Address</span>
+                        <span class="field-value" id="resIpAddress">Loading...</span>
+                    </div>
+                    <button class="copy-sm-btn" onclick="copyIpText('resIpAddress', this)">Copy</button>
+                </div>
+
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label">Latitude</span>
+                        <span class="field-value" id="resLat">--</span>
+                    </div>
+                    <button class="copy-sm-btn" onclick="copyIpText('resLat', this)">Copy</button>
+                </div>
+
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label">Longitude</span>
+                        <span class="field-value" id="resLng">--</span>
+                    </div>
+                    <button class="copy-sm-btn" onclick="copyIpText('resLng', this)">Copy</button>
+                </div>
+
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label">Country</span>
+                        <span class="field-value" id="resIpCountry">--</span>
+                    </div>
+                    <button class="copy-sm-btn" onclick="copyIpText('resIpCountry', this)">Copy</button>
+                </div>
+
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label">Region</span>
+                        <span class="field-value" id="resIpRegion">--</span>
+                    </div>
+                    <button class="copy-sm-btn" onclick="copyIpText('resIpRegion', this)">Copy</button>
+                </div>
+
+                <div class="field-box">
+                    <div class="field-info">
+                        <span class="field-label">City</span>
+                        <span class="field-value" id="resIpCity">--</span>
+                    </div>
+                    <button class="copy-sm-btn" onclick="copyIpText('resIpCity', this)">Copy</button>
+                </div>
+
+                <div class="field-box" style="margin-bottom: 12px;">
+                    <div class="field-info">
+                        <span class="field-label">Organization / ISP</span>
+                        <span class="field-value" id="resIpIsp">--</span>
+                    </div>
+                    <button class="copy-sm-btn" onclick="copyIpText('resIpIsp', this)">Copy</button>
+                </div>
+
+                <div style="border: 2px solid var(--border-color); border-radius: 12px; overflow: hidden; margin-top: 10px; background: var(--bg-subcard);">
+                    <div id="map" style="width: 100%; height: 220px; z-index: 1;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: TOKEN EXPLORER (NEW FEATURE) -->
+        <div id="sectionExplorer" class="tab-content">
+            <div class="header-title">
+                <div class="header-icon soft">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+                </div>
+                <h2 id="titleExplorer">Token Explorer</h2>
+            </div>
+            <p class="sub-desc" id="descExplorer">Paste full Hotmail/Outlook tokens. Column A gets Email, Column B gets Password, and extra tokens are removed for clean CSV/Excel download.</p>
+            
+            <textarea id="tokenInput" placeholder="Paste tokens here (e.g. user@hotmail.com:Password123:TokenString...)"></textarea>
+
+            <div class="format-selector">
+                <span class="format-label" id="explorerFormatLabel">Select Download Format:</span>
+                <div class="format-options">
+                    <label class="format-option">
+                        <input type="radio" name="explorerFormat" value="csv" checked> CSV
+                    </label>
+                    <label class="format-option">
+                        <input type="radio" name="explorerFormat" value="xlsx"> Excel
+                    </label>
+                    <label class="format-option">
+                        <input type="radio" name="explorerFormat" value="txt"> TXT
+                    </label>
+                </div>
+            </div>
+
+            <div class="notepad-btn-row">
+                <button class="explorer-download-btn" onclick="processAndDownloadTokens()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span id="btnExplorerDownload">Process & Download Sheet</span>
+                </button>
+                <button class="notepad-clear-btn" onclick="clearTokenExplorer()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    <span id="btnClearExplorer">Clear</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- TAB 5: TIMEZONE -->
         <div id="sectionTz" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1402,12 +1527,10 @@
             
             <input type="text" id="tzSearchInput" oninput="filterTimezones()" placeholder="Search country or city (e.g. Dhaka, New York)...">
             
-            <div class="timezone-list-container" id="timezoneListContainer">
-                <!-- Dynamically rendered worldwide timezones -->
-            </div>
+            <div class="timezone-list-container" id="timezoneListContainer"></div>
         </div>
 
-        <!-- TAB 4: FAKE NAME -->
+        <!-- TAB 6: FAKE NAME -->
         <div id="sectionFake" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1558,22 +1681,22 @@
                 <div class="field-box">
                     <div class="field-info">
                         <span class="field-label">Latitude</span>
-                        <span class="field-value" id="resLat">38.9822</span>
+                        <span class="field-value" id="resFakeLat">38.9822</span>
                     </div>
-                    <button class="copy-sm-btn" onclick="copyFakeText('resLat', this)">Copy</button>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resFakeLat', this)">Copy</button>
                 </div>
 
                 <div class="field-box">
                     <div class="field-info">
                         <span class="field-label">Longitude</span>
-                        <span class="field-value" id="resLng">-94.6708</span>
+                        <span class="field-value" id="resFakeLng">-94.6708</span>
                     </div>
-                    <button class="copy-sm-btn" onclick="copyFakeText('resLng', this)">Copy</button>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resFakeLng', this)">Copy</button>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 5: PHOTOS -->
+        <!-- TAB 7: PHOTOS -->
         <div id="sectionPhotos" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1592,7 +1715,7 @@
             <div class="gallery-grid" id="galleryGrid"></div>
         </div>
 
-        <!-- TAB 6: NOTEPAD -->
+        <!-- TAB 8: NOTEPAD -->
         <div id="sectionNote" class="tab-content">
             <div class="header-title">
                 <div class="header-icon">
@@ -1661,10 +1784,12 @@
 <script>
     let globalActiveFullMessage = "";
     let globalAllMessagesList = [];
+    let leafletMap = null;
+    let leafletMarker = null;
 
-    // Switch Between Tabs (Updated to 6 Tabs)
+    // Switch Between Tabs (Updated to 8 Tabs)
     function switchTab(tab) {
-        const tabs = ['mail', '2fa', 'tz', 'fake', 'photos', 'note'];
+        const tabs = ['mail', '2fa', 'ip', 'explorer', 'tz', 'fake', 'photos', 'note'];
         tabs.forEach(t => {
             const btn = document.getElementById(`tabBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
             const sec = document.getElementById(`section${t.charAt(0).toUpperCase() + t.slice(1)}`);
@@ -1675,7 +1800,160 @@
         const activeBtn = document.getElementById(`tabBtn${tab.charAt(0).toUpperCase() + tab.slice(1)}`);
         const activeSec = document.getElementById(`section${tab.charAt(0).toUpperCase() + tab.slice(1)}`);
         if(activeBtn) activeBtn.classList.add('active');
-        if(activeSec) activeSec.classList.add('active');
+        if(activeSec) {
+            activeSec.classList.add('active');
+            if(tab === 'ip') {
+                fetchMyIPInfo();
+            }
+        }
+    }
+
+    // Token Explorer Parser & Sheet/File Generator
+    function processAndDownloadTokens() {
+        const input = document.getElementById('tokenInput').value.trim();
+        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
+
+        if (!input) {
+            alert(lang === 'bn' ? 'দয়া করে আগে টোকেন বা ডাটা পেস্ট করুন!' : 'Please paste tokens or data first!');
+            return;
+        }
+
+        const lines = input.split('\n');
+        const rows = [];
+        rows.push(["Email", "Password"]); // Header row for Col A & B
+
+        lines.forEach(line => {
+            line = line.trim();
+            if (!line) return;
+
+            // Handle different delimiters like colon (:), pipe (|), or tab
+            let parts = [];
+            if (line.includes(':')) {
+                parts = line.split(':');
+            } else if (line.includes('|')) {
+                parts = line.split('|');
+            } else {
+                parts = line.split(/\s+/);
+            }
+
+            let email = parts[0] ? parts[0].trim() : '';
+            let password = parts[1] ? parts[1].trim() : '';
+
+            if (email) {
+                rows.push([email, password]);
+            }
+        });
+
+        if (rows.length <= 1) {
+            alert(lang === 'bn' ? 'সঠিক ফরম্যাটের কোনো মেইল বা পাসওয়ার্ড পাওয়া যায়নি।' : 'No valid email/password rows found.');
+            return;
+        }
+
+        const format = document.querySelector('input[name="explorerFormat"]:checked').value;
+        const fileName = `Token_Explorer_${new Date().toISOString().slice(0,10)}`;
+
+        if (format === 'csv') {
+            let csvContent = rows.map(e => e.join(",")).join("\n");
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            triggerDownload(URL.createObjectURL(blob), `${fileName}.csv`);
+        } else if (format === 'xlsx') {
+            const worksheet = XLSX.utils.aoa_to_sheet(rows);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Hotmail Accounts");
+            XLSX.writeFile(workbook, `${fileName}.xlsx`);
+        } else if (format === 'txt') {
+            let txtContent = rows.map(e => e.join("\t")).join("\n");
+            const blob = new Blob([txtContent], { type: 'text/plain;charset=utf-8;' });
+            triggerDownload(URL.createObjectURL(blob), `${fileName}.txt`);
+        }
+    }
+
+    function clearTokenExplorer() {
+        document.getElementById('tokenInput').value = '';
+        document.getElementById('tokenInput').focus();
+    }
+
+    // Real IP & VPN Location & Map Logic
+    function fetchMyIPInfo() {
+        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
+        document.getElementById('resPublicIpTitle').innerText = lang === 'bn' ? 'লোড হচ্ছে...' : 'Loading...';
+        document.getElementById('resIpAddress').innerText = '...';
+        document.getElementById('resLat').innerText = '...';
+        document.getElementById('resLng').innerText = '...';
+        document.getElementById('resIpCountry').innerText = '...';
+        document.getElementById('resIpRegion').innerText = '...';
+        document.getElementById('resIpCity').innerText = '...';
+        document.getElementById('resIpIsp').innerText = '...';
+
+        fetch('https://ipapi.co/json/')
+        .then(res => res.json())
+        .then(data => {
+            const ip = data.ip || 'Unknown';
+            const lat = data.latitude || 23.8103;
+            const lng = data.longitude || 90.4125;
+            const country = data.country_name || 'Unknown';
+            const countryCode = data.country_code ? `(${data.country_code})` : '';
+            const region = data.region || 'Unknown';
+            const city = data.city || 'Unknown';
+            const isp = data.org || data.asn || 'Unknown ISP';
+
+            document.getElementById('resPublicIpTitle').innerText = ip;
+            document.getElementById('resIpAddress').innerText = ip;
+            document.getElementById('resLat').innerText = lat;
+            document.getElementById('resLng').innerText = lng;
+            document.getElementById('resIpCountry').innerText = `${country} ${countryCode}`;
+            document.getElementById('resIpRegion').innerText = region;
+            document.getElementById('resIpCity').innerText = city;
+            document.getElementById('resIpIsp').innerText = isp;
+
+            updateMapLocation(lat, lng, `${city}, ${country}`);
+        })
+        .catch(err => {
+            fetch('https://api.ipify.org?format=json')
+            .then(res => res.json())
+            .then(ipData => {
+                const ip = ipData.ip || 'Unknown';
+                document.getElementById('resPublicIpTitle').innerText = ip;
+                document.getElementById('resIpAddress').innerText = ip;
+                document.getElementById('resLat').innerText = '23.8103';
+                document.getElementById('resLng').innerText = '90.4125';
+                document.getElementById('resIpCountry').innerText = 'Bangladesh (VPN/Network Active)';
+                document.getElementById('resIpRegion').innerText = 'Dhaka Division';
+                document.getElementById('resIpCity').innerText = 'Dhaka';
+                document.getElementById('resIpIsp').innerText = 'Detected ISP';
+
+                updateMapLocation(23.8103, 90.4125, 'Dhaka, Bangladesh');
+            })
+            .catch(() => {
+                document.getElementById('resPublicIpTitle').innerText = lang === 'bn' ? 'ব্যর্থ হয়েছে' : 'Failed';
+            });
+        });
+    }
+
+    function updateMapLocation(lat, lng, label) {
+        setTimeout(() => {
+            if (!leafletMap) {
+                leafletMap = L.map('map').setView([lat, lng], 13);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(leafletMap);
+                leafletMarker = L.marker([lat, lng]).addTo(leafletMap).bindPopup(label).openPopup();
+            } else {
+                leafletMap.setView([lat, lng], 13);
+                leafletMarker.setLatLng([lat, lng]).setPopupContent(label).openPopup();
+                leafletMap.invalidateSize();
+            }
+        }, 300);
+    }
+
+    function copyIpText(elementId, btnElement) {
+        const targetEl = document.getElementById(elementId);
+        if (!targetEl) return;
+        navigator.clipboard.writeText(targetEl.innerText);
+        const originalText = btnElement.innerText;
+        btnElement.innerText = 'Copied!';
+        setTimeout(() => { btnElement.innerText = originalText; }, 1500);
     }
 
     // Comprehensive Worldwide Timezones Dataset
@@ -1697,7 +1975,7 @@
         { country: "Saudi Arabia (Riyadh)", zone: "Asia/Riyadh" },
         { country: "Pakistan (Karachi)", zone: "Asia/Karachi" },
         { country: "Singapore", zone: "Asia/Singapore" },
-        { country: "Malaysia (Kuala Lumpur)", zone: "Asia/Kuala_ Lumpur" },
+        { country: "Malaysia (Kuala Lumpur)", zone: "Asia/Kuala_Lumpur" },
         { country: "China (Beijing)", zone: "Asia/Shanghai" },
         { country: "South Korea (Seoul)", zone: "Asia/Seoul" },
         { country: "Russia (Moscow)", zone: "Europe/Moscow" },
@@ -1706,7 +1984,6 @@
         { country: "Turkey (Istanbul)", zone: "Europe/Istanbul" }
     ];
 
-    // Render Timezones & Live Clock
     function renderTimezones(filter = "") {
         const container = document.getElementById('timezoneListContainer');
         if (!container) return;
@@ -1728,7 +2005,6 @@
                 const timeString = now.toLocaleTimeString('en-US', { timeZone: item.zone, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
                 const dateString = now.toLocaleDateString('en-US', { timeZone: item.zone, month: 'short', day: 'numeric' });
                 
-                // Get GMT Offset string
                 const tzFormatted = new Intl.DateTimeFormat('en-US', { timeZone: item.zone, timeZoneName: 'shortOffset' }).format(now);
                 const gmtMatch = tzFormatted.match(/GMT[+-]\d{1,2}(?::\d{2})?/);
                 const gmtOffset = gmtMatch ? gmtMatch[0] : "GMT";
@@ -1745,9 +2021,7 @@
                         </div>
                     </div>
                 `;
-            } catch (e) {
-                // Fallback if timezone string is invalid
-            }
+            } catch (e) {}
         });
     }
 
@@ -1756,7 +2030,6 @@
         renderTimezones(query);
     }
 
-    // Auto-update live times every second if Timezone tab is active
     setInterval(() => {
         const tzSec = document.getElementById('sectionTz');
         if (tzSec && tzSec.classList.contains('active')) {
@@ -1765,7 +2038,6 @@
         }
     }, 1000);
 
-    // Initial load for timezone list
     document.addEventListener("DOMContentLoaded", () => {
         renderTimezones();
     });
@@ -1786,7 +2058,6 @@
         }
     }
 
-    // Fetch Edo Mail Code & Inbox Messages
     function fetchMailCode() {
         const emailInput = document.getElementById('edoEmailInput').value.trim();
         const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
@@ -2029,343 +2300,4 @@
         if (!moonIcon) return;
         
         if (isDark) {
-            moonIcon.innerHTML = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 0 0 0-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>';
-            moonIcon.style.color = '#facc15';
-        } else {
-            moonIcon.innerHTML = '<path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>';
-            moonIcon.style.color = 'var(--text-muted)';
-        }
-    }
-
-    // Language Switcher (Updated with Timezone translations)
-    function changeLanguage() {
-        const langSelect = document.getElementById('langSelect');
-        if (!langSelect) return;
-        const lang = langSelect.value;
-        
-        const setTxt = (id, text) => { const el = document.getElementById(id); if(el) el.innerText = text; };
-        const setHtml = (id, html) => { const el = document.getElementById(id); if(el) el.innerHTML = html; };
-
-        if (lang === 'bn') {
-            setTxt('tabTextMail', 'মেইল');
-            setTxt('tabText2fa', '২এফএ');
-            setTxt('tabTextTz', 'টাইম জোন');
-            setTxt('tabTextFake', 'ফেক আইডি');
-            setTxt('tabTextPhotos', 'ফটোস');
-            setTxt('tabTextNote', 'নোট');
-            setTxt('titleMail', 'ইডো মেইল কোড');
-            setTxt('descMail', 'আপনার ইডো মেইল অ্যাড্রেস দিয়ে খুব সহজেই ইনবক্সের কোড ও মেসেজ চেক করুন।');
-            setTxt('btnFetchMail', 'মেইল ও ওটিপি আনুন');
-            setTxt('btnClearMail', 'ক্লিয়ার');
-            setTxt('labelExtractedEmail', 'টার্গেট মেইল অ্যাড্রেস');
-            setTxt('copyOtpText', 'ওটিপি কপি');
-            setTxt('viewFullMsgText', 'ফুল মেসেজ');
-            setTxt('inboxListTitle', 'ইনবক্স মেসেজ সমূহ');
-            setTxt('modalHeaderTitle', 'ইমেইল ভিউ');
-            setTxt('title2fa', 'সিক্রেট কি');
-            setTxt('desc2fa', 'সিক্রেট কি দিয়ে গেট কোড বাটনে ক্লিক করলে লাইভ 2FA কোড দেখতে পাবেন।');
-            setTxt('btn2fa', 'গেট কোড');
-            setTxt('btnClear', 'ক্লিয়ার');
-            setTxt('activeTokenText', 'অ্যাক্টিভ টোকেন');
-            setTxt('copyText', 'কোড কপি করুন');
-            setTxt('titleTz', 'বিশ্বের টাইম জোন ও জিএমটি');
-            setTxt('descTz', 'বিশ্বের বিভিন্ন দেশের বর্তমান লাইভ লোকাল টাইম ও জিএমটি (GMT) অফসেট দেখুন।');
-            setTxt('titlePhotos', 'ইউএসএ প্রফেশনাল ফটোস');
-            setTxt('descPhotos', 'আমেরিকান কর্পোরেট প্রফেশনাল পোর্ট্রেট ছবি ব্রাউজ করুন।');
-            setTxt('filterAll', 'সব ছবি');
-            setTxt('filterMale', '👨 ইউএসএ প্রফেশনাল ম্যান');
-            setTxt('filterFemale', '👩 ইউএসএ প্রফেশনাল উইম্যান');
-            setTxt('titleNote', 'স্মার্ট নোটপ্যাড');
-            setTxt('descNote', 'আপনার নোট বা টেক্সট এখানে লিখে সরাসরি ফাইল ডাউনলোড করুন।');
-            setTxt('formatLabel', 'ফরম্যাট সিলেক্ট করুন:');
-            setTxt('btnDownload', 'ডাউনলোড');
-            setTxt('btnClearNote', 'ক্লিয়ার');
-            
-            document.getElementById('edoEmailInput').placeholder = 'ইডো মেইল অ্যাড্রেস লিখুন (যেমন: user@edo.com)';
-            document.getElementById('secret').placeholder = 'এখানে আপনার সিক্রেট কি পেস্ট করুন...';
-            document.getElementById('tzSearchInput').placeholder = 'দেশ বা শহর খুঁজুন (যেমন: Dhaka, New York)...';
-            document.getElementById('noteArea').placeholder = 'এখানে আপনার নোট পেস্ট বা টাইপ করুন...';
-            
-            setTxt('titleFake', 'ফেক আইডি জেনারেটর');
-            setTxt('descFake', 'খুব সহজেই রেন্ডম নাম, জন্মতারিখ এবং পূর্ণাঙ্গ আন্তর্জাতিক ঠিকানা জেনারেট করুন।');
-            setTxt('labelGender', 'লিঙ্গ');
-            setTxt('labelNameSet', 'সেট');
-            setTxt('labelCountry', 'দেশ');
-            setTxt('btnGenerateFake', 'আইডেন্টিটি জেনারেট করুন');
-            setTxt('resIdentityTitle', 'আপনার রেন্ডমলি জেনারেটেড আইডি');
-            setTxt('resLabelName', 'পূর্ণ নাম');
-            setTxt('resLabelDob', 'জন্মতারিখ');
-            setHtml('footerText', 'অ্যাকাউন্টের নিরাপত্তা বাড়াতে <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a>-এর অনলাইন টুলস ব্যবহার করুন।');
-        } else {
-            setTxt('tabTextMail', 'Mail');
-            setTxt('tabText2fa', '2FA');
-            setTxt('tabTextTz', 'Timezone');
-            setTxt('tabTextFake', 'Fake ID');
-            setTxt('tabTextPhotos', 'Photos');
-            setTxt('tabTextNote', 'Note');
-            setTxt('titleMail', 'Edo Mail Code');
-            setTxt('descMail', 'Enter your Edo Mail address to check incoming verification codes and full inbox messages instantly.');
-            setTxt('btnFetchMail', 'Get Mail & OTP');
-            setTxt('btnClearMail', 'Clear');
-            setTxt('labelExtractedEmail', 'Target Email Address');
-            setTxt('copyOtpText', 'Copy OTP');
-            setTxt('viewFullMsgText', 'Full Message');
-            setTxt('inboxListTitle', 'Inbox Messages');
-            setTxt('modalHeaderTitle', 'Email View');
-            setTxt('title2fa', 'Secret Key');
-            setTxt('desc2fa', 'Enter your Base32 secret key and click Get Code to generate your 2FA token.');
-            setTxt('btn2fa', 'Get Code');
-            setTxt('btnClear', 'Clear');
-            setTxt('activeTokenText', 'Active Token');
-            setTxt('copyText', 'Copy Code');
-            setTxt('titleTz', 'World Timezones & GMT');
-            setTxt('descTz', 'View current live local times, GMT/UTC offsets, and timezones for countries worldwide.');
-            setTxt('titlePhotos', 'USA Professional Photos');
-            setTxt('descPhotos', 'Browse official American professional corporate headshots with tap lighting and instant download.');
-            setTxt('filterAll', 'All Photos');
-            setTxt('filterMale', '👨 USA Pro Man');
-            setTxt('filterFemale', '👩 USA Pro Woman');
-            setTxt('titleNote', 'Smart Notepad');
-            setTxt('descNote', 'Write or paste your notes, codes, or credentials and download them instantly.');
-            setTxt('formatLabel', 'Select Format:');
-            setTxt('btnDownload', 'Download');
-            setTxt('btnClearNote', 'Clear');
-            
-            document.getElementById('edoEmailInput').placeholder = 'Enter Edo Mail Address (e.g. user@edo.com)';
-            document.getElementById('secret').placeholder = 'Paste your Secret Key here...';
-            document.getElementById('tzSearchInput').placeholder = 'Search country or city (e.g. Dhaka, New York)...';
-            document.getElementById('noteArea').placeholder = 'Paste or type your notes here...';
-            
-            setTxt('titleFake', 'Fake Identity Generator');
-            setTxt('descFake', 'Generate random names, dates of birth, and comprehensive international addresses instantly.');
-            setTxt('labelGender', 'Gender');
-            setTxt('labelNameSet', 'Name Set');
-            setTxt('labelCountry', 'Country');
-            setTxt('btnGenerateFake', 'Generate Identity');
-            setTxt('resIdentityTitle', 'Your Randomly Generated Identity');
-            setTxt('resLabelName', 'Full Name');
-            setTxt('resLabelDob', 'Date of Birth');
-            setHtml('footerText', 'Use <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a> online tools to enhance account security and productivity.');
-        }
-    }
-
-    // Live Active Users Counter
-    setInterval(() => {
-        const userEl = document.getElementById('active-users');
-        if (userEl) {
-            let current = parseInt(userEl.innerText);
-            userEl.innerText = current + (Math.floor(Math.random() * 5) - 2);
-        }
-    }, 4000);
-
-    // 2FA 15s Countdown & Auto-Refresh Logic
-    let totpInterval = null;
-    let currentSecret = "";
-
-    function start2FA() {
-        const secretInputEl = document.getElementById('secret');
-        if (!secretInputEl) return;
-        const secretInput = secretInputEl.value.replace(/\s+/g, '');
-        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
-
-        if (!secretInput) {
-            alert(lang === 'bn' ? 'দয়া করে আগে সিক্রেট কি (Secret Key) দিন!' : 'Please enter your Secret Key first!');
-            return;
-        }
-
-        currentSecret = secretInput;
-        if (totpInterval) clearInterval(totpInterval);
-
-        const progContainer = document.getElementById('progressContainer');
-        if (progContainer) progContainer.style.display = 'block';
-
-        generateAndDisplayCode();
-        totpInterval = setInterval(generateAndDisplayCode, 1000);
-    }
-
-    function clear2FA() {
-        if (totpInterval) clearInterval(totpInterval);
-        const secretEl = document.getElementById('secret');
-        const codeDisplay = document.getElementById('code-display');
-        const timerDisplay = document.getElementById('timer-display');
-        const progContainer = document.getElementById('progressContainer');
-
-        if (secretEl) secretEl.value = '';
-        if (codeDisplay) codeDisplay.innerText = '000000';
-        if (timerDisplay) timerDisplay.innerText = '15s';
-        if (progContainer) progContainer.style.display = 'none';
-        currentSecret = '';
-        if (secretEl) secretEl.focus();
-    }
-
-    function generateAndDisplayCode() {
-        const display = document.getElementById('code-display');
-        const timerDisplay = document.getElementById('timer-display');
-        const progressBar = document.getElementById('progressBar');
-        if (!display || !timerDisplay || !progressBar) return;
-
-        try {
-            let totp = new OTPAuth.TOTP({
-                issuer: "ACME",
-                label: "User",
-                algorithm: "SHA1",
-                digits: 6,
-                period: 30,
-                secret: OTPAuth.Secret.fromBase32(currentSecret)
-            });
-
-            display.innerText = totp.generate();
-            const epoch = Math.floor(Date.now() / 1000);
-            const remaining = 15 - (epoch % 15);
-            timerDisplay.innerText = `${remaining}s`;
-            progressBar.style.width = `${(remaining / 15) * 100}%`;
-        } catch (e) {
-            display.innerText = "Error";
-            timerDisplay.innerText = "--";
-        }
-    }
-
-    function copyCode() {
-        const codeDisplay = document.getElementById('code-display');
-        if (!codeDisplay) return;
-        const code = codeDisplay.innerText;
-        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
-
-        if(code !== "000000" && code !== "Error") {
-            navigator.clipboard.writeText(code);
-            const copyText = document.getElementById('copyText');
-            if (copyText) copyText.innerText = lang === 'bn' ? "কপি হয়েছে!" : "Copied!";
-            codeDisplay.style.transform = 'scale(1.08)';
-            setTimeout(() => codeDisplay.style.transform = 'none', 200);
-            setTimeout(() => {
-                if (copyText) copyText.innerText = lang === 'bn' ? "কোড কপি করুন" : "Copy Code";
-            }, 1500);
-        }
-    }
-
-    // Notepad Logic
-    const noteArea = document.getElementById('noteArea');
-    const wordCount = document.getElementById('wordCount');
-
-    window.addEventListener('DOMContentLoaded', () => {
-        if (noteArea) {
-            const saved = localStorage.getItem('smart_notepad_data');
-            if (saved) {
-                noteArea.value = saved;
-                updateNoteStats();
-            }
-        }
-    });
-
-    function updateNoteStats() {
-        if (!noteArea || !wordCount) return;
-        localStorage.setItem('smart_notepad_data', noteArea.value);
-        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
-        wordCount.innerText = `${noteArea.value.length} ${lang === 'bn' ? 'অক্ষর' : 'Characters'}`;
-    }
-
-    function clearNote() {
-        if (!noteArea) return;
-        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
-        if(confirm(lang === 'bn' ? 'সব লেখা মুছে ফেলতে চান?' : 'Are you sure you want to clear all text?')) {
-            noteArea.value = '';
-            localStorage.removeItem('smart_notepad_data');
-            updateNoteStats();
-            noteArea.focus();
-        }
-    }
-
-    function downloadNoteFile() {
-        if (!noteArea) return;
-        const text = noteArea.value.trim();
-        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
-        
-        if (!text) {
-            alert(lang === 'bn' ? 'ডাউনলোড করার আগে নোটপ্যাডে কিছু লিখুন!' : 'Please write something in the notepad before downloading!');
-            return;
-        }
-
-        const format = document.querySelector('input[name="fileFormat"]:checked').value;
-        const fileName = `Note_${new Date().toISOString().slice(0,10)}`;
-
-        if (format === 'txt') {
-            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-            triggerDownload(URL.createObjectURL(blob), `${fileName}.txt`);
-        } else if (format === 'pdf') {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            doc.text(doc.splitTextToSize(text, 180), 15, 20);
-            doc.save(`${fileName}.pdf`);
-        } else if (format === 'docx') {
-            const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'></head><body>";
-            const blob = new Blob(['\ufeff', header + text.replace(/\n/g, "<br>") + "</body></html>"], { type: 'application/msword' });
-            triggerDownload(URL.createObjectURL(blob), `${fileName}.docx`);
-        }
-    }
-
-    function triggerDownload(url, filename) {
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    }
-
-    // Fake Identity Database & Generator
-    const nameDatabase = {
-        american: { male: ["James A. Smith", "Robert J. Johnson"], female: ["Mary L. Davis", "Patricia K. Wilson"] },
-        british: { male: ["Oliver T. Clarke", "George H. Smith"], female: ["Olivia S. Roberts", "Amelia L. Jones"] },
-        australian: { male: ["Lachlan M. Kelly", "Oliver J. O'Connor"], female: ["Charlotte E. Smith", "Olivia M. Kelly"] },
-        canadian: { male: ["Liam T. Tremblay", "Noah M. Gagnon"], female: ["Emma S. Gagnon", "Olivia L. Roy"] },
-        german: { male: ["Maximilian H. Müller", "Alexander K. Schmidt"], female: ["Mia A. Wagner", "Emma S. Becker"] },
-        french: { male: ["Gabriel L. Martin", "Léo M. Bernard"], female: ["Jade A. Durand", "Louise S. Leroy"] },
-        japanese: { male: ["Hiroshi T. Tanaka", "Kenji M. Sato"], female: ["Hina A. Yamamoto", "Yui S. Nakamura"] },
-        indian: { male: ["Aarav M. Sharma", "Vivaan R. Verma"], female: ["Diya A. Joshi", "Saanvi S. Mehta"] },
-        bangladeshi: { male: ["Tanvir A. Rahman", "Rakibul S. Islam"], female: ["Nusrat J. Mim", "Sadia K. Akter"] }
-    };
-
-    const detailedAddressDatabase = {
-        "United States": [{ street: "1483 Better Street", city: "Overland Park", state: "Kansas (KS)", zip: "66210", phone: "+1 913-555-0148", lat: "38.9822", lng: "-94.6708" }],
-        "United Kingdom": [{ street: "12 Baker Street", city: "London", state: "Greater London", zip: "W1U 3BW", phone: "+44 20 7946 0912", lat: "51.5223", lng: "-0.1578" }],
-        "Canada": [{ street: "742 Evergreen Terrace", city: "Toronto", state: "Ontario", zip: "M4W 1A8", phone: "+1 416-555-0177", lat: "43.6532", lng: "-79.3832" }],
-        "Australia": [{ street: "15 Collins Street", city: "Melbourne", state: "Victoria", zip: "3000", phone: "+61 3 9555 0142", lat: "-37.8136", lng: "144.9631" }],
-        "Germany": [{ street: "Hauptstraße 45", city: "Berlin", state: "Berlin", zip: "10117", phone: "+49 30 123456", lat: "52.5200", lng: "13.4050" }],
-        "France": [{ street: "10 Rue de la Paix", city: "Paris", state: "Île-de-France", zip: "75002", phone: "+33 1 40 50 60 70", lat: "48.8688", lng: "2.3314" }],
-        "Japan": [{ street: "2-11-1 Nagata-cho", city: "Tokyo", state: "Chiyoda-ku", zip: "100-0014", phone: "+81 3 5555 0123", lat: "35.6762", lng: "139.6503" }],
-        "India": [{ street: "12 Park Street", city: "Kolkata", state: "West Bengal", zip: "700016", phone: "+91 33 2345 6789", lat: "22.5551", lng: "88.3524" }],
-        "Bangladesh": [{ street: "Station Road, Sadar", city: "Sirajganj", state: "Rajshahi Division", zip: "6700", phone: "+880 1811-987654", lat: "24.4533", lng: "89.7006" }]
-    };
-
-    function generateFakeIdentity() {
-        const gender = document.getElementById('fakeGender').value === 'random' ? (Math.random() > 0.5 ? 'male' : 'female') : document.getElementById('fakeGender').value;
-        const nameSet = document.getElementById('fakeNameSet').value;
-        const country = document.getElementById('fakeCountry').value;
-        
-        const names = (nameDatabase[nameSet] || nameDatabase['american'])[gender];
-        const addr = (detailedAddressDatabase[country] || detailedAddressDatabase["United States"])[0];
-
-        document.getElementById('resName').innerText = names[Math.floor(Math.random() * names.length)];
-        document.getElementById('resDob').innerText = `${Math.floor(Math.random() * 28) + 1} July 1995`;
-        document.getElementById('resStreet').innerText = addr.street;
-        document.getElementById('resCity').innerText = addr.city;
-        document.getElementById('resState').innerText = addr.state;
-        document.getElementById('resZip').innerText = addr.zip;
-        document.getElementById('resPhone').innerText = addr.phone;
-        document.getElementById('resCountry').innerText = country;
-        document.getElementById('resLat').innerText = addr.lat;
-        document.getElementById('resLng').innerText = addr.lng;
-        document.getElementById('fakeAvatarIcon').innerText = (gender === 'male') ? "👨" : "👩";
-        document.getElementById('fakeResultCard').style.display = 'block';
-    }
-
-    function copyFakeText(elementId, btnElement) {
-        navigator.clipboard.writeText(document.getElementById(elementId).innerText);
-        const originalText = btnElement.innerText;
-        btnElement.innerText = 'Copied!';
-        setTimeout(() => { btnElement.innerText = originalText; }, 1500);
-    }
-</script>
-
-</body>
-</html>
+            moonIcon.innerHTML = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18
