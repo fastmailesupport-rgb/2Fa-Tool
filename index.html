@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fast Mail Shop - Edo Mail Code, 2FA, Fake Identity, USA Professional Photos & Notepad</title>
+    <title>Fast Mail Shop - Edo Mail Code, 2FA, Timezone, Fake Identity, USA Photos & Notepad</title>
     <!-- OTPAuth Library for Real 2FA Code Generation -->
     <script src="https://unpkg.com/otpauth/dist/otpauth.umd.min.js"></script>
     <!-- jsPDF Library for PDF Export -->
@@ -180,7 +180,7 @@
             color: var(--text-main);
         }
 
-        /* 5-Tab Switcher Layout */
+        /* 6-Tab Switcher Layout */
         .tab-wrapper {
             width: calc(100% - 32px);
             max-width: 408px;
@@ -188,8 +188,8 @@
             padding: 4px;
             border-radius: 14px;
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 3px;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 2px;
             margin-bottom: 14px;
             border: 1px solid var(--border-color);
         }
@@ -197,9 +197,9 @@
         .tab-btn {
             border: none;
             background: transparent;
-            padding: 7px 1px;
+            padding: 6px 1px;
             border-radius: 10px;
-            font-size: 0.65rem;
+            font-size: 0.58rem;
             font-weight: 600;
             color: var(--text-muted);
             cursor: pointer;
@@ -323,6 +323,77 @@
             animation: none;
         }
 
+        /* Timezone Search & List Styles */
+        #tzSearchInput {
+            width: 100%;
+            height: 42px;
+            background-color: var(--bg-input);
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-main);
+            padding: 0 12px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        #tzSearchInput:focus {
+            border-color: var(--teal-primary);
+        }
+
+        .timezone-list-container {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .tz-card {
+            background-color: var(--bg-subcard);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 9px 12px;
+            margin-bottom: 7px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.2s;
+        }
+
+        .tz-card:hover {
+            border-color: var(--teal-primary);
+        }
+
+        .tz-info {
+            font-size: 0.78rem;
+            overflow: hidden;
+            padding-right: 6px;
+        }
+
+        .tz-country-name {
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tz-gmt-val {
+            font-size: 0.72rem;
+            color: var(--teal-primary);
+            font-weight: 700;
+            font-family: monospace;
+            margin-top: 2px;
+        }
+
+        .tz-time-val {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--text-main);
+            font-family: monospace;
+            text-align: right;
+        }
+
         /* Notepad Box */
         #noteArea {
             width: 100%;
@@ -348,7 +419,7 @@
             animation: none;
         }
 
-        /* Mail Code Output Result Card & Platform Icon Row */
+        /* Mail Code Output Result Card */
         .mail-result-card {
             margin-top: 1.2rem;
             background-color: var(--bg-subcard);
@@ -422,7 +493,6 @@
             color: var(--teal-primary);
         }
 
-        /* Inbox All Messages List Styles */
         .inbox-list-section {
             margin-top: 15px;
             border-top: 1px solid var(--border-color);
@@ -1181,30 +1251,35 @@
         </div>
     </div>
 
-    <!-- 5-Tab Switcher Layout -->
+    <!-- 6-Tab Switcher Layout (Including Timezone) -->
     <div class="tab-wrapper">
         <button class="tab-btn active" id="tabBtnMail" onclick="switchTab('mail')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            <span id="tabTextMail">Mail Code</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span id="tabTextMail">Mail</span>
         </button>
 
         <button class="tab-btn" id="tabBtn2fa" onclick="switchTab('2fa')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-            <span id="tabText2fa">2FA Key</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+            <span id="tabText2fa">2FA</span>
+        </button>
+
+        <button class="tab-btn" id="tabBtnTz" onclick="switchTab('tz')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span id="tabTextTz">Timezone</span>
         </button>
 
         <button class="tab-btn" id="tabBtnFake" onclick="switchTab('fake')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            <span id="tabTextFake">Fake Name</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span id="tabTextFake">Fake ID</span>
         </button>
 
         <button class="tab-btn" id="tabBtnPhotos" onclick="switchTab('photos')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             <span id="tabTextPhotos">Photos</span>
         </button>
 
         <button class="tab-btn" id="tabBtnNote" onclick="switchTab('note')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             <span id="tabTextNote">Note</span>
         </button>
     </div>
@@ -1212,7 +1287,7 @@
     <!-- Main Container -->
     <div class="container">
         
-        <!-- TAB 1: EDO MAIL CODE (Hotmail Removed & Replaced) -->
+        <!-- TAB 1: EDO MAIL CODE -->
         <div id="sectionMail" class="tab-content active">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1236,7 +1311,6 @@
             </div>
             
             <div class="mail-result-card" id="mailResultCard">
-                <!-- Extracted Email Copy Box -->
                 <div class="field-box name-highlight-box" style="margin-bottom: 10px;">
                     <div class="field-info" style="width: 100%; overflow: hidden;">
                         <span class="field-label" id="labelExtractedEmail">Target Email Address</span>
@@ -1245,14 +1319,12 @@
                     <button class="copy-sm-btn" onclick="copyMailText('resEmailAddress', this)">Copy</button>
                 </div>
 
-                <!-- OTP Card with Platform App Icon & Full Message Button -->
                 <div class="token-card" style="margin-top: 8px;">
                     <div class="token-header-row">
                         <div class="token-label" id="mailOtpLabel">LATEST OTP FROM: <span id="platformNameText" style="color: var(--teal-primary);">EDO MAIL</span></div>
                         <div id="mailTimerBadge" class="timer-badge">Just Now</div>
                     </div>
 
-                    <!-- App Icon on Left + OTP Display -->
                     <div class="otp-platform-display">
                         <div class="platform-icon-box" id="platformIconContainer" title="Sender Platform">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -1260,7 +1332,6 @@
                         <div class="otp-code-value" id="mailCodeDisplay">------</div>
                     </div>
 
-                    <!-- Copy OTP & View Full Message Buttons -->
                     <div class="mail-action-grid">
                         <button class="copy-btn" onclick="copyMailCodeText()">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
@@ -1272,14 +1343,10 @@
                         </button>
                     </div>
 
-                    <!-- Inbox All Messages List Section -->
                     <div class="inbox-list-section">
                         <div class="inbox-header-title" id="inboxListTitle">Inbox Messages</div>
-                        <div id="inboxListContainer">
-                            <!-- Dynamic inbox items will render here -->
-                        </div>
+                        <div id="inboxListContainer"></div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -1323,7 +1390,24 @@
             </div>
         </div>
 
-        <!-- TAB 3: FAKE NAME -->
+        <!-- TAB 3: TIMEZONE & WORLD CLOCK (NEW) -->
+        <div id="sectionTz" class="tab-content">
+            <div class="header-title">
+                <div class="header-icon soft">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <h2 id="titleTz">World Timezones & GMT</h2>
+            </div>
+            <p class="sub-desc" id="descTz">View current live local times, GMT/UTC offsets, and timezones for countries worldwide.</p>
+            
+            <input type="text" id="tzSearchInput" oninput="filterTimezones()" placeholder="Search country or city (e.g. Dhaka, New York)...">
+            
+            <div class="timezone-list-container" id="timezoneListContainer">
+                <!-- Dynamically rendered worldwide timezones -->
+            </div>
+        </div>
+
+        <!-- TAB 4: FAKE NAME -->
         <div id="sectionFake" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1489,7 +1573,7 @@
             </div>
         </div>
 
-        <!-- TAB 4: PHOTOS -->
+        <!-- TAB 5: PHOTOS -->
         <div id="sectionPhotos" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1508,7 +1592,7 @@
             <div class="gallery-grid" id="galleryGrid"></div>
         </div>
 
-        <!-- TAB 5: NOTEPAD -->
+        <!-- TAB 6: NOTEPAD -->
         <div id="sectionNote" class="tab-content">
             <div class="header-title">
                 <div class="header-icon">
@@ -1570,9 +1654,7 @@
                 </div>
                 <button class="modal-close-btn" onclick="closeFullMessageModal()">&times;</button>
             </div>
-            <div class="modal-body" id="modalFullBodyContent">
-                <!-- Dynamic full message content -->
-            </div>
+            <div class="modal-body" id="modalFullBodyContent"></div>
         </div>
     </div>
 
@@ -1580,9 +1662,9 @@
     let globalActiveFullMessage = "";
     let globalAllMessagesList = [];
 
-    // Switch Between Tabs
+    // Switch Between Tabs (Updated to 6 Tabs)
     function switchTab(tab) {
-        const tabs = ['mail', '2fa', 'fake', 'photos', 'note'];
+        const tabs = ['mail', '2fa', 'tz', 'fake', 'photos', 'note'];
         tabs.forEach(t => {
             const btn = document.getElementById(`tabBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
             const sec = document.getElementById(`section${t.charAt(0).toUpperCase() + t.slice(1)}`);
@@ -1595,6 +1677,98 @@
         if(activeBtn) activeBtn.classList.add('active');
         if(activeSec) activeSec.classList.add('active');
     }
+
+    // Comprehensive Worldwide Timezones Dataset
+    const worldTimezones = [
+        { country: "Bangladesh (Dhaka)", zone: "Asia/Dhaka" },
+        { country: "United States (New York - EST)", zone: "America/New_York" },
+        { country: "United States (Los Angeles - PST)", zone: "America/Los_Angeles" },
+        { country: "United States (Chicago - CST)", zone: "America/Chicago" },
+        { country: "United Kingdom (London - GMT/BST)", zone: "Europe/London" },
+        { country: "Germany (Berlin)", zone: "Europe/Berlin" },
+        { country: "France (Paris)", zone: "Europe/Paris" },
+        { country: "Canada (Toronto)", zone: "America/Toronto" },
+        { country: "Canada (Vancouver)", zone: "America/Vancouver" },
+        { country: "Australia (Sydney)", zone: "Australia/Sydney" },
+        { country: "Australia (Melbourne)", zone: "Australia/Melbourne" },
+        { country: "Japan (Tokyo)", zone: "Asia/Tokyo" },
+        { country: "India (Kolkata/New Delhi)", zone: "Asia/Kolkata" },
+        { country: "United Arab Emirates (Dubai)", zone: "Asia/Dubai" },
+        { country: "Saudi Arabia (Riyadh)", zone: "Asia/Riyadh" },
+        { country: "Pakistan (Karachi)", zone: "Asia/Karachi" },
+        { country: "Singapore", zone: "Asia/Singapore" },
+        { country: "Malaysia (Kuala Lumpur)", zone: "Asia/Kuala_ Lumpur" },
+        { country: "China (Beijing)", zone: "Asia/Shanghai" },
+        { country: "South Korea (Seoul)", zone: "Asia/Seoul" },
+        { country: "Russia (Moscow)", zone: "Europe/Moscow" },
+        { country: "Brazil (São Paulo)", zone: "America/Sao_Paulo" },
+        { country: "South Africa (Johannesburg)", zone: "Africa/Johannesburg" },
+        { country: "Turkey (Istanbul)", zone: "Europe/Istanbul" }
+    ];
+
+    // Render Timezones & Live Clock
+    function renderTimezones(filter = "") {
+        const container = document.getElementById('timezoneListContainer');
+        if (!container) return;
+        container.innerHTML = "";
+
+        const filtered = worldTimezones.filter(item => 
+            item.country.toLowerCase().includes(filter.toLowerCase()) || 
+            item.zone.toLowerCase().includes(filter.toLowerCase())
+        );
+
+        if (filtered.length === 0) {
+            container.innerHTML = "<p style='font-size:0.8rem; color:var(--text-muted); text-align:center; padding:15px;'>No matching timezones found.</p>";
+            return;
+        }
+
+        filtered.forEach(item => {
+            try {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', { timeZone: item.zone, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+                const dateString = now.toLocaleDateString('en-US', { timeZone: item.zone, month: 'short', day: 'numeric' });
+                
+                // Get GMT Offset string
+                const tzFormatted = new Intl.DateTimeFormat('en-US', { timeZone: item.zone, timeZoneName: 'shortOffset' }).format(now);
+                const gmtMatch = tzFormatted.match(/GMT[+-]\d{1,2}(?::\d{2})?/);
+                const gmtOffset = gmtMatch ? gmtMatch[0] : "GMT";
+
+                container.innerHTML += `
+                    <div class="tz-card">
+                        <div class="tz-info">
+                            <div class="tz-country-name">${item.country}</div>
+                            <div class="tz-gmt-val">${gmtOffset} (${item.zone})</div>
+                        </div>
+                        <div class="tz-time-val">
+                            <div>${timeString}</div>
+                            <div style="font-size:0.68rem; color:var(--text-muted); font-weight:600;">${dateString}</div>
+                        </div>
+                    </div>
+                `;
+            } catch (e) {
+                // Fallback if timezone string is invalid
+            }
+        });
+    }
+
+    function filterTimezones() {
+        const query = document.getElementById('tzSearchInput').value;
+        renderTimezones(query);
+    }
+
+    // Auto-update live times every second if Timezone tab is active
+    setInterval(() => {
+        const tzSec = document.getElementById('sectionTz');
+        if (tzSec && tzSec.classList.contains('active')) {
+            const query = document.getElementById('tzSearchInput') ? document.getElementById('tzSearchInput').value : '';
+            renderTimezones(query);
+        }
+    }, 1000);
+
+    // Initial load for timezone list
+    document.addEventListener("DOMContentLoaded", () => {
+        renderTimezones();
+    });
 
     // Platform Icon Helper
     function getPlatformBadge(senderOrText) {
@@ -1612,7 +1786,7 @@
         }
     }
 
-    // Fetch Edo Mail Code & Inbox Messages using new API
+    // Fetch Edo Mail Code & Inbox Messages
     function fetchMailCode() {
         const emailInput = document.getElementById('edoEmailInput').value.trim();
         const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
@@ -1626,13 +1800,11 @@
         document.getElementById('mailCodeDisplay').innerText = "WAIT...";
         document.getElementById('mailResultCard').style.display = 'block';
 
-        // NEW EDO MAIL API CONNECTION
         const apiUrl = `https://api.vf9p.us/v1.php?email=${encodeURIComponent(emailInput)}`;
 
         fetch(apiUrl)
         .then(res => res.json())
         .then(data => {
-            // ধরে নিচ্ছি এপিআই থেকে ডেটা অ্যারে বা অবজেক্ট আকারে আসতে পারে
             let messages = [];
             if (Array.isArray(data)) {
                 messages = data;
@@ -1651,12 +1823,10 @@
                 return;
             }
 
-            // লেটেস্ট মেসেজটি পিক করা
             const latestMsg = messages[0];
             const sender = latestMsg.sender || latestMsg.from || "System";
             const subject = latestMsg.subject || "Verification Code";
             
-            // মেসেজ বডি বা সাবজেক্ট থেকে ওটিপি কোড এক্সট্রাক্ট করা (4 থেকে 8 ডিজিট)
             const fullText = (latestMsg.body || latestMsg.text || latestMsg.html || "") + " " + subject;
             const otpMatch = fullText.match(/\b\d{4,8}\b/);
             const otp = otpMatch ? otpMatch[0] : "------";
@@ -1665,7 +1835,6 @@
 
             updateMailUI(sender, subject, otp, globalActiveFullMessage);
             
-            // ইনবক্স লিস্ট রেন্ডার করা
             const formattedList = messages.map(m => ({
                 sender: m.sender || m.from || "System",
                 subject: m.subject || "Verification Code",
@@ -1687,7 +1856,6 @@
         document.getElementById('mailCodeDisplay').innerText = otp;
     }
 
-    // Render All Inbox Messages List
     function renderInboxList(messages) {
         const container = document.getElementById('inboxListContainer');
         if (!container) return;
@@ -1712,7 +1880,6 @@
         });
     }
 
-    // Open Modal with Specific Inbox Message
     function viewSpecificInboxMessage(index) {
         const msg = globalAllMessagesList[index];
         if (!msg) return;
@@ -1720,7 +1887,6 @@
         document.getElementById('fullMsgModal').style.display = 'flex';
     }
 
-    // Open Modal for Main Latest Full Message
     function openFullMessageModal() {
         document.getElementById('modalFullBodyContent').innerText = globalActiveFullMessage || "No full message available.";
         document.getElementById('fullMsgModal').style.display = 'flex';
@@ -1871,7 +2037,7 @@
         }
     }
 
-    // Language Switcher
+    // Language Switcher (Updated with Timezone translations)
     function changeLanguage() {
         const langSelect = document.getElementById('langSelect');
         if (!langSelect) return;
@@ -1881,11 +2047,12 @@
         const setHtml = (id, html) => { const el = document.getElementById(id); if(el) el.innerHTML = html; };
 
         if (lang === 'bn') {
-            setTxt('tabTextMail', 'মেইল কোড');
-            setTxt('tabText2fa', '২এফএ কি');
-            setTxt('tabTextFake', 'ফেক নেম');
+            setTxt('tabTextMail', 'মেইল');
+            setTxt('tabText2fa', '২এফএ');
+            setTxt('tabTextTz', 'টাইম জোন');
+            setTxt('tabTextFake', 'ফেক আইডি');
             setTxt('tabTextPhotos', 'ফটোস');
-            setTxt('tabTextNote', 'নোটপ্যাড');
+            setTxt('tabTextNote', 'নোট');
             setTxt('titleMail', 'ইডো মেইল কোড');
             setTxt('descMail', 'আপনার ইডো মেইল অ্যাড্রেস দিয়ে খুব সহজেই ইনবক্সের কোড ও মেসেজ চেক করুন।');
             setTxt('btnFetchMail', 'মেইল ও ওটিপি আনুন');
@@ -1901,6 +2068,8 @@
             setTxt('btnClear', 'ক্লিয়ার');
             setTxt('activeTokenText', 'অ্যাক্টিভ টোকেন');
             setTxt('copyText', 'কোড কপি করুন');
+            setTxt('titleTz', 'বিশ্বের টাইম জোন ও জিএমটি');
+            setTxt('descTz', 'বিশ্বের বিভিন্ন দেশের বর্তমান লাইভ লোকাল টাইম ও জিএমটি (GMT) অফসেট দেখুন।');
             setTxt('titlePhotos', 'ইউএসএ প্রফেশনাল ফটোস');
             setTxt('descPhotos', 'আমেরিকান কর্পোরেট প্রফেশনাল পোর্ট্রেট ছবি ব্রাউজ করুন।');
             setTxt('filterAll', 'সব ছবি');
@@ -1914,6 +2083,7 @@
             
             document.getElementById('edoEmailInput').placeholder = 'ইডো মেইল অ্যাড্রেস লিখুন (যেমন: user@edo.com)';
             document.getElementById('secret').placeholder = 'এখানে আপনার সিক্রেট কি পেস্ট করুন...';
+            document.getElementById('tzSearchInput').placeholder = 'দেশ বা শহর খুঁজুন (যেমন: Dhaka, New York)...';
             document.getElementById('noteArea').placeholder = 'এখানে আপনার নোট পেস্ট বা টাইপ করুন...';
             
             setTxt('titleFake', 'ফেক আইডি জেনারেটর');
@@ -1927,9 +2097,10 @@
             setTxt('resLabelDob', 'জন্মতারিখ');
             setHtml('footerText', 'অ্যাকাউন্টের নিরাপত্তা বাড়াতে <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a>-এর অনলাইন টুলস ব্যবহার করুন।');
         } else {
-            setTxt('tabTextMail', 'Mail Code');
-            setTxt('tabText2fa', '2FA Key');
-            setTxt('tabTextFake', 'Fake Name');
+            setTxt('tabTextMail', 'Mail');
+            setTxt('tabText2fa', '2FA');
+            setTxt('tabTextTz', 'Timezone');
+            setTxt('tabTextFake', 'Fake ID');
             setTxt('tabTextPhotos', 'Photos');
             setTxt('tabTextNote', 'Note');
             setTxt('titleMail', 'Edo Mail Code');
@@ -1947,6 +2118,8 @@
             setTxt('btnClear', 'Clear');
             setTxt('activeTokenText', 'Active Token');
             setTxt('copyText', 'Copy Code');
+            setTxt('titleTz', 'World Timezones & GMT');
+            setTxt('descTz', 'View current live local times, GMT/UTC offsets, and timezones for countries worldwide.');
             setTxt('titlePhotos', 'USA Professional Photos');
             setTxt('descPhotos', 'Browse official American professional corporate headshots with tap lighting and instant download.');
             setTxt('filterAll', 'All Photos');
@@ -1960,6 +2133,7 @@
             
             document.getElementById('edoEmailInput').placeholder = 'Enter Edo Mail Address (e.g. user@edo.com)';
             document.getElementById('secret').placeholder = 'Paste your Secret Key here...';
+            document.getElementById('tzSearchInput').placeholder = 'Search country or city (e.g. Dhaka, New York)...';
             document.getElementById('noteArea').placeholder = 'Paste or type your notes here...';
             
             setTxt('titleFake', 'Fake Identity Generator');
