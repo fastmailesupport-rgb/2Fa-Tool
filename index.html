@@ -3,14 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fast Mail Shop - Edo Mail Code, 2FA, My IP & Map, Fake Identity, USA Photos & Notepad</title>
+    <title>Fast Mail Shop - Edo Mail Code, 2FA, Timezone, Fake Identity, USA Photos & Notepad</title>
     <!-- OTPAuth Library for Real 2FA Code Generation -->
     <script src="https://unpkg.com/otpauth/dist/otpauth.umd.min.js"></script>
     <!-- jsPDF Library for PDF Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- Leaflet CSS & JS for Live Interactive Map -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <style>
         :root {
@@ -183,7 +180,7 @@
             color: var(--text-main);
         }
 
-        /* 7-Tab Switcher Layout */
+        /* 6-Tab Switcher Layout */
         .tab-wrapper {
             width: calc(100% - 32px);
             max-width: 408px;
@@ -191,7 +188,7 @@
             padding: 4px;
             border-radius: 14px;
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
+            grid-template-columns: repeat(6, 1fr);
             gap: 2px;
             margin-bottom: 14px;
             border: 1px solid var(--border-color);
@@ -200,9 +197,9 @@
         .tab-btn {
             border: none;
             background: transparent;
-            padding: 6px 0px;
-            border-radius: 8px;
-            font-size: 0.52rem;
+            padding: 6px 1px;
+            border-radius: 10px;
+            font-size: 0.58rem;
             font-weight: 600;
             color: var(--text-muted);
             cursor: pointer;
@@ -1254,40 +1251,35 @@
         </div>
     </div>
 
-    <!-- 7-Tab Switcher Layout (Including My IP) -->
+    <!-- 6-Tab Switcher Layout (Including Timezone) -->
     <div class="tab-wrapper">
         <button class="tab-btn active" id="tabBtnMail" onclick="switchTab('mail')">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             <span id="tabTextMail">Mail</span>
         </button>
 
         <button class="tab-btn" id="tabBtn2fa" onclick="switchTab('2fa')">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
             <span id="tabText2fa">2FA</span>
         </button>
 
-        <button class="tab-btn" id="tabBtnIp" onclick="switchTab('ip')">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            <span id="tabTextIp">My IP</span>
-        </button>
-
         <button class="tab-btn" id="tabBtnTz" onclick="switchTab('tz')">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <span id="tabTextTz">Time</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span id="tabTextTz">Timezone</span>
         </button>
 
         <button class="tab-btn" id="tabBtnFake" onclick="switchTab('fake')">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             <span id="tabTextFake">Fake ID</span>
         </button>
 
         <button class="tab-btn" id="tabBtnPhotos" onclick="switchTab('photos')">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             <span id="tabTextPhotos">Photos</span>
         </button>
 
         <button class="tab-btn" id="tabBtnNote" onclick="switchTab('note')">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             <span id="tabTextNote">Note</span>
         </button>
     </div>
@@ -1398,92 +1390,7 @@
             </div>
         </div>
 
-        <!-- TAB 3: MY IP & EXACT LOCATION MAP (UPDATED AS REQUESTED) -->
-        <div id="sectionIp" class="tab-content">
-            <div class="header-title">
-                <div class="header-icon soft">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                </div>
-                <h2 id="titleIp">My Location & IP Details</h2>
-            </div>
-            <p class="sub-desc" id="descIp">Check your real public IP address, location, VPN network, and exact map coordinate.</p>
-            
-            <button class="action-btn" onclick="fetchMyIPInfo()" style="margin-bottom: 12px; width: 100%;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
-                <span id="btnCheckIp">Refresh Location & IP</span>
-            </button>
-
-            <!-- Pink Header Banner matching screenshot style -->
-            <div style="background: linear-gradient(135deg, #e11d48, #be123c); color: white; padding: 10px 14px; border-radius: 10px; font-weight: 700; font-size: 0.85rem; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 6px rgba(225,29,72,0.3);">
-                <span id="publicIpHeaderLabel">Public IP Address:</span>
-                <span id="resPublicIpTitle" style="font-family: monospace; font-size: 0.95rem;">Loading...</span>
-            </div>
-
-            <div id="ipResultCard">
-                <div class="field-box">
-                    <div class="field-info">
-                        <span class="field-label">IP Address</span>
-                        <span class="field-value" id="resIpAddress">Loading...</span>
-                    </div>
-                    <button class="copy-sm-btn" onclick="copyIpText('resIpAddress', this)">Change / Copy</button>
-                </div>
-
-                <div class="field-box">
-                    <div class="field-info">
-                        <span class="field-label">Latitude</span>
-                        <span class="field-value" id="resLat">--</span>
-                    </div>
-                    <button class="copy-sm-btn" onclick="copyIpText('resLat', this)">Copy</button>
-                </div>
-
-                <div class="field-box">
-                    <div class="field-info">
-                        <span class="field-label">Longitude</span>
-                        <span class="field-value" id="resLng">--</span>
-                    </div>
-                    <button class="copy-sm-btn" onclick="copyIpText('resLng', this)">Copy</button>
-                </div>
-
-                <div class="field-box">
-                    <div class="field-info">
-                        <span class="field-label">Country</span>
-                        <span class="field-value" id="resIpCountry">--</span>
-                    </div>
-                    <button class="copy-sm-btn" onclick="copyIpText('resIpCountry', this)">Copy</button>
-                </div>
-
-                <div class="field-box">
-                    <div class="field-info">
-                        <span class="field-label">Region</span>
-                        <span class="field-value" id="resIpRegion">--</span>
-                    </div>
-                    <button class="copy-sm-btn" onclick="copyIpText('resIpRegion', this)">Copy</button>
-                </div>
-
-                <div class="field-box">
-                    <div class="field-info">
-                        <span class="field-label">City</span>
-                        <span class="field-value" id="resIpCity">--</span>
-                    </div>
-                    <button class="copy-sm-btn" onclick="copyIpText('resIpCity', this)">Copy</button>
-                </div>
-
-                <div class="field-box" style="margin-bottom: 12px;">
-                    <div class="field-info">
-                        <span class="field-label">Organization / ISP</span>
-                        <span class="field-value" id="resIpIsp">--</span>
-                    </div>
-                    <button class="copy-sm-btn" onclick="copyIpText('resIpIsp', this)">Copy</button>
-                </div>
-
-                <!-- Leaflet Live Map Container -->
-                <div style="border: 2px solid var(--border-color); border-radius: 12px; overflow: hidden; margin-top: 10px; background: var(--bg-subcard);">
-                    <div id="map" style="width: 100%; height: 220px; z-index: 1;"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 4: TIMEZONE & WORLD CLOCK -->
+        <!-- TAB 3: TIMEZONE & WORLD CLOCK (NEW) -->
         <div id="sectionTz" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1495,10 +1402,12 @@
             
             <input type="text" id="tzSearchInput" oninput="filterTimezones()" placeholder="Search country or city (e.g. Dhaka, New York)...">
             
-            <div class="timezone-list-container" id="timezoneListContainer"></div>
+            <div class="timezone-list-container" id="timezoneListContainer">
+                <!-- Dynamically rendered worldwide timezones -->
+            </div>
         </div>
 
-        <!-- TAB 5: FAKE NAME -->
+        <!-- TAB 4: FAKE NAME -->
         <div id="sectionFake" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1649,22 +1558,22 @@
                 <div class="field-box">
                     <div class="field-info">
                         <span class="field-label">Latitude</span>
-                        <span class="field-value" id="resFakeLat">38.9822</span>
+                        <span class="field-value" id="resLat">38.9822</span>
                     </div>
-                    <button class="copy-sm-btn" onclick="copyFakeText('resFakeLat', this)">Copy</button>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resLat', this)">Copy</button>
                 </div>
 
                 <div class="field-box">
                     <div class="field-info">
                         <span class="field-label">Longitude</span>
-                        <span class="field-value" id="resFakeLng">-94.6708</span>
+                        <span class="field-value" id="resLng">-94.6708</span>
                     </div>
-                    <button class="copy-sm-btn" onclick="copyFakeText('resFakeLng', this)">Copy</button>
+                    <button class="copy-sm-btn" onclick="copyFakeText('resLng', this)">Copy</button>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 6: PHOTOS -->
+        <!-- TAB 5: PHOTOS -->
         <div id="sectionPhotos" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1683,7 +1592,7 @@
             <div class="gallery-grid" id="galleryGrid"></div>
         </div>
 
-        <!-- TAB 7: NOTEPAD -->
+        <!-- TAB 6: NOTEPAD -->
         <div id="sectionNote" class="tab-content">
             <div class="header-title">
                 <div class="header-icon">
@@ -1752,12 +1661,10 @@
 <script>
     let globalActiveFullMessage = "";
     let globalAllMessagesList = [];
-    let leafletMap = null;
-    let leafletMarker = null;
 
-    // Switch Between Tabs
+    // Switch Between Tabs (Updated to 6 Tabs)
     function switchTab(tab) {
-        const tabs = ['mail', '2fa', 'ip', 'tz', 'fake', 'photos', 'note'];
+        const tabs = ['mail', '2fa', 'tz', 'fake', 'photos', 'note'];
         tabs.forEach(t => {
             const btn = document.getElementById(`tabBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
             const sec = document.getElementById(`section${t.charAt(0).toUpperCase() + t.slice(1)}`);
@@ -1768,96 +1675,7 @@
         const activeBtn = document.getElementById(`tabBtn${tab.charAt(0).toUpperCase() + tab.slice(1)}`);
         const activeSec = document.getElementById(`section${tab.charAt(0).toUpperCase() + tab.slice(1)}`);
         if(activeBtn) activeBtn.classList.add('active');
-        if(activeSec) {
-            activeSec.classList.add('active');
-            if(tab === 'ip') {
-                fetchMyIPInfo(); // Auto fetch real IP and update map
-            }
-        }
-    }
-
-    // Real IP & VPN Location & Map Logic
-    function fetchMyIPInfo() {
-        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
-        document.getElementById('resPublicIpTitle').innerText = lang === 'bn' ? 'লোড হচ্ছে...' : 'Loading...';
-        document.getElementById('resIpAddress').innerText = '...';
-        document.getElementById('resLat').innerText = '...';
-        document.getElementById('resLng').innerText = '...';
-        document.getElementById('resIpCountry').innerText = '...';
-        document.getElementById('resIpRegion').innerText = '...';
-        document.getElementById('resIpCity').innerText = '...';
-        document.getElementById('resIpIsp').innerText = '...';
-
-        fetch('https://ipapi.co/json/')
-        .then(res => res.json())
-        .then(data => {
-            const ip = data.ip || 'Unknown';
-            const lat = data.latitude || 23.8103;
-            const lng = data.longitude || 90.4125;
-            const country = data.country_name || 'Unknown';
-            const countryCode = data.country_code ? `(${data.country_code})` : '';
-            const region = data.region || 'Unknown';
-            const city = data.city || 'Unknown';
-            const isp = data.org || data.asn || 'Unknown ISP';
-
-            document.getElementById('resPublicIpTitle').innerText = ip;
-            document.getElementById('resIpAddress').innerText = ip;
-            document.getElementById('resLat').innerText = lat;
-            document.getElementById('resLng').innerText = lng;
-            document.getElementById('resIpCountry').innerText = `${country} ${countryCode}`;
-            document.getElementById('resIpRegion').innerText = region;
-            document.getElementById('resIpCity').innerText = city;
-            document.getElementById('resIpIsp').innerText = isp;
-
-            updateMapLocation(lat, lng, `${city}, ${country}`);
-        })
-        .catch(err => {
-            // Fallback API
-            fetch('https://api.ipify.org?format=json')
-            .then(res => res.json())
-            .then(ipData => {
-                const ip = ipData.ip || 'Unknown';
-                document.getElementById('resPublicIpTitle').innerText = ip;
-                document.getElementById('resIpAddress').innerText = ip;
-                document.getElementById('resLat').innerText = '23.8103';
-                document.getElementById('resLng').innerText = '90.4125';
-                document.getElementById('resIpCountry').innerText = 'Bangladesh (VPN/Network Active)';
-                document.getElementById('resIpRegion').innerText = 'Dhaka Division';
-                document.getElementById('resIpCity').innerText = 'Dhaka';
-                document.getElementById('resIpIsp').innerText = 'Detected ISP';
-
-                updateMapLocation(23.8103, 90.4125, 'Dhaka, Bangladesh');
-            })
-            .catch(() => {
-                document.getElementById('resPublicIpTitle').innerText = lang === 'bn' ? 'ব্যর্থ হয়েছে' : 'Failed';
-            });
-        });
-    }
-
-    function updateMapLocation(lat, lng, label) {
-        setTimeout(() => {
-            if (!leafletMap) {
-                leafletMap = L.map('map').setView([lat, lng], 13);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 19,
-                    attribution: '© OpenStreetMap contributors'
-                }).addTo(leafletMap);
-                leafletMarker = L.marker([lat, lng]).addTo(leafletMap).bindPopup(label).openPopup();
-            } else {
-                leafletMap.setView([lat, lng], 13);
-                leafletMarker.setLatLng([lat, lng]).setPopupContent(label).openPopup();
-                leafletMap.invalidateSize();
-            }
-        }, 300);
-    }
-
-    function copyIpText(elementId, btnElement) {
-        const targetEl = document.getElementById(elementId);
-        if (!targetEl) return;
-        navigator.clipboard.writeText(targetEl.innerText);
-        const originalText = btnElement.innerText;
-        btnElement.innerText = 'Copied!';
-        setTimeout(() => { btnElement.innerText = originalText; }, 1500);
+        if(activeSec) activeSec.classList.add('active');
     }
 
     // Comprehensive Worldwide Timezones Dataset
@@ -1879,7 +1697,7 @@
         { country: "Saudi Arabia (Riyadh)", zone: "Asia/Riyadh" },
         { country: "Pakistan (Karachi)", zone: "Asia/Karachi" },
         { country: "Singapore", zone: "Asia/Singapore" },
-        { country: "Malaysia (Kuala Lumpur)", zone: "Asia/Kuala_Lumpur" },
+        { country: "Malaysia (Kuala Lumpur)", zone: "Asia/Kuala_ Lumpur" },
         { country: "China (Beijing)", zone: "Asia/Shanghai" },
         { country: "South Korea (Seoul)", zone: "Asia/Seoul" },
         { country: "Russia (Moscow)", zone: "Europe/Moscow" },
@@ -1888,6 +1706,7 @@
         { country: "Turkey (Istanbul)", zone: "Europe/Istanbul" }
     ];
 
+    // Render Timezones & Live Clock
     function renderTimezones(filter = "") {
         const container = document.getElementById('timezoneListContainer');
         if (!container) return;
@@ -1909,6 +1728,7 @@
                 const timeString = now.toLocaleTimeString('en-US', { timeZone: item.zone, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
                 const dateString = now.toLocaleDateString('en-US', { timeZone: item.zone, month: 'short', day: 'numeric' });
                 
+                // Get GMT Offset string
                 const tzFormatted = new Intl.DateTimeFormat('en-US', { timeZone: item.zone, timeZoneName: 'shortOffset' }).format(now);
                 const gmtMatch = tzFormatted.match(/GMT[+-]\d{1,2}(?::\d{2})?/);
                 const gmtOffset = gmtMatch ? gmtMatch[0] : "GMT";
@@ -1925,7 +1745,9 @@
                         </div>
                     </div>
                 `;
-            } catch (e) {}
+            } catch (e) {
+                // Fallback if timezone string is invalid
+            }
         });
     }
 
@@ -1934,6 +1756,7 @@
         renderTimezones(query);
     }
 
+    // Auto-update live times every second if Timezone tab is active
     setInterval(() => {
         const tzSec = document.getElementById('sectionTz');
         if (tzSec && tzSec.classList.contains('active')) {
@@ -1942,6 +1765,7 @@
         }
     }, 1000);
 
+    // Initial load for timezone list
     document.addEventListener("DOMContentLoaded", () => {
         renderTimezones();
     });
@@ -1962,6 +1786,7 @@
         }
     }
 
+    // Fetch Edo Mail Code & Inbox Messages
     function fetchMailCode() {
         const emailInput = document.getElementById('edoEmailInput').value.trim();
         const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
@@ -2212,7 +2037,7 @@
         }
     }
 
-    // Language Switcher
+    // Language Switcher (Updated with Timezone translations)
     function changeLanguage() {
         const langSelect = document.getElementById('langSelect');
         if (!langSelect) return;
@@ -2224,8 +2049,7 @@
         if (lang === 'bn') {
             setTxt('tabTextMail', 'মেইল');
             setTxt('tabText2fa', '২এফএ');
-            setTxt('tabTextIp', 'মাই আইপি');
-            setTxt('tabTextTz', 'টাইম');
+            setTxt('tabTextTz', 'টাইম জোন');
             setTxt('tabTextFake', 'ফেক আইডি');
             setTxt('tabTextPhotos', 'ফটোস');
             setTxt('tabTextNote', 'নোট');
@@ -2244,10 +2068,6 @@
             setTxt('btnClear', 'ক্লিয়ার');
             setTxt('activeTokenText', 'অ্যাক্টিভ টোকেন');
             setTxt('copyText', 'কোড কপি করুন');
-            setTxt('titleIp', 'আমার লোকেশন ও আইপি ডিটেইলস');
-            setTxt('descIp', 'আপনার রিয়েল পাবলিক আইপি, লোকেশন, ভিপিএন নেটওয়ার্ক এবং ম্যাপে সঠিক অবস্থান চেক করুন।');
-            setTxt('btnCheckIp', 'লোকেশন ও আইপি রিফ্রেশ করুন');
-            setTxt('publicIpHeaderLabel', 'পাবলিক আইপি অ্যাড্রেস:');
             setTxt('titleTz', 'বিশ্বের টাইম জোন ও জিএমটি');
             setTxt('descTz', 'বিশ্বের বিভিন্ন দেশের বর্তমান লাইভ লোকাল টাইম ও জিএমটি (GMT) অফসেট দেখুন।');
             setTxt('titlePhotos', 'ইউএসএ প্রফেশনাল ফটোস');
@@ -2279,8 +2099,7 @@
         } else {
             setTxt('tabTextMail', 'Mail');
             setTxt('tabText2fa', '2FA');
-            setTxt('tabTextIp', 'My IP');
-            setTxt('tabTextTz', 'Time');
+            setTxt('tabTextTz', 'Timezone');
             setTxt('tabTextFake', 'Fake ID');
             setTxt('tabTextPhotos', 'Photos');
             setTxt('tabTextNote', 'Note');
@@ -2299,10 +2118,6 @@
             setTxt('btnClear', 'Clear');
             setTxt('activeTokenText', 'Active Token');
             setTxt('copyText', 'Copy Code');
-            setTxt('titleIp', 'My Location & IP Details');
-            setTxt('descIp', 'Check your real public IP address, location, VPN network, and exact map coordinate.');
-            setTxt('btnCheckIp', 'Refresh Location & IP');
-            setTxt('publicIpHeaderLabel', 'Public IP Address:');
             setTxt('titleTz', 'World Timezones & GMT');
             setTxt('descTz', 'View current live local times, GMT/UTC offsets, and timezones for countries worldwide.');
             setTxt('titlePhotos', 'USA Professional Photos');
@@ -2538,8 +2353,8 @@
         document.getElementById('resZip').innerText = addr.zip;
         document.getElementById('resPhone').innerText = addr.phone;
         document.getElementById('resCountry').innerText = country;
-        document.getElementById('resFakeLat').innerText = addr.lat;
-        document.getElementById('resFakeLng').innerText = addr.lng;
+        document.getElementById('resLat').innerText = addr.lat;
+        document.getElementById('resLng').innerText = addr.lng;
         document.getElementById('fakeAvatarIcon').innerText = (gender === 'male') ? "👨" : "👩";
         document.getElementById('fakeResultCard').style.display = 'block';
     }
@@ -2549,3 +2364,8 @@
         const originalText = btnElement.innerText;
         btnElement.innerText = 'Copied!';
         setTimeout(() => { btnElement.innerText = originalText; }, 1500);
+    }
+</script>
+
+</body>
+</html>
