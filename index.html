@@ -1,453 +1,263 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fast Mail Shop - Edo Mail, 2FA, My IP, Token Splitter & Tools</title>
-    <!-- OTPAuth Library -->
-    <script src="https://unpkg.com/otpauth/dist/otpauth.umd.min.js"></script>
-    <!-- SheetJS (xlsx) for Excel/CSV Export -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <!-- Leaflet CSS & JS for Live Map -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
-    <style>
-        :root {
-            --bg-body: #f3f4f6;
-            --bg-card: #ffffff;
-            --bg-input: #f9fafb;
-            --bg-subcard: #f8fafc;
-            --tab-bg: #e2e8f0;
-            --text-main: #111827;
-            --text-muted: #64748b;
-            --border-color: #e5e7eb;
-            --teal-primary: #0d9488;
-            --teal-hover: #0f766e;
-            --teal-light: #e6f4f1;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        body.dark-mode {
-            --bg-body: #0f172a;
-            --bg-card: #1e293b;
-            --bg-input: #0f172a;
-            --bg-subcard: #0f172a;
-            --tab-bg: #0f172a;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
-            --teal-light: rgba(13, 148, 136, 0.15);
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            border-top: 3px solid var(--teal-primary);
-            padding-bottom: 24px;
-        }
-
-        .navbar {
-            width: 100%; max-width: 440px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;
-        }
-
-        .brand-container {
-            display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none;
-            background-color: var(--bg-card); border: 2px solid var(--teal-primary); padding: 6px 12px 6px 6px; border-radius: 14px;
-        }
-
-        .brand-logo {
-            background: linear-gradient(135deg, #10b981, #0d9488); color: white; width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
-        }
-
-        .brand-name {
-            font-size: 0.88rem; font-weight: 800; background: linear-gradient(135deg, #0d9488, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase;
-        }
-
-        .nav-controls { display: flex; align-items: center; gap: 6px; }
-
-        .nav-pill {
-            background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 999px; height: 36px; padding: 0 11px;
-            display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 0.85rem; font-weight: 600; color: var(--text-main); cursor: pointer;
-        }
-
-        .nav-circle { width: 36px; padding: 0; }
-        .icon-teal { color: var(--teal-primary); display: flex; align-items: center; }
-
-        .lang-select { background: transparent; border: none; color: var(--text-main); font-weight: 600; font-size: 0.85rem; outline: none; cursor: pointer; }
-        .lang-select option { background-color: var(--bg-card); color: var(--text-main); }
-
-        /* 8-Tab Switcher */
-        .tab-wrapper {
-            width: calc(100% - 32px); max-width: 420px; background-color: var(--tab-bg); padding: 4px; border-radius: 14px;
-            display: grid; grid-template-columns: repeat(8, 1fr); gap: 2px; margin-bottom: 14px; border: 1px solid var(--border-color);
-        }
-
-        .tab-btn {
-            border: none; background: transparent; padding: 6px 0; border-radius: 8px; font-size: 0.48rem; font-weight: 700;
-            color: var(--text-muted); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px;
-        }
-
-        .tab-btn.active { background-color: var(--bg-card); color: var(--teal-primary); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06); }
-
-        .container {
-            background-color: var(--bg-card); padding: 1.4rem; border-radius: 18px; box-shadow: var(--shadow);
-            width: calc(100% - 32px); max-width: 420px; border: 1px solid var(--border-color);
-        }
-
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
-        .header-title { display: flex; align-items: center; gap: 10px; margin-bottom: 0.6rem; }
-        .header-icon { background-color: var(--teal-light); color: var(--teal-primary); width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; }
-        h2 { font-size: 1.05rem; color: var(--text-main); font-weight: 700; }
-        .sub-desc { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.4; }
-
-        input[type="text"], textarea {
-            width: 100%; background-color: var(--bg-input); border: 2px solid var(--teal-primary); border-radius: 12px;
-            color: var(--text-main); padding: 12px; font-family: monospace; font-size: 0.9rem; margin-bottom: 1rem; outline: none;
-        }
-        #tokenInput { height: 110px; resize: vertical; }
-
-        .sheet-preview-card {
-            margin-top: 1rem; background-color: var(--bg-subcard); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; display: none;
-        }
-        .sheet-table-wrapper { max-height: 180px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-card); margin-bottom: 10px; }
-        .sheet-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; font-family: monospace; text-align: left; }
-        .sheet-table th { background-color: var(--teal-primary); color: white; padding: 6px 8px; position: sticky; top: 0; z-index: 2; }
-        .sheet-table td { padding: 5px 8px; border-bottom: 1px solid var(--border-color); color: var(--text-main); word-break: break-all; }
-
-        .action-btn, .clear-btn, .copy-sm-btn {
-            background-color: var(--teal-primary); color: white; border: none; padding: 11px; border-radius: 12px; font-size: 0.88rem; font-weight: 700; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 6px;
-        }
-        .clear-btn { background-color: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
-        .copy-sm-btn { padding: 5px 10px; font-size: 0.75rem; width: auto; }
-        .btn-row { display: flex; gap: 8px; margin-bottom: 1rem; }
-
-        .site-footer { width: calc(100% - 32px); max-width: 420px; margin-top: 14px; padding: 12px; background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; text-align: center; }
-        .footer-text { font-size: 0.74rem; color: var(--text-muted); }
-        .footer-text a { color: var(--teal-primary); text-decoration: none; font-weight: 600; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAST MAIL SHOP | Digital Tools</title>
+<style>
+:root{--bg:#0b1020;--panel:#151d32;--panel2:#1b2740;--text:#f3f6ff;--muted:#9ba9c4;--blue:#4d8dff;--green:#22c997;--border:#293752}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{padding:22px 16px;text-align:center;background:linear-gradient(120deg,#142a52,#172044);border-bottom:1px solid var(--border)}
+header h1{margin:0;font-size:25px;letter-spacing:1px}
+header p{margin:8px 0 0;color:#b8c9e9;font-size:13px}
+.container{max-width:1050px;margin:22px auto;padding:0 14px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tab{border:1px solid var(--border);background:var(--panel);color:var(--text);padding:11px 15px;border-radius:9px;cursor:pointer}
+.tab.active{background:var(--blue);border-color:var(--blue);color:white}
+.page{display:none}.page.active{display:block}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px}
+h2{font-size:19px;margin:0 0 16px}
+label{display:block;color:var(--muted);font-size:13px;margin:12px 0 7px}
+input,textarea,select{width:100%;padding:12px;border-radius:9px;border:1px solid var(--border);background:#0d1629;color:white;font-size:14px;outline:none}
+textarea{min-height:180px;resize:vertical}
+button.action{border:0;background:var(--blue);color:white;padding:11px 16px;border-radius:9px;cursor:pointer;font-weight:bold;margin:10px 5px 0 0}
+button.secondary{background:var(--panel2);border:1px solid var(--border)}
+button:hover{filter:brightness(1.12)}
+.result{background:#0d1629;border:1px solid var(--border);padding:16px;border-radius:10px;margin-top:14px;overflow-wrap:anywhere}
+.big{font-size:34px;font-weight:bold;letter-spacing:5px;text-align:center;color:var(--green);padding:15px}
+.muted{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+footer{text-align:center;color:var(--muted);padding:25px;font-size:12px}
+@media(max-width:550px){header h1{font-size:21px}.tab{flex:1 1 42%;font-size:12px}.card{padding:15px}.big{font-size:27px}}
+</style>
 </head>
 <body>
+<header>
+<h1>⚡ FAST MAIL SHOP</h1>
+<p>YOUR DIGITAL TOOLS — SIMPLE, FAST & EASY</p>
+</header>
 
-    <!-- Navbar -->
-    <div class="navbar">
-        <a href="https://fastmailshop.com" target="_blank" class="brand-container">
-            <div class="brand-logo">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 10.5V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12.5"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/><path d="m16 19 2 2 4-4"/></svg>
-            </div>
-            <span class="brand-name">Fast Mail Shop</span>
-        </a>
-        <div class="nav-controls">
-            <div class="nav-pill">
-                <select class="lang-select" id="langSelect">
-                    <option value="en">EN</option>
-                    <option value="bn">BN</option>
-                </select>
-            </div>
-            <button class="nav-pill nav-circle" id="darkModeBtn" title="Dark Mode">🌙</button>
-        </div>
-    </div>
+<main class="container">
+<nav class="tabs">
+<button class="tab active" data-page="twofa">🔐 2FA Generator</button>
+<button class="tab" data-page="ip">🌐 My IP</button>
+<button class="tab" data-page="timezone">🕒 Time Zone</button>
+<button class="tab" data-page="notes">📝 Notepad</button>
+<button class="tab" data-page="about">ℹ️ About</button>
+</nav>
 
-    <!-- 8 Tabs -->
-    <div class="tab-wrapper">
-        <button class="tab-btn active" data-target="sectionMail">✉️<span>Mail</span></button>
-        <button class="tab-btn" data-target="section2fa">🔐<span>2FA</span></button>
-        <button class="tab-btn" data-target="sectionSplit">📊<span>Splitter</span></button>
-        <button class="tab-btn" data-target="sectionIp">🌐<span>My IP</span></button>
-        <button class="tab-btn" data-target="sectionTz">⏰<span>Time</span></button>
-        <button class="tab-btn" data-target="sectionFake">👤<span>Fake ID</span></button>
-        <button class="tab-btn" data-target="sectionPhotos">📷<span>Photos</span></button>
-        <button class="tab-btn" data-target="sectionNote">📝<span>Note</span></button>
-    </div>
+<section class="page active" id="twofa">
+<div class="card">
+<h2>🔐 Authenticator Code Generator</h2>
+<p class="muted">Generate a 6-digit TOTP code from an authenticator secret you are authorized to use.</p>
+<label>Enter 2FA Secret or otpauth:// URI</label>
+<input id="secret" placeholder="Enter your Base32 secret">
+<button class="action" id="generate">Generate Code</button>
+<button class="action secondary" id="clear2fa">Clear</button>
+<div class="result">
+<div class="big" id="otp">------</div>
+<div class="muted" id="otpStatus" style="text-align:center">Enter a secret to generate a code</div>
+</div>
+<button class="action secondary" id="copyOtp">Copy Code</button>
+</div>
+</section>
 
-    <!-- Container -->
-    <div class="container">
-        
-        <!-- Tab 1: Mail -->
-        <div id="sectionMail" class="tab-content active">
-            <div class="header-title"><div class="header-icon">✉️</div><h2>Edo Mail Code</h2></div>
-            <p class="sub-desc">Enter your Edo Mail address to check incoming verification codes instantly.</p>
-            <input type="text" id="edoEmailInput" placeholder="user@edo.com">
-            <button class="action-btn" id="fetchMailBtn">Get Mail & OTP</button>
-            <div id="mailResultCard" style="display:none; margin-top:10px; background:var(--bg-subcard); padding:10px; border-radius:8px;">
-                <p>Latest OTP: <b id="mailCodeDisplay" style="color:var(--teal-primary); font-size:1.2rem;">------</b></p>
-            </div>
-        </div>
+<section class="page" id="ip">
+<div class="card">
+<h2>🌐 IP Address Checker</h2>
+<p class="muted">Check the public IP address of your current internet connection.</p>
+<button class="action" id="checkIp">Check My IP</button>
+<div class="result" id="ipResult">Your IP information will appear here.</div>
+</div>
+</section>
 
-        <!-- Tab 2: 2FA -->
-        <div id="section2fa" class="tab-content">
-            <div class="header-title"><div class="header-icon">🔐</div><h2>2FA Secret Key</h2></div>
-            <p class="sub-desc">Enter your Base32 secret key to generate live 2FA tokens.</p>
-            <textarea id="secret" placeholder="Paste Secret Key..."></textarea>
-            <button class="action-btn" id="start2faBtn">Get Code</button>
-            <div style="text-align:center; margin-top:15px; font-size:1.8rem; font-weight:bold; font-family:monospace;" id="code-display">000000</div>
-        </div>
+<section class="page" id="timezone">
+<div class="card">
+<h2>🕒 World Clock</h2>
+<label>Select Time Zone</label>
+<select id="zone">
+<option value="Asia/Dhaka">Dhaka — Bangladesh</option>
+<option value="Asia/Kolkata">Kolkata — India</option>
+<option value="Asia/Dubai">Dubai — UAE</option>
+<option value="Europe/London">London — UK</option>
+<option value="Europe/Paris">Paris — France</option>
+<option value="America/New_York">New York — USA</option>
+<option value="America/Los_Angeles">Los Angeles — USA</option>
+<option value="Asia/Tokyo">Tokyo — Japan</option>
+<option value="Australia/Sydney">Sydney — Australia</option>
+</select>
+<div class="result">
+<div class="big" id="clock" style="letter-spacing:1px">--:--:--</div>
+<p id="date" style="text-align:center"></p>
+<p class="muted" id="zoneName" style="text-align:center"></p>
+</div>
+</div>
+</section>
 
-        <!-- Tab 3: Hotmail Token Splitter (Main Request) -->
-        <div id="sectionSplit" class="tab-content">
-            <div class="header-title"><div class="header-icon">📊</div><h2>Hotmail Token Splitter</h2></div>
-            <p class="sub-desc">Paste full Hotmail accounts (Email:Password:Token) to preview columns A, B, C below.</p>
-            
-            <textarea id="tokenInput" placeholder="user@hotmail.com:Password123:TokenXYZ..."></textarea>
-            
-            <div style="margin-bottom: 10px; font-size: 0.8rem;">
-                <label><input type="radio" name="splitFormat" value="xlsx" checked> Excel</label>
-                <label style="margin-left: 10px;"><input type="radio" name="splitFormat" value="csv"> CSV</label>
-                <label style="margin-left: 10px;"><input type="radio" name="splitFormat" value="txt"> TXT</label>
-            </div>
+<section class="page" id="notes">
+<div class="card">
+<h2>📝 Personal Notepad</h2>
+<p class="muted">Your notes are saved locally in this browser.</p>
+<textarea id="noteText" placeholder="Write your notes here..."></textarea>
+<button class="action" id="saveNote">Save Notes</button>
+<button class="action secondary" id="downloadNote">Download TXT</button>
+<button class="action secondary" id="clearNote">Clear Notes</button>
+<p class="muted" id="noteStatus"></p>
+</div>
+</section>
 
-            <div class="btn-row">
-                <button class="action-btn" id="previewSplitBtn">Preview & Download</button>
-                <button class="clear-btn" id="clearSplitBtn">Clear</button>
-            </div>
+<section class="page" id="about">
+<div class="card">
+<h2>⚡ FAST MAIL SHOP</h2>
+<p>Welcome to Fast Mail Shop Digital Tools.</p>
+<p class="muted">This standalone page includes an authenticator code generator, public IP checker, world clock and local notepad.</p>
+<p class="muted">Mail inbox and email verification integrations require an authorized provider API or OAuth connection. This page does not access external mailboxes or retrieve other users' verification codes.</p>
+</div>
+</section>
+</main>
 
-            <!-- Spreadsheet Live Preview Table -->
-            <div class="sheet-preview-card" id="sheetPreviewCard">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <span style="font-size: 0.78rem; font-weight: 700; color: var(--teal-primary);">Spreadsheet Preview</span>
-                    <button class="copy-sm-btn" id="downloadProcessedBtn">Download File</button>
-                </div>
-                <div class="sheet-table-wrapper">
-                    <table class="sheet-table">
-                        <thead>
-                            <tr>
-                                <th>Col A (Email)</th>
-                                <th>Col B (Password)</th>
-                                <th>Col C (Token)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="sheetPreviewBody"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab 4: IP -->
-        <div id="sectionIp" class="tab-content">
-            <div class="header-title"><div class="header-icon">🌐</div><h2>My Location & IP</h2></div>
-            <button class="action-btn" id="fetchIpBtn">Check IP Info</button>
-            <div id="ipResult" style="margin-top:10px; font-size:0.85rem; font-family:monospace;">Click button to load IP...</div>
-            <div id="map" style="width: 100%; height: 180px; margin-top: 10px; border-radius: 8px;"></div>
-        </div>
-
-        <!-- Tab 5: Time -->
-        <div id="sectionTz" class="tab-content">
-            <div class="header-title"><div class="header-icon">⏰</div><h2>World Timezones</h2></div>
-            <div id="tzList" style="font-size:0.85rem;">Bangladesh (Dhaka): <b id="dhakaTime">--:--</b></div>
-        </div>
-
-        <!-- Tab 6: Fake ID -->
-        <div id="sectionFake" class="tab-content">
-            <div class="header-title"><div class="header-icon">👤</div><h2>Fake Identity</h2></div>
-            <button class="action-btn" id="genFakeBtn">Generate Identity</button>
-            <div id="fakeResult" style="margin-top:10px; font-size:0.85rem; font-family:monospace;">Click generate...</div>
-        </div>
-
-        <!-- Tab 7: Photos -->
-        <div id="sectionPhotos" class="tab-content">
-            <div class="header-title"><div class="header-icon">📷</div><h2>Professional Photos</h2></div>
-            <p class="sub-desc">Sample headshots available for use.</p>
-        </div>
-
-        <!-- Tab 8: Notepad -->
-        <div id="sectionNote" class="tab-content">
-            <div class="header-title"><div class="header-icon">📝</div><h2>Smart Notepad</h2></div>
-            <textarea id="noteArea" style="height:150px;" placeholder="Type notes here..."></textarea>
-            <button class="action-btn" id="downloadNoteBtn">Download Note</button>
-        </div>
-
-    </div>
-
-    <div class="site-footer">
-        <p class="footer-text">Use <a href="https://fastmailshop.com" target="_blank">fastmailshop.com</a> tools securely.</p>
-    </div>
+<footer>FAST MAIL SHOP © 2026 | All Rights Reserved</footer>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // 1. Safe Tab Switching Handler
-        const tabButtons = document.querySelectorAll('.tab-btn');
-        tabButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                tabButtons.forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                
-                btn.classList.add('active');
-                const targetId = btn.getAttribute('data-target');
-                const targetSec = document.getElementById(targetId);
-                if (targetSec) {
-                    targetSec.classList.add('active');
-                    if (targetId === 'sectionIp' && window.fetchIpInfo) {
-                        fetchIpInfo();
-                    }
-                }
-            });
-        });
+// Tab navigation
+document.querySelectorAll(".tab").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById(btn.dataset.page).classList.add("active");
+ });
+});
 
-        // 2. Dark Mode Toggle
-        const darkModeBtn = document.getElementById('darkModeBtn');
-        if (darkModeBtn) {
-            darkModeBtn.addEventListener('click', () => {
-                document.body.classList.toggle('dark-mode');
-            });
-        }
+// Base32 decoder
+function base32ToBytes(input){
+ const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+ const clean=input.toUpperCase().replace(/[\s=-]/g,"");
+ let bits="",out=[];
+ for(const c of clean){
+  const v=chars.indexOf(c);
+  if(v<0) throw new Error("Invalid Base32 secret.");
+  bits+=v.toString(2).padStart(5,"0");
+ }
+ for(let i=0;i+8<=bits.length;i+=8) out.push(parseInt(bits.slice(i,i+8),2));
+ if(!out.length) throw new Error("Secret is empty or invalid.");
+ return new Uint8Array(out);
+}
 
-        // 3. Hotmail Token Splitter & Preview Logic (Robust Parser)
-        let globalProcessedRows = [];
-        const previewBtn = document.getElementById('previewSplitBtn');
-        const clearBtn = document.getElementById('clearSplitBtn');
-        const downloadBtn = document.getElementById('downloadProcessedBtn');
+// TOTP using Web Crypto
+async function makeTotp(secret){
+ const keyBytes=base32ToBytes(secret);
+ const counter=Math.floor(Date.now()/1000/30);
+ const buffer=new ArrayBuffer(8);
+ const view=new DataView(buffer);
+ view.setUint32(4,counter);
+ const key=await crypto.subtle.importKey(
+  "raw",keyBytes,{name:"HMAC",hash:"SHA-1"},false,["sign"]
+ );
+ const signature=new Uint8Array(await crypto.subtle.sign("HMAC",key,buffer));
+ const offset=signature[signature.length-1]&15;
+ const binary=((signature[offset]&127)<<24)|
+  ((signature[offset+1]&255)<<16)|
+  ((signature[offset+2]&255)<<8)|
+  (signature[offset+3]&255);
+ return String(binary%1000000).padStart(6,"0");
+}
 
-        if (previewBtn) {
-            previewBtn.addEventListener('click', () => {
-                const inputData = document.getElementById('tokenInput').value.trim();
-                if (!inputData) {
-                    alert('দয়া করে আগে হটমেইল বা টোকেনগুলো পেস্ট করুন!');
-                    return;
-                }
+function extractSecret(value){
+ const input=value.trim();
+ if(input.toLowerCase().startsWith("otpauth://")){
+  const url=new URL(input);
+  const secret=url.searchParams.get("secret");
+  if(!secret) throw new Error("No secret found in this OTP URI.");
+  return secret;
+ }
+ return input;
+}
 
-                const lines = inputData.split('\n');
-                globalProcessedRows = [];
+async function generateOtp(){
+ const status=document.getElementById("otpStatus");
+ try{
+  if(!window.crypto || !crypto.subtle) throw new Error("Secure browser context required. Open this page using HTTPS or localhost.");
+  const secret=extractSecret(document.getElementById("secret").value);
+  const code=await makeTotp(secret);
+  document.getElementById("otp").textContent=code;
+  status.textContent="Code generated • Refreshes every 30 seconds";
+ }catch(e){
+  document.getElementById("otp").textContent="------";
+  status.textContent=e.message;
+ }
+}
+document.getElementById("generate").addEventListener("click",generateOtp);
+document.getElementById("secret").addEventListener("keydown",e=>{if(e.key==="Enter")generateOtp()});
+document.getElementById("clear2fa").addEventListener("click",()=>{
+ document.getElementById("secret").value="";
+ document.getElementById("otp").textContent="------";
+ document.getElementById("otpStatus").textContent="Enter a secret to generate a code";
+});
+document.getElementById("copyOtp").addEventListener("click",async()=>{
+ const code=document.getElementById("otp").textContent;
+ if(!/^\d{6}$/.test(code)) return alert("Generate a code first.");
+ try{await navigator.clipboard.writeText(code);alert("Code copied!")}
+ catch(e){alert("Copy is not available in this browser.")}
+});
 
-                lines.forEach(line => {
-                    const cleanLine = line.trim();
-                    if (!cleanLine) return;
+// Public IP lookup
+document.getElementById("checkIp").addEventListener("click",async()=>{
+ const box=document.getElementById("ipResult");
+ box.textContent="Checking...";
+ try{
+  const response=await fetch("https://api.ipify.org?format=json");
+  if(!response.ok) throw new Error("IP service unavailable.");
+  const data=await response.json();
+  box.innerHTML="<strong>Public IP:</strong> "+data.ip;
+ }catch(e){
+  box.textContent="Could not retrieve IP. Check your internet connection and try again.";
+ }
+});
 
-                    let parts = [];
-                    if (cleanLine.includes(':')) {
-                        parts = cleanLine.split(':');
-                    } else if (cleanLine.includes('|')) {
-                        parts = cleanLine.split('|');
-                    } else if (cleanLine.includes('\t')) {
-                        parts = cleanLine.split('\t');
-                    } else if (cleanLine.includes(',')) {
-                        parts = cleanLine.split(',');
-                    } else {
-                        parts = cleanLine.split(/\s+/);
-                    }
+// World clock
+function updateClock(){
+ const zone=document.getElementById("zone").value;
+ const now=new Date();
+ document.getElementById("clock").textContent=new Intl.DateTimeFormat("en-US",{
+  timeZone:zone,hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true
+ }).format(now);
+ document.getElementById("date").textContent=new Intl.DateTimeFormat("en-US",{
+  timeZone:zone,weekday:"long",year:"numeric",month:"long",day:"numeric"
+ }).format(now);
+ document.getElementById("zoneName").textContent=zone;
+}
+document.getElementById("zone").addEventListener("change",updateClock);
+updateClock();
+setInterval(updateClock,1000);
 
-                    if (parts.length >= 2) {
-                        const email = parts[0].trim();
-                        const password = parts[1].trim();
-                        const tokenRest = parts.slice(2).join(':').trim() || '';
-
-                        if (email && password) {
-                            globalProcessedRows.push({ Email: email, Password: password, Token: tokenRest });
-                        }
-                    }
-                });
-
-                if (globalProcessedRows.length === 0) {
-                    alert('সঠিক ফরম্যাটে কোনো ডাটা পাওয়া যায়নি! (যেমন: email:pass:token)');
-                    return;
-                }
-
-                const tbody = document.getElementById('sheetPreviewBody');
-                tbody.innerHTML = '';
-
-                globalProcessedRows.forEach(row => {
-                    tbody.innerHTML += `
-                        <tr>
-                            <td>${escapeHtml(row.Email)}</td>
-                            <td>${escapeHtml(row.Password)}</td>
-                            <td>${escapeHtml(row.Token)}</td>
-                        </tr>
-                    `;
-                });
-
-                document.getElementById('sheetPreviewCard').style.display = 'block';
-            });
-        }
-
-        if (clearBtn) {
-            clearBtn.addEventListener('click', () => {
-                document.getElementById('tokenInput').value = '';
-                document.getElementById('sheetPreviewCard').style.display = 'none';
-                globalProcessedRows = [];
-            });
-        }
-
-        if (downloadBtn) {
-            downloadBtn.addEventListener('click', () => {
-                if (globalProcessedRows.length === 0) return;
-                const format = document.querySelector('input[name="splitFormat"]:checked').value;
-                const fileName = `Hotmail_Sheet_${new Date().toISOString().slice(0,10)}`;
-
-                if (format === 'xlsx') {
-                    const exportData = [{ Email: "Email", Password: "Password", Token: "Token" }, ...globalProcessedRows];
-                    const worksheet = XLSX.utils.json_to_sheet(exportData, { skipHeader: true });
-                    const workbook = XLSX.utils.book_new();
-                    XLSX.utils.book_append_sheet(workbook, worksheet, "Hotmail Data");
-                    XLSX.writeFile(workbook, `${fileName}.xlsx`);
-                } else if (format === 'csv') {
-                    let csvContent = "Email,Password,Token\n";
-                    globalProcessedRows.forEach(r => {
-                        csvContent += `"${r.Email}","${r.Password}","${r.Token}"\n`;
-                    });
-                    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-                    triggerDownload(URL.createObjectURL(blob), `${fileName}.csv`);
-                } else if (format === 'txt') {
-                    let txtContent = "";
-                    globalProcessedRows.forEach(r => {
-                        txtContent += `${r.Email}:${r.Password}:${r.Token}\n`;
-                    });
-                    const blob = new Blob([txtContent], { type: 'text/plain;charset=utf-8;' });
-                    triggerDownload(URL.createObjectURL(blob), `${fileName}.txt`);
-                }
-            });
-        }
-
-        function escapeHtml(text) {
-            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-        }
-
-        function triggerDownload(url, filename) {
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            a.click();
-        }
-
-        // 4. Other Tools Safe Triggers
-        const fetchMailBtn = document.getElementById('fetchMailBtn');
-        if (fetchMailBtn) {
-            fetchMailBtn.addEventListener('click', () => {
-                const email = document.getElementById('edoEmailInput').value.trim();
-                if(!email) { alert('Enter email!'); return; }
-                document.getElementById('mailResultCard').style.display = 'block';
-                document.getElementById('mailCodeDisplay').innerText = '123456'; // Sample simulation
-            });
-        }
-
-        let leafletMap = null;
-        window.fetchIpInfo = function() {
-            fetch('https://ipapi.co/json/')
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('ipResult').innerText = `IP: ${data.ip} | Country: ${data.country_name} | City: ${data.city}`;
-                if(!leafletMap) {
-                    leafletMap = L.map('map').setView([data.latitude || 23.8, data.longitude || 90.4], 13);
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(leafletMap);
-                    L.marker([data.latitude || 23.8, data.longitude || 90.4]).addTo(leafletMap);
-                }
-            }).catch(() => {
-                document.getElementById('ipResult').innerText = 'Failed to fetch IP details.';
-            });
-        };
-
-        const fetchIpBtn = document.getElementById('fetchIpBtn');
-        if(fetchIpBtn) { fetchIpBtn.addEventListener('click', window.fetchIpInfo); }
-    });
+// Local notepad
+const note=document.getElementById("noteText");
+try{note.value=localStorage.getItem("fastmailshop_notes")||"";}catch(e){}
+document.getElementById("saveNote").addEventListener("click",()=>{
+ try{
+  localStorage.setItem("fastmailshop_notes",note.value);
+  document.getElementById("noteStatus").textContent="Notes saved on this device.";
+ }catch(e){
+  document.getElementById("noteStatus").textContent="Could not save notes in this browser.";
+ }
+});
+document.getElementById("downloadNote").addEventListener("click",()=>{
+ const blob=new Blob([note.value],{type:"text/plain;charset=utf-8"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;a.download="Fast-Mail-Shop-Notes.txt";a.click();
+ URL.revokeObjectURL(url);
+});
+document.getElementById("clearNote").addEventListener("click",()=>{
+ if(confirm("Are you sure you want to clear your notes?")){
+  note.value="";
+  try{localStorage.removeItem("fastmailshop_notes");}catch(e){}
+  document.getElementById("noteStatus").textContent="Notes cleared.";
+ }
+});
 </script>
-
 </body>
 </html>
