@@ -75,14 +75,8 @@
         }
 
         @keyframes neonBoxGlow {
-            0%, 100% {
-                border-color: rgba(13, 148, 136, 0.5);
-                box-shadow: 0 0 8px rgba(13, 148, 136, 0.2);
-            }
-            50% {
-                border-color: rgba(10, 185, 129, 0.9);
-                box-shadow: 0 0 16px rgba(16, 185, 129, 0.4);
-            }
+            0%, 100% { border-color: rgba(13, 148, 136, 0.5); box-shadow: 0 0 8px rgba(13, 148, 136, 0.2); }
+            50% { border-color: rgba(10, 185, 129, 0.9); box-shadow: 0 0 16px rgba(16, 185, 129, 0.4); }
         }
 
         .brand-container {
@@ -99,9 +93,7 @@
             transition: transform 0.2s ease;
         }
 
-        .brand-container:active {
-            transform: scale(0.96);
-        }
+        .brand-container:active { transform: scale(0.96); }
 
         .brand-logo {
             background: linear-gradient(135deg, #10b981, #0d9488);
@@ -125,17 +117,7 @@
             text-transform: uppercase;
         }
 
-        body.dark-mode .brand-name {
-            background: linear-gradient(135deg, #14b8a6, #34d399);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-controls {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        .nav-controls { display: flex; align-items: center; gap: 6px; }
 
         .nav-pill {
             background-color: var(--bg-card);
@@ -155,20 +137,9 @@
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .nav-pill:hover {
-            border-color: var(--teal-primary);
-        }
-
-        .nav-circle {
-            width: 36px;
-            padding: 0;
-        }
-
-        .icon-teal {
-            color: var(--teal-primary);
-            display: flex;
-            align-items: center;
-        }
+        .nav-pill:hover { border-color: var(--teal-primary); }
+        .nav-circle { width: 36px; padding: 0; }
+        .icon-teal { color: var(--teal-primary); display: flex; align-items: center; }
 
         .lang-select {
             background: transparent;
@@ -179,11 +150,7 @@
             outline: none;
             cursor: pointer;
         }
-
-        .lang-select option {
-            background-color: var(--bg-card);
-            color: var(--text-main);
-        }
+        .lang-select option { background-color: var(--bg-card); color: var(--text-main); }
 
         /* 8-Tab Switcher Layout */
         .tab-wrapper {
@@ -215,10 +182,7 @@
             transition: all 0.2s ease;
         }
 
-        .tab-btn:active {
-            transform: scale(0.95);
-        }
-
+        .tab-btn:active { transform: scale(0.95); }
         .tab-btn.active {
             background-color: var(--bg-card);
             color: var(--teal-primary);
@@ -234,58 +198,24 @@
             width: calc(100% - 32px);
             max-width: 420px;
             border: 1px solid var(--border-color);
-            transition: background-color 0.3s, border-color 0.3s;
         }
 
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.25s ease-in-out;
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.25s ease-in-out; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(4px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .header-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 0.6rem;
-        }
-
+        .header-title { display: flex; align-items: center; gap: 10px; margin-bottom: 0.6rem; }
         .header-icon {
-            background-color: var(--teal-primary);
-            color: #ffffff;
-            width: 32px;
-            height: 32px;
-            border-radius: 9px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background-color: var(--teal-primary); color: #ffffff; width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center;
         }
+        .header-icon.soft { background-color: var(--teal-light); color: var(--teal-primary); }
 
-        .header-icon.soft {
-            background-color: var(--teal-light);
-            color: var(--teal-primary);
-        }
-
-        h2 {
-            font-size: 1.05rem;
-            color: var(--text-main);
-            font-weight: 700;
-        }
-
-        .sub-desc {
-            font-size: 0.83rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-            line-height: 1.4;
-        }
+        h2 { font-size: 1.05rem; color: var(--text-main); font-weight: 700; }
+        .sub-desc { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.4; }
 
         @keyframes pulseBorder {
             0% { border-color: var(--teal-primary); box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.4); }
@@ -293,7 +223,6 @@
             100% { border-color: var(--teal-primary); box-shadow: 0 0 0 0 rgba(13, 148, 136, 0); }
         }
 
-        /* Inputs & Textareas */
         #edoEmailInput, #secret, #tokenInput, #noteArea {
             width: 100%;
             background-color: var(--bg-input);
@@ -310,41 +239,68 @@
         }
 
         #edoEmailInput, #secret { height: 52px; resize: none; }
-        #tokenInput { height: 130px; resize: vertical; }
+        #tokenInput { height: 110px; resize: vertical; }
         #noteArea { height: 220px; resize: vertical; }
 
         #edoEmailInput:focus, #secret:focus, #tokenInput:focus, #noteArea:focus {
-            outline: none;
-            border-color: #0d9488;
-            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.25);
-            animation: none;
+            outline: none; border-color: #0d9488; box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.25); animation: none;
+        }
+
+        /* Spreadsheet Preview Table Styles */
+        .sheet-preview-card {
+            margin-top: 1rem;
+            background-color: var(--bg-subcard);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            display: none;
+        }
+
+        .sheet-table-wrapper {
+            max-height: 180px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-card);
+            margin-bottom: 10px;
+        }
+
+        .sheet-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+            font-family: monospace;
+            text-align: left;
+        }
+
+        .sheet-table th {
+            background-color: var(--teal-primary);
+            color: white;
+            padding: 6px 8px;
+            font-weight: 700;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        .sheet-table td {
+            padding: 5px 8px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+            word-break: break-all;
+        }
+
+        .sheet-table tr:nth-child(even) {
+            background-color: var(--bg-subcard);
         }
 
         /* Timezone Search */
         #tzSearchInput {
-            width: 100%;
-            height: 42px;
-            background-color: var(--bg-input);
-            border: 1.5px solid var(--border-color);
-            border-radius: 10px;
-            color: var(--text-main);
-            padding: 0 12px;
-            font-size: 0.85rem;
-            margin-bottom: 10px;
-            outline: none;
+            width: 100%; height: 42px; background-color: var(--bg-input); border: 1.5px solid var(--border-color); border-radius: 10px; color: var(--text-main); padding: 0 12px; font-size: 0.85rem; margin-bottom: 10px; outline: none;
         }
-        #tzSearchInput:focus { border-color: var(--teal-primary); }
-
         .timezone-list-container { max-height: 280px; overflow-y: auto; padding-right: 4px; }
         .tz-card {
-            background-color: var(--bg-subcard);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 9px 12px;
-            margin-bottom: 7px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background-color: var(--bg-subcard); border: 1px solid var(--border-color); border-radius: 10px; padding: 9px 12px; margin-bottom: 7px; display: flex; justify-content: space-between; align-items: center;
         }
         .tz-country-name { font-weight: 700; color: var(--text-main); font-size: 0.78rem; }
         .tz-gmt-val { font-size: 0.72rem; color: var(--teal-primary); font-weight: 700; font-family: monospace; }
@@ -352,27 +308,12 @@
 
         /* Mail Result Card */
         .mail-result-card {
-            margin-top: 1rem;
-            background-color: var(--bg-subcard);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1rem;
-            display: none;
+            margin-top: 1rem; background-color: var(--bg-subcard); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; display: none;
         }
         .otp-platform-display {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin: 12px 0;
-            padding: 10px;
-            background-color: var(--bg-card);
-            border: 1.5px solid var(--border-color);
-            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; gap: 12px; margin: 12px 0; padding: 10px; background-color: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 12px;
         }
-        .platform-icon-box {
-            width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background-color: var(--teal-light); flex-shrink: 0;
-        }
+        .platform-icon-box { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background-color: var(--teal-light); flex-shrink: 0; }
         .otp-code-value { font-size: 1.7rem; font-weight: 800; letter-spacing: 3px; font-family: monospace; color: var(--teal-primary); }
         .mail-action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
         .view-msg-btn {
@@ -517,7 +458,7 @@
         </div>
     </div>
 
-    <!-- 8-Tab Switcher Layout (Including Token Splitter & Map) -->
+    <!-- 8-Tab Switcher Layout -->
     <div class="tab-wrapper">
         <button class="tab-btn active" id="tabBtnMail" onclick="switchTab('mail')">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -581,7 +522,7 @@
                     <span id="btnFetchMail">Get Mail & OTP</span>
                 </button>
                 <button class="clear-btn" onclick="clearMailTab()">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                     <span id="btnClearMail">Clear</span>
                 </button>
             </div>
@@ -602,7 +543,7 @@
                     </div>
 
                     <div class="otp-platform-display">
-                        <div class="platform-icon-box" id="platformIconContainer" title="Sender Platform">
+                        <div class="platform-icon-box" id="platformIconContainer">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                         </div>
                         <div class="otp-code-value" id="mailCodeDisplay">------</div>
@@ -610,11 +551,11 @@
 
                     <div class="mail-action-grid">
                         <button class="copy-btn" onclick="copyMailCodeText()">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                             <span id="copyOtpText">Copy OTP</span>
                         </button>
                         <button class="view-msg-btn" onclick="openFullMessageModal()" id="toggleMsgBtn">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                             <span id="viewFullMsgText">Full Message</span>
                         </button>
                     </div>
@@ -631,7 +572,7 @@
         <div id="section2fa" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
                 </div>
                 <h2 id="title2fa">Secret Key</h2>
             </div>
@@ -645,7 +586,7 @@
                     <span id="btn2fa">Get Code</span>
                 </button>
                 <button class="clear-btn" onclick="clear2FA()">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                     <span id="btnClear">Clear</span>
                 </button>
             </div>
@@ -660,26 +601,26 @@
                 </div>
                 <div id="code-display">000000</div>
                 <button class="copy-btn" onclick="copyCode()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     <span id="copyText">Copy Code</span>
                 </button>
             </div>
         </div>
 
-        <!-- TAB 3: HOTMAIL / OUTLOOK TOKEN SPLITTER (NEW FEATURE) -->
+        <!-- TAB 3: HOTMAIL TOKEN SPLITTER & SHEET PREVIEW (UPDATED) -->
         <div id="sectionSplit" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
                 </div>
                 <h2 id="titleSplit">Hotmail Token Splitter</h2>
             </div>
-            <p class="sub-desc" id="descSplit">Paste full Hotmail tokens (Email:Password:Token) to split into Column A (Email), Column B (Password) and remove extra tokens for Excel/CSV.</p>
+            <p class="sub-desc" id="descSplit">Paste full Hotmail tokens (Email:Password:Token) to preview in Column A (Email), Column B (Password) and Column C (Extra Tokens) below.</p>
             
             <textarea id="tokenInput" placeholder="Paste full Hotmail lines here... (e.g. user@hotmail.com:Pass123:TokenXYZ...)"></textarea>
             
             <div class="format-selector" style="margin-bottom: 10px;">
-                <span class="format-label" id="splitFormatLabel">Select Export Format:</span>
+                <span class="format-label" id="splitFormatLabel">Select Download Format:</span>
                 <div class="format-options">
                     <label class="format-option"><input type="radio" name="splitFormat" value="xlsx" checked> Excel</label>
                     <label class="format-option"><input type="radio" name="splitFormat" value="csv"> CSV</label>
@@ -688,14 +629,36 @@
             </div>
 
             <div class="btn-row">
-                <button class="action-btn" onclick="processAndDownloadTokens()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    <span id="btnProcessSplit">Split & Download Sheet</span>
+                <button class="action-btn" onclick="previewAndProcessTokens()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    <span id="btnPreviewSplit">Preview Sheet & Download</span>
                 </button>
                 <button class="clear-btn" onclick="clearSplitter()">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                     <span id="btnClearSplit">Clear</span>
                 </button>
+            </div>
+
+            <!-- Spreadsheet Live Preview Section (As Requested) -->
+            <div class="sheet-preview-card" id="sheetPreviewCard">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span style="font-size: 0.78rem; font-weight: 700; color: var(--teal-primary);" id="previewTableTitle">Spreadsheet Preview (Cols A, B, C)</span>
+                    <button class="copy-sm-btn" onclick="downloadProcessedFile()" id="downloadSheetBtn">Download File</button>
+                </div>
+                <div class="sheet-table-wrapper">
+                    <table class="sheet-table" id="sheetPreviewTable">
+                        <thead>
+                            <tr>
+                                <th>Col A (Email)</th>
+                                <th>Col B (Password)</th>
+                                <th>Col C (Token / Rest)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sheetPreviewBody">
+                            <!-- Dynamic rows injected here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -703,7 +666,7 @@
         <div id="sectionIp" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                 </div>
                 <h2 id="titleIp">My Location & IP Details</h2>
             </div>
@@ -757,7 +720,7 @@
         <div id="sectionTz" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 </div>
                 <h2 id="titleTz">World Timezones & GMT</h2>
             </div>
@@ -771,7 +734,7 @@
         <div id="sectionFake" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 </div>
                 <h2 id="titleFake">Fake Identity Generator</h2>
             </div>
@@ -794,9 +757,6 @@
                         <select class="fake-select" id="fakeNameSet">
                             <option value="american">American</option>
                             <option value="british">British</option>
-                            <option value="australian">Australian</option>
-                            <option value="canadian">Canadian</option>
-                            <option value="german">German</option>
                             <option value="bangladeshi">Bangladeshi</option>
                         </select>
                     </div>
@@ -807,8 +767,6 @@
                         <select class="fake-select" id="fakeCountry">
                             <option value="United States">USA</option>
                             <option value="United Kingdom">UK</option>
-                            <option value="Canada">Canada</option>
-                            <option value="Australia">Australia</option>
                             <option value="Bangladesh">Bangladesh</option>
                         </select>
                     </div>
@@ -846,7 +804,7 @@
         <div id="sectionPhotos" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                 </div>
                 <h2 id="titlePhotos">USA Professional Photos</h2>
             </div>
@@ -864,7 +822,7 @@
         <div id="sectionNote" class="tab-content">
             <div class="header-title">
                 <div class="header-icon">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                 </div>
                 <h2 id="titleNote">Smart Notepad</h2>
             </div>
@@ -919,6 +877,7 @@
     let globalAllMessagesList = [];
     let leafletMap = null;
     let leafletMarker = null;
+    let globalProcessedRows = [];
 
     // Switch Between 8 Tabs Safely
     function switchTab(tab) {
@@ -941,8 +900,8 @@
         }
     }
 
-    // HOTMAIL / OUTLOOK TOKEN SPLITTER LOGIC
-    function processAndDownloadTokens() {
+    // HOTMAIL TOKEN SPLITTER & SHEET PREVIEW LOGIC
+    function previewAndProcessTokens() {
         const inputData = document.getElementById('tokenInput').value.trim();
         const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
 
@@ -952,9 +911,7 @@
         }
 
         const lines = inputData.split('\n');
-        const rows = [];
-        // Header row
-        rows.push({ Email: "Email", Password: "Password" });
+        globalProcessedRows = [];
 
         lines.forEach(line => {
             const cleanLine = line.trim();
@@ -965,36 +922,63 @@
             if (parts.length >= 2) {
                 const email = parts[0].trim();
                 const password = parts[1].trim();
+                // Everything else combined for Column C
+                const tokenRest = parts.slice(2).join(':').trim() || '';
+
                 if (email && password) {
-                    rows.push({ Email: email, Password: password });
+                    globalProcessedRows.push({ Email: email, Password: password, Token: tokenRest });
                 }
             }
         });
 
-        if (rows.length <= 1) {
+        if (globalProcessedRows.length === 0) {
             alert(lang === 'bn' ? 'সঠিক ফরম্যাটে কোনো ডাটা পাওয়া যায়নি! (যেমন: email:pass:token)' : 'No valid data found in correct format! (e.g. email:pass:token)');
             return;
         }
 
+        // Render Table Preview inside the sheet
+        const tbody = document.getElementById('sheetPreviewBody');
+        tbody.innerHTML = '';
+
+        globalProcessedRows.forEach(row => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${escapeHtml(row.Email)}</td>
+                    <td>${escapeHtml(row.Password)}</td>
+                    <td>${escapeHtml(row.Token)}</td>
+                </tr>
+            `;
+        });
+
+        document.getElementById('sheetPreviewCard').style.display = 'block';
+    }
+
+    function escapeHtml(text) {
+        return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    function downloadProcessedFile() {
+        if (globalProcessedRows.length === 0) return;
         const format = document.querySelector('input[name="splitFormat"]:checked').value;
-        const fileName = `Hotmail_Credentials_${new Date().toISOString().slice(0,10)}`;
+        const fileName = `Hotmail_Sheet_${new Date().toISOString().slice(0,10)}`;
 
         if (format === 'xlsx') {
-            const worksheet = XLSX.utils.json_to_sheet(rows, { skipHeader: true });
+            const exportData = [{ Email: "Email", Password: "Password", Token: "Token" }, ...globalProcessedRows];
+            const worksheet = XLSX.utils.json_to_sheet(exportData, { skipHeader: true });
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, "Hotmail Data");
             XLSX.writeFile(workbook, `${fileName}.xlsx`);
         } else if (format === 'csv') {
-            let csvContent = "Email,Password\n";
-            rows.slice(1).forEach(r => {
-                csvContent += `"${r.Email}","${r.Password}"\n`;
+            let csvContent = "Email,Password,Token\n";
+            globalProcessedRows.forEach(r => {
+                csvContent += `"${r.Email}","${r.Password}","${r.Token}"\n`;
             });
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             triggerDownload(URL.createObjectURL(blob), `${fileName}.csv`);
         } else if (format === 'txt') {
             let txtContent = "";
-            rows.slice(1).forEach(r => {
-                txtContent += `${r.Email}:${r.Password}\n`;
+            globalProcessedRows.forEach(r => {
+                txtContent += `${r.Email}:${r.Password}:${r.Token}\n`;
             });
             const blob = new Blob([txtContent], { type: 'text/plain;charset=utf-8;' });
             triggerDownload(URL.createObjectURL(blob), `${fileName}.txt`);
@@ -1003,6 +987,8 @@
 
     function clearSplitter() {
         document.getElementById('tokenInput').value = '';
+        document.getElementById('sheetPreviewCard').style.display = 'none';
+        globalProcessedRows = [];
         document.getElementById('tokenInput').focus();
     }
 
@@ -1207,11 +1193,11 @@
         if (lang === 'bn') {
             setTxt('tabTextMail', 'মেইল'); setTxt('tabText2fa', '২এফএ'); setTxt('tabTextSplit', 'স্প্লিটার'); setTxt('tabTextIp', 'আইপি');
             setTxt('titleMail', 'ইডো মেইল কোড'); setTxt('btnFetchMail', 'মেইল আনুন');
-            setTxt('titleSplit', 'হটমেইল টোকেন স্প্লিটার'); setTxt('btnProcessSplit', 'স্প্লিট ও ডাউনলোড শিট');
+            setTxt('titleSplit', 'হটমেইল টোকেন স্প্লিটার'); setTxt('btnPreviewSplit', 'শিট প্রিভিউ ও ডাউনলোড');
         } else {
             setTxt('tabTextMail', 'Mail'); setTxt('tabText2fa', '2FA'); setTxt('tabTextSplit', 'Splitter'); setTxt('tabTextIp', 'My IP');
             setTxt('titleMail', 'Edo Mail Code'); setTxt('btnFetchMail', 'Get Mail & OTP');
-            setTxt('titleSplit', 'Hotmail Token Splitter'); setTxt('btnProcessSplit', 'Split & Download Sheet');
+            setTxt('titleSplit', 'Hotmail Token Splitter'); setTxt('btnPreviewSplit', 'Preview Sheet & Download');
         }
     }
 
