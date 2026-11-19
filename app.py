@@ -16,18 +16,22 @@ def get_access_token(refresh_token, client_id):
         "scope": "https://graph.microsoft.com/.default"
     }
     try:
-        res = requests.post(token_url, data=payload)
+        res = requests.post(token_url, data=payload, timeout=15)
         if res.status_code == 200:
             return res.json().get("access_token")
     except Exception as e:
         print("Token generation error:", str(e))
     return None
 
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({"status": "ok", "message": "Mail OTP server is running"}), 200
+
 @app.route('/get-otp', methods=['POST'])
 def get_otp():
     try:
-        data = request.json
-        raw_input = data.get('token', '').strip()
+        data = request.get_json(silent=True) or {}
+        raw_input = str(data.get('token', '')).strip()
         
         if not raw_input:
             return jsonify({"error": "Token is missing"}), 400
@@ -56,7 +60,7 @@ def get_otp():
         }
         
         graph_url = 'https://graph.microsoft.com/v1.0/me/messages?$top=15&$orderby=receivedDateTime desc'
-        response = requests.get(graph_url, headers=headers)
+        response = requests.get(graph_url, headers=headers, timeout=20)
         
         if response.status_code != 200:
             return jsonify({
@@ -154,4 +158,4 @@ def get_otp():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000      p
+    app.run(host='0.0.0.0', port=5000)
