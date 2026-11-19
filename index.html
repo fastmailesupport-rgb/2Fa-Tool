@@ -180,7 +180,7 @@
             color: var(--text-main);
         }
 
-        /* 5-Tab Switcher Layout */
+        /* 6-Tab Switcher Layout */
         .tab-wrapper {
             width: calc(100% - 32px);
             max-width: 408px;
@@ -188,8 +188,8 @@
             padding: 4px;
             border-radius: 14px;
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 3px;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 2px;
             margin-bottom: 14px;
             border: 1px solid var(--border-color);
         }
@@ -199,7 +199,7 @@
             background: transparent;
             padding: 7px 1px;
             border-radius: 10px;
-            font-size: 0.65rem;
+            font-size: 0.58rem;
             font-weight: 600;
             color: var(--text-muted);
             cursor: pointer;
@@ -346,6 +346,79 @@
             animation: none;
         }
 
+        /* Bulk User & Password Generator Styles */
+        .gen-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .gen-input-box {
+            background-color: var(--bg-subcard);
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            padding: 7px 9px;
+        }
+
+        .gen-input-box:focus-within {
+            border-color: var(--teal-primary);
+        }
+
+        .gen-label {
+            display: block;
+            font-size: 0.63rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .gen-control {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-family: monospace;
+            font-size: 0.82rem;
+            font-weight: 600;
+            outline: none;
+        }
+
+        .gen-control option {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        .gen-output-card {
+            margin-top: 1rem;
+            background-color: var(--bg-subcard);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            display: none;
+        }
+
+        .gen-textarea {
+            width: 100%;
+            height: 125px;
+            background-color: var(--bg-input);
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-main);
+            padding: 10px;
+            font-family: monospace;
+            font-size: 0.78rem;
+            resize: vertical;
+            outline: none;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .gen-textarea:focus {
+            border-color: var(--teal-primary);
+        }
+
         .mail-result-card {
             margin-top: 1.2rem;
             background-color: var(--bg-subcard);
@@ -383,7 +456,6 @@
             color: var(--teal-primary);
         }
 
-        /* Inbox Section Wrapper */
         .inbox-section-wrapper {
             margin-top: 16px;
             border-top: 1px solid var(--border-color);
@@ -702,7 +774,6 @@
             word-break: break-word;
         }
 
-        /* স্টাইলিশ কাস্টম কনফার্ম মডাল স্টাইল */
         .custom-confirm-card {
             background-color: var(--bg-card);
             color: var(--text-main);
@@ -1433,30 +1504,35 @@
         </div>
     </div>
 
-    <!-- 5-Tab Switcher Layout -->
+    <!-- 6-Tab Switcher Layout -->
     <div class="tab-wrapper">
         <button class="tab-btn active" id="tabBtnMail" onclick="switchTab('mail')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             <span id="tabTextMail">Mail Code</span>
         </button>
 
         <button class="tab-btn" id="tabBtn2fa" onclick="switchTab('2fa')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
             <span id="tabText2fa">2FA Key</span>
         </button>
 
         <button class="tab-btn" id="tabBtnFake" onclick="switchTab('fake')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             <span id="tabTextFake">Fake Name</span>
         </button>
 
+        <button class="tab-btn" id="tabBtnGen" onclick="switchTab('gen')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <span id="tabTextGen">User/Pass</span>
+        </button>
+
         <button class="tab-btn" id="tabBtnPhotos" onclick="switchTab('photos')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             <span id="tabTextPhotos">Photos</span>
         </button>
 
         <button class="tab-btn" id="tabBtnNote" onclick="switchTab('note')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             <span id="tabTextNote">Note</span>
         </button>
     </div>
@@ -1744,7 +1820,83 @@
             </div>
         </div>
 
-        <!-- TAB 4: PHOTOS -->
+        <!-- TAB 4: BULK FAKE USER & PASSWORD GENERATOR -->
+        <div id="sectionGen" class="tab-content">
+            <div class="header-title">
+                <div class="header-icon soft">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </div>
+                <h2 id="titleGen">Fake User & Password Gen</h2>
+            </div>
+            <p class="sub-desc" id="descGen">Generate up to 200 usernames and 200 passwords in Random or Custom mode with optional end date.</p>
+
+            <div class="gen-grid-2">
+                <div class="gen-input-box">
+                    <label class="gen-label" for="genCount" id="labelGenCount">Count (1–200)</label>
+                    <input type="number" id="genCount" class="gen-control" min="1" max="200" value="200">
+                </div>
+                <div class="gen-input-box">
+                    <label class="gen-label" for="genMode" id="labelGenMode">Mode</label>
+                    <select id="genMode" class="gen-control" onchange="toggleCustomGenInput()">
+                        <option value="random" selected>Random</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="genCustomRow" class="gen-input-box" style="display: none; margin-bottom: 10px;">
+                <label class="gen-label" for="genCustomPrefix" id="labelGenCustom">Custom Base / Word</label>
+                <input type="text" id="genCustomPrefix" class="gen-control" placeholder="e.g. antor, fastmail, shopbd">
+            </div>
+
+            <div class="gen-grid-2">
+                <div class="gen-input-box">
+                    <label class="gen-label" for="genDateType" id="labelGenDateType">End Date</label>
+                    <select id="genDateType" class="gen-control" onchange="toggleGenDatePicker()">
+                        <option value="none" selected>None</option>
+                        <option value="today_ymd">Today (YYYYMMDD)</option>
+                        <option value="today_dmy">Today (DDMMYY)</option>
+                        <option value="custom_date">Choose Date</option>
+                    </select>
+                </div>
+                <div id="genDatePickerBox" class="gen-input-box" style="display: none;">
+                    <label class="gen-label" for="genDateValue" id="labelGenDateVal">Pick Date</label>
+                    <input type="date" id="genDateValue" class="gen-control">
+                </div>
+            </div>
+
+            <div class="btn-row">
+                <button class="action-btn" onclick="generateBulkUserPass()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                    <span id="btnGenBulk">Generate All</span>
+                </button>
+                <button class="clear-btn" onclick="clearBulkUserPass()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    <span id="btnClearBulk">Clear</span>
+                </button>
+            </div>
+
+            <div class="gen-output-card" id="genOutputCard">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                    <span class="gen-label" style="margin: 0;">Users (<span id="genUserTotal">0</span>)</span>
+                    <button class="copy-sm-btn" onclick="copyGenField('genUsersList', this)">Copy Users</button>
+                </div>
+                <textarea id="genUsersList" class="gen-textarea" readonly></textarea>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                    <span class="gen-label" style="margin: 0;">Passwords (<span id="genPassTotal">0</span>)</span>
+                    <button class="copy-sm-btn" onclick="copyGenField('genPassList', this)">Copy Passwords</button>
+                </div>
+                <textarea id="genPassList" class="gen-textarea" readonly></textarea>
+
+                <button class="copy-btn" onclick="downloadBulkUserPassTxt()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span id="btnDownloadBulk">Download (.TXT)</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- TAB 5: PHOTOS -->
         <div id="sectionPhotos" class="tab-content">
             <div class="header-title">
                 <div class="header-icon soft">
@@ -1763,7 +1915,7 @@
             <div class="gallery-grid" id="galleryGrid"></div>
         </div>
 
-        <!-- TAB 5: NOTEPAD -->
+        <!-- TAB 6: NOTEPAD -->
         <div id="sectionNote" class="tab-content">
             <div class="header-title">
                 <div class="header-icon">
@@ -1857,7 +2009,7 @@
     let globalAllMessagesList = [];
 
     function switchTab(tab) {
-        const tabs = ['mail', '2fa', 'fake', 'photos', 'note'];
+        const tabs = ['mail', '2fa', 'fake', 'gen', 'photos', 'note'];
         tabs.forEach(t => {
             const btn = document.getElementById(`tabBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
             const sec = document.getElementById(`section${t.charAt(0).toUpperCase() + t.slice(1)}`);
@@ -1869,6 +2021,129 @@
         const activeSec = document.getElementById(`section${tab.charAt(0).toUpperCase() + tab.slice(1)}`);
         if(activeBtn) activeBtn.classList.add('active');
         if(activeSec) activeSec.classList.add('active');
+    }
+
+    // BULK FAKE USER & PASSWORD GENERATOR METHODS
+    window.addEventListener('DOMContentLoaded', () => {
+        const dateInput = document.getElementById('genDateValue');
+        if (dateInput) {
+            dateInput.value = new Date().toISOString().slice(0, 10);
+        }
+    });
+
+    function toggleCustomGenInput() {
+        const mode = document.getElementById('genMode').value;
+        document.getElementById('genCustomRow').style.display = mode === 'custom' ? 'block' : 'none';
+    }
+
+    function toggleGenDatePicker() {
+        const dateType = document.getElementById('genDateType').value;
+        document.getElementById('genDatePickerBox').style.display = dateType === 'custom_date' ? 'block' : 'none';
+    }
+
+    function getSelectedGenDateSuffix() {
+        const dateType = document.getElementById('genDateType').value;
+        if (dateType === 'none') return '';
+
+        let target = new Date();
+        if (dateType === 'custom_date') {
+            const val = document.getElementById('genDateValue').value;
+            if (val) {
+                const parts = val.split('-');
+                if (parts.length === 3) {
+                    target = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+                }
+            }
+        }
+
+        const yyyy = target.getFullYear().toString();
+        const yy = yyyy.slice(-2);
+        const mm = String(target.getMonth() + 1).padStart(2, '0');
+        const dd = String(target.getDate()).padStart(2, '0');
+
+        if (dateType === 'today_dmy' || dateType === 'custom_date') {
+            return `${dd}${mm}${yy}`;
+        }
+        return `${yyyy}${mm}${dd}`;
+    }
+
+    function generateBulkUserPass() {
+        const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
+        let count = parseInt(document.getElementById('genCount').value, 10);
+        if (isNaN(count) || count < 1) count = 1;
+        if (count > 200) count = 200;
+        document.getElementById('genCount').value = count;
+
+        const mode = document.getElementById('genMode').value;
+        const customRaw = document.getElementById('genCustomPrefix').value.trim().toLowerCase().replace(/[^a-z0-9._]/g, '');
+
+        if (mode === 'custom' && !customRaw) {
+            alert(lang === 'bn' ? 'Custom মোডের জন্য একটি বেস শব্দ লিখুন!' : 'Please enter a custom base word!');
+            return;
+        }
+
+        const dateSuffix = getSelectedGenDateSuffix();
+        const firsts = ["alex", "ryan", "liam", "noah", "emma", "olivia", "ava", "sophia", "mia", "lucas", "ethan", "mason", "logan", "aria", "chloe", "daniel", "henry", "jack", "grace", "leo"];
+        const lasts = ["smith", "jones", "brown", "taylor", "miller", "wilson", "moore", "clark", "hall", "young", "king", "wright", "scott", "green", "adams", "baker", "hill", "carter", "mitchell", "perez"];
+        const passPool = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789@#!";
+
+        const users = [];
+        const passwords = [];
+
+        for (let i = 1; i <= count; i++) {
+            let user = "";
+            if (mode === 'custom') {
+                const randNum = Math.floor(Math.random() * 9000) + 100;
+                user = `${customRaw}${randNum}${dateSuffix}`;
+            } else {
+                const f = firsts[Math.floor(Math.random() * firsts.length)];
+                const l = lasts[Math.floor(Math.random() * lasts.length)];
+                const n = Math.floor(Math.random() * 900) + 10;
+                user = `${f}.${l}${n}${dateSuffix}`;
+            }
+
+            let randPart = "";
+            for (let j = 0; j < 6; j++) {
+                randPart += passPool.charAt(Math.floor(Math.random() * passPool.length));
+            }
+            const prefix = mode === 'custom' ? customRaw.slice(0, 8) : "Pass";
+            const pass = `${prefix}#${randPart}${i}${dateSuffix}`;
+
+            users.push(user);
+            passwords.push(pass);
+        }
+
+        document.getElementById('genUsersList').value = users.join('\n');
+        document.getElementById('genPassList').value = passwords.join('\n');
+        document.getElementById('genUserTotal').innerText = users.length;
+        document.getElementById('genPassTotal').innerText = passwords.length;
+        document.getElementById('genOutputCard').style.display = 'block';
+    }
+
+    function clearBulkUserPass() {
+        document.getElementById('genUsersList').value = '';
+        document.getElementById('genPassList').value = '';
+        document.getElementById('genUserTotal').innerText = '0';
+        document.getElementById('genPassTotal').innerText = '0';
+        document.getElementById('genOutputCard').style.display = 'none';
+    }
+
+    function copyGenField(elementId, btnElement) {
+        const val = document.getElementById(elementId).value;
+        if (!val) return;
+        navigator.clipboard.writeText(val);
+        const orig = btnElement.innerText;
+        btnElement.innerText = 'Copied!';
+        setTimeout(() => { btnElement.innerText = orig; }, 1500);
+    }
+
+    function downloadBulkUserPassTxt() {
+        const u = document.getElementById('genUsersList').value.trim();
+        const p = document.getElementById('genPassList').value.trim();
+        if (!u || !p) return;
+        const content = `=== USERNAMES ===\n${u}\n\n=== PASSWORDS ===\n${p}\n`;
+        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+        triggerDownload(URL.createObjectURL(blob), `Users_Passwords_${new Date().toISOString().slice(0,10)}.txt`);
     }
 
     function getPlatformBadge(senderOrText) {
@@ -1919,7 +2194,6 @@
                 globalActiveFullMessage = data.full_message || "";
                 globalAllMessagesList = data.messages_list || [];
                 
-                // যদি ব্যাকএন্ড থেকে মেসেজ লিস্ট না এসে শুধু একটি মাত্র লেটেস্ট ওটিপি আসে
                 if (globalAllMessagesList.length === 0 && data.otp) {
                     globalAllMessagesList.push({
                         sender: data.sender || "Microsoft",
@@ -1931,7 +2205,6 @@
                     });
                 }
 
-                // যদি ব্যাকএন্ডের লিস্টে প্রথম মেসেজটিতে এক্স/অন্যান্য প্ল্যাটফর্মের কোড বা সাবজেক্ট থাকে তবে তা টপ কার্ডে আপডেট হবে
                 let topSender = data.sender || "Microsoft";
                 let topSubject = data.subject || "Verification Code";
                 let topOtp = data.otp || "------";
@@ -2234,6 +2507,7 @@
             setTxt('tabTextMail', 'মেইল কোড');
             setTxt('tabText2fa', '২এফএ কি');
             setTxt('tabTextFake', 'ফেক নেম');
+            setTxt('tabTextGen', 'ইউজার/পাস');
             setTxt('tabTextPhotos', 'ফটোস');
             setTxt('tabTextNote', 'নোটপ্যাড');
             setTxt('titleMail', 'হটমেইল / আউটলুক মেইল কোড');
@@ -2250,6 +2524,10 @@
             setTxt('btnClear', 'ক্লিয়ার');
             setTxt('activeTokenText', 'অ্যাক্টিভ টোকেন');
             setTxt('copyText', 'কোড কপি করুন');
+            setTxt('titleGen', 'ফেক ইউজার ও পাসওয়ার্ড জেনারেটর');
+            setTxt('descGen', 'একসাথে ২০০ পর্যন্ত ইউজার ও পাসওয়ার্ড রেন্ডম বা কাস্টমভাবে জেনারেট করুন এবং শেষে ডেট যুক্ত করুন।');
+            setTxt('btnGenBulk', 'সব জেনারেট করুন');
+            setTxt('btnClearBulk', 'ক্লিয়ার');
             setTxt('titlePhotos', 'ইউএসএ প্রফেশনাল ফটোস');
             setTxt('descPhotos', 'আমেরিকান কর্পোরেট প্রফেশনাল পোর্ট্রেট ছবি ব্রাউজ করুন।');
             setTxt('filterAll', 'সব ছবি');
@@ -2284,6 +2562,7 @@
             setTxt('tabTextMail', 'Mail Code');
             setTxt('tabText2fa', '2FA Key');
             setTxt('tabTextFake', 'Fake Name');
+            setTxt('tabTextGen', 'User/Pass');
             setTxt('tabTextPhotos', 'Photos');
             setTxt('tabTextNote', 'Note');
             setTxt('titleMail', 'Hotmail / Outlook Mail Code');
@@ -2300,6 +2579,10 @@
             setTxt('btnClear', 'Clear');
             setTxt('activeTokenText', 'Active Token');
             setTxt('copyText', 'Copy Code');
+            setTxt('titleGen', 'Fake User & Password Gen');
+            setTxt('descGen', 'Generate up to 200 usernames and 200 passwords in Random or Custom mode with optional end date.');
+            setTxt('btnGenBulk', 'Generate All');
+            setTxt('btnClearBulk', 'Clear');
             setTxt('titlePhotos', 'USA Professional Photos');
             setTxt('descPhotos', 'Browse official American professional corporate headshots with tap lighting and instant download.');
             setTxt('filterAll', 'All Photos');
