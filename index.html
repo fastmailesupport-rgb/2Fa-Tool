@@ -1559,7 +1559,7 @@
             <textarea id="mailTokenInput" placeholder="Paste your full Mail Token here..."></textarea>
             
             <div class="btn-row">
-                <button class="action-btn" onclick="fetchMailCode()">
+                <button class="action-btn" id="btnFetchMailAction" onclick="fetchMailCode()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
                     <span id="btnFetchMail">Get Mail & OTP</span>
                 </button>
@@ -2015,9 +2015,15 @@
     </div>
 
 <script>
+    const MAIL_API_URL = 'https://twofa-tool-bucc.onrender.com/get-otp';
     let globalActiveFullMessage = "";
     let globalAllMessagesList = [];
     let globalGeneratedPairs = [];
+    let isFetchingMail = false;
+
+    function warmUpMailServer() {
+        fetch('https://twofa-tool-bucc.onrender.com/', { method: 'GET', mode: 'no-cors' }).catch(() => {});
+    }
 
     function switchTab(tab) {
         const tabs = ['mail', '2fa', 'fake', 'gen', 'photos', 'note'];
@@ -2032,10 +2038,15 @@
         const activeSec = document.getElementById(`section${tab.charAt(0).toUpperCase() + tab.slice(1)}`);
         if(activeBtn) activeBtn.classList.add('active');
         if(activeSec) activeSec.classList.add('active');
+
+        if (tab === 'mail') {
+            warmUpMailServer();
+        }
     }
 
     // BULK FAKE USER & PASSWORD GENERATOR METHODS
     window.addEventListener('DOMContentLoaded', () => {
+        warmUpMailServer();
         const dateInput = document.getElementById('genDateValue');
         if (dateInput) {
             dateInput.value = new Date().toISOString().slice(0, 10);
@@ -2116,11 +2127,9 @@
                 baseName = clampName2To8(picked).toLowerCase();
             }
 
-            // Username: 2-8 letter name + single number
             const num = Math.floor(Math.random() * 99) + 1;
             const username = `${baseName}${num}`;
 
-            // Password: name + ONLY day (no month or year)
             const passName = capitalizeFirst(baseName);
             const password = `${passName}${dayOnly}`;
 
@@ -2190,14 +2199,33 @@
         }
     }
 
-    function fetchMailCode() {
+    function sendMailOtpRequest(tokenInput) {
+        return fetch(MAIL_API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: tokenInput })
+        }).then(res => {
+            if (!res.ok) {
+                throw new Error("HTTP_" + res.status);
+            }
+            return res.json();
+        });
+    }
+
+    function fetchMailCode(attempt = 1) {
         const tokenInput = document.getElementById('mailTokenInput').value.trim();
         const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
+        const maxAttempts = 6;
 
         if (!tokenInput) {
             alert(lang === 'bn' ? 'দয়া করে আগে আপনার হটমেইল/আউটলুক টোকেনটি দিন!' : 'Please enter your Mail Token first!');
             return;
         }
+
+        if (attempt === 1 && isFetchingMail) {
+            return;
+        }
+        isFetchingMail = true;
 
         let extractedEmail = "user@outlook.com";
         const emailMatch = tokenInput.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
@@ -2206,52 +2234,55 @@
         }
 
         document.getElementById('resEmailAddress').innerText = extractedEmail;
-        document.getElementById('mailCodeDisplay').innerText = "WAIT...";
+        document.getElementById('mailCodeDisplay').innerText = attempt === 1 ? "WAIT..." : `WAKE ${attempt}/${maxAttempts}`;
         document.getElementById('mailResultCard').style.display = 'block';
 
-        fetch('https://twofa-tool-bucc.onrender.com/get-otp', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token: tokenInput })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) {
-                alert("Error: " + data.error);
-                document.getElementById('mailCodeDisplay').innerText = "ERROR";
-            } else {
-                globalActiveFullMessage = data.full_message || "";
-                globalAllMessagesList = data.messages_list || [];
-                
-                if (globalAllMessagesList.length === 0 && data.otp) {
-                    globalAllMessagesList.push({
-                        sender: data.sender || "Microsoft",
-                        email: "no-reply@microsoft.com",
-                        subject: data.subject || "Verification Code",
-                        otp: data.otp,
-                        time: "Just Now",
-                        full_message: data.full_message || ""
-                    });
+        sendMailOtpRequest(tokenInput)
+            .then(data => {
+                isFetchingMail = false;
+                if (data.error) {
+                    alert("Error: " + data.error);
+                    document.getElementById('mailCodeDisplay').innerText = "ERROR";
+                } else {
+                    globalActiveFullMessage = data.full_message || "";
+                    globalAllMessagesList = data.messages_list || [];
+                    
+                    if (globalAllMessagesList.length === 0 && data.otp) {
+                        globalAllMessagesList.push({
+                            sender: data.sender || "Microsoft",
+                            email: "no-reply@microsoft.com",
+                            subject: data.subject || "Verification Code",
+                            otp: data.otp,
+                            time: "Just Now",
+                            full_message: data.full_message || ""
+                        });
+                    }
+
+                    let topSender = data.sender || "Microsoft";
+                    let topSubject = data.subject || "Verification Code";
+                    let topOtp = data.otp || "------";
+
+                    if (globalAllMessagesList.length > 0) {
+                        topSender = globalAllMessagesList[0].sender || topSender;
+                        topSubject = globalAllMessagesList[0].subject || topSubject;
+                        topOtp = globalAllMessagesList[0].otp || topOtp;
+                    }
+
+                    updateMailUI(topSender, topSubject, topOtp, globalActiveFullMessage);
+                    renderInboxList(globalAllMessagesList);
                 }
-
-                let topSender = data.sender || "Microsoft";
-                let topSubject = data.subject || "Verification Code";
-                let topOtp = data.otp || "------";
-
-                if (globalAllMessagesList.length > 0) {
-                    topSender = globalAllMessagesList[0].sender || topSender;
-                    topSubject = globalAllMessagesList[0].subject || topSubject;
-                    topOtp = globalAllMessagesList[0].otp || topOtp;
+            })
+            .catch(() => {
+                if (attempt < maxAttempts) {
+                    setTimeout(() => {
+                        fetchMailCode(attempt + 1);
+                    }, 3500);
+                } else {
+                    isFetchingMail = false;
+                    document.getElementById('mailCodeDisplay').innerText = "RETRY";
+                    alert(lang === 'bn' ? 'সার্ভার চালু হতে অতিরিক্ত সময় নিচ্ছে। কয়েক সেকেন্ড পর আবার ক্লিক করুন।' : 'Server is taking longer to respond. Please click again in a few seconds.');
                 }
-
-                updateMailUI(topSender, topSubject, topOtp, globalActiveFullMessage);
-                renderInboxList(globalAllMessagesList);
-            }
-        })
-        .catch(err => {
-            alert(lang === 'bn' ? 'সার্ভার রেসপন্স করতে সময় নিচ্ছে। আবার চেষ্টা করুন।' : 'Server waking up! Please try again in a few seconds.');
-            document.getElementById('mailCodeDisplay').innerText = "FAILED";
-        });
+            });
     }
 
     function updateMailUI(sender, subject, otp, fullBody) {
@@ -2393,6 +2424,7 @@
     }
 
     function clearMailTab() {
+        isFetchingMail = false;
         document.getElementById('mailTokenInput').value = '';
         document.getElementById('mailResultCard').style.display = 'none';
         document.getElementById('inboxListContainer').innerHTML = `<div class="inbox-empty-card">No other inbox messages found.</div>`;
@@ -2414,7 +2446,7 @@
         const code = codeDisplay.innerText;
         const lang = document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'en';
 
-        if(code !== "------" && code !== "WAIT..." && code !== "ERROR" && code !== "FAILED") {
+        if(code !== "------" && !code.startsWith("WAIT") && !code.startsWith("WAKE") && code !== "ERROR" && code !== "RETRY") {
             navigator.clipboard.writeText(code);
             const copyText = document.getElementById('copyOtpText');
             if (copyText) copyText.innerText = lang === 'bn' ? "কপি হয়েছে!" : "Copied!";
