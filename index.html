@@ -419,6 +419,12 @@
             border-color: var(--teal-primary);
         }
 
+        .gen-download-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
         .mail-result-card {
             margin-top: 1.2rem;
             background-color: var(--bg-subcard);
@@ -1828,12 +1834,12 @@
                 </div>
                 <h2 id="titleGen">Fake User & Password Gen</h2>
             </div>
-            <p class="sub-desc" id="descGen">Generate up to 200 usernames and 200 passwords in Random or Custom mode with optional end date.</p>
+            <p class="sub-desc" id="descGen">Default 1 pc (up to 200). Username is a 2–8 letter name + number; password is name + day only.</p>
 
             <div class="gen-grid-2">
                 <div class="gen-input-box">
                     <label class="gen-label" for="genCount" id="labelGenCount">Count (1–200)</label>
-                    <input type="number" id="genCount" class="gen-control" min="1" max="200" value="200">
+                    <input type="number" id="genCount" class="gen-control" min="1" max="200" value="1">
                 </div>
                 <div class="gen-input-box">
                     <label class="gen-label" for="genMode" id="labelGenMode">Mode</label>
@@ -1845,18 +1851,16 @@
             </div>
 
             <div id="genCustomRow" class="gen-input-box" style="display: none; margin-bottom: 10px;">
-                <label class="gen-label" for="genCustomPrefix" id="labelGenCustom">Custom Base / Word</label>
-                <input type="text" id="genCustomPrefix" class="gen-control" placeholder="e.g. antor, fastmail, shopbd">
+                <label class="gen-label" for="genCustomPrefix" id="labelGenCustom">Custom Name (2–8 letters)</label>
+                <input type="text" id="genCustomPrefix" class="gen-control" maxlength="8" placeholder="e.g. antor, rian, mina">
             </div>
 
             <div class="gen-grid-2">
                 <div class="gen-input-box">
-                    <label class="gen-label" for="genDateType" id="labelGenDateType">End Date</label>
+                    <label class="gen-label" for="genDateType" id="labelGenDateType">Password Day</label>
                     <select id="genDateType" class="gen-control" onchange="toggleGenDatePicker()">
-                        <option value="none" selected>None</option>
-                        <option value="today_ymd">Today (YYYYMMDD)</option>
-                        <option value="today_dmy">Today (DDMMYY)</option>
-                        <option value="custom_date">Choose Date</option>
+                        <option value="today_day" selected>Today Day (DD)</option>
+                        <option value="pick_date">Choose Date (Day)</option>
                     </select>
                 </div>
                 <div id="genDatePickerBox" class="gen-input-box" style="display: none;">
@@ -1868,7 +1872,7 @@
             <div class="btn-row">
                 <button class="action-btn" onclick="generateBulkUserPass()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
-                    <span id="btnGenBulk">Generate All</span>
+                    <span id="btnGenBulk">Generate</span>
                 </button>
                 <button class="clear-btn" onclick="clearBulkUserPass()">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
@@ -1889,10 +1893,16 @@
                 </div>
                 <textarea id="genPassList" class="gen-textarea" readonly></textarea>
 
-                <button class="copy-btn" onclick="downloadBulkUserPassTxt()">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    <span id="btnDownloadBulk">Download (.TXT)</span>
-                </button>
+                <div class="gen-download-grid">
+                    <button class="copy-btn" onclick="downloadBulkUserPassCsv()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        <span>Download (.CSV)</span>
+                    </button>
+                    <button class="copy-btn" onclick="downloadBulkUserPassTxt()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        <span>Download (.TXT)</span>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -2007,6 +2017,7 @@
 <script>
     let globalActiveFullMessage = "";
     let globalAllMessagesList = [];
+    let globalGeneratedPairs = [];
 
     function switchTab(tab) {
         const tabs = ['mail', '2fa', 'fake', 'gen', 'photos', 'note'];
@@ -2038,15 +2049,14 @@
 
     function toggleGenDatePicker() {
         const dateType = document.getElementById('genDateType').value;
-        document.getElementById('genDatePickerBox').style.display = dateType === 'custom_date' ? 'block' : 'none';
+        document.getElementById('genDatePickerBox').style.display = dateType === 'pick_date' ? 'block' : 'none';
     }
 
-    function getSelectedGenDateSuffix() {
+    function getOnlyDayNumber() {
         const dateType = document.getElementById('genDateType').value;
-        if (dateType === 'none') return '';
-
         let target = new Date();
-        if (dateType === 'custom_date') {
+
+        if (dateType === 'pick_date') {
             const val = document.getElementById('genDateValue').value;
             if (val) {
                 const parts = val.split('-');
@@ -2056,15 +2066,19 @@
             }
         }
 
-        const yyyy = target.getFullYear().toString();
-        const yy = yyyy.slice(-2);
-        const mm = String(target.getMonth() + 1).padStart(2, '0');
-        const dd = String(target.getDate()).padStart(2, '0');
+        return String(target.getDate()).padStart(2, '0');
+    }
 
-        if (dateType === 'today_dmy' || dateType === 'custom_date') {
-            return `${dd}${mm}${yy}`;
-        }
-        return `${yyyy}${mm}${dd}`;
+    function clampName2To8(rawName) {
+        const cleaned = (rawName || "").replace(/[^a-zA-Z]/g, '');
+        if (cleaned.length < 2) return "alex";
+        if (cleaned.length > 8) return cleaned.slice(0, 8);
+        return cleaned;
+    }
+
+    function capitalizeFirst(str) {
+        if (!str) return "";
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     }
 
     function generateBulkUserPass() {
@@ -2075,42 +2089,44 @@
         document.getElementById('genCount').value = count;
 
         const mode = document.getElementById('genMode').value;
-        const customRaw = document.getElementById('genCustomPrefix').value.trim().toLowerCase().replace(/[^a-z0-9._]/g, '');
+        const customRaw = document.getElementById('genCustomPrefix').value.trim().replace(/[^a-zA-Z]/g, '');
 
-        if (mode === 'custom' && !customRaw) {
-            alert(lang === 'bn' ? 'Custom মোডের জন্য একটি বেস শব্দ লিখুন!' : 'Please enter a custom base word!');
+        if (mode === 'custom' && customRaw.length < 2) {
+            alert(lang === 'bn' ? 'Custom মোডের জন্য কমপক্ষে ২ অক্ষরের একটি নাম দিন (সর্বোচ্চ ৮ অক্ষর)!' : 'Please enter a name with 2 to 8 letters for Custom mode!');
             return;
         }
 
-        const dateSuffix = getSelectedGenDateSuffix();
-        const firsts = ["alex", "ryan", "liam", "noah", "emma", "olivia", "ava", "sophia", "mia", "lucas", "ethan", "mason", "logan", "aria", "chloe", "daniel", "henry", "jack", "grace", "leo"];
-        const lasts = ["smith", "jones", "brown", "taylor", "miller", "wilson", "moore", "clark", "hall", "young", "king", "wright", "scott", "green", "adams", "baker", "hill", "carter", "mitchell", "perez"];
-        const passPool = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789@#!";
+        const dayOnly = getOnlyDayNumber();
+        const namePool2To8 = [
+            "ana", "mia", "leo", "max", "zoe", "ian", "ava", "eli",
+            "alex", "ryan", "liam", "noah", "emma", "olivia", "lucas", "ethan", "mason", "logan", "aria", "chloe", "jack",
+            "daniel", "henry", "grace", "sophia", "sadia", "tanvir", "nusrat", "rakib", "arafat", "farhan", "mahi", "tisha"
+        ];
 
         const users = [];
         const passwords = [];
+        globalGeneratedPairs = [];
 
-        for (let i = 1; i <= count; i++) {
-            let user = "";
+        for (let i = 0; i < count; i++) {
+            let baseName = "";
             if (mode === 'custom') {
-                const randNum = Math.floor(Math.random() * 9000) + 100;
-                user = `${customRaw}${randNum}${dateSuffix}`;
+                baseName = clampName2To8(customRaw).toLowerCase();
             } else {
-                const f = firsts[Math.floor(Math.random() * firsts.length)];
-                const l = lasts[Math.floor(Math.random() * lasts.length)];
-                const n = Math.floor(Math.random() * 900) + 10;
-                user = `${f}.${l}${n}${dateSuffix}`;
+                const picked = namePool2To8[Math.floor(Math.random() * namePool2To8.length)];
+                baseName = clampName2To8(picked).toLowerCase();
             }
 
-            let randPart = "";
-            for (let j = 0; j < 6; j++) {
-                randPart += passPool.charAt(Math.floor(Math.random() * passPool.length));
-            }
-            const prefix = mode === 'custom' ? customRaw.slice(0, 8) : "Pass";
-            const pass = `${prefix}#${randPart}${i}${dateSuffix}`;
+            // Username: 2-8 letter name + single number
+            const num = Math.floor(Math.random() * 99) + 1;
+            const username = `${baseName}${num}`;
 
-            users.push(user);
-            passwords.push(pass);
+            // Password: name + ONLY day (no month or year)
+            const passName = capitalizeFirst(baseName);
+            const password = `${passName}${dayOnly}`;
+
+            users.push(username);
+            passwords.push(password);
+            globalGeneratedPairs.push({ username, password });
         }
 
         document.getElementById('genUsersList').value = users.join('\n');
@@ -2125,6 +2141,7 @@
         document.getElementById('genPassList').value = '';
         document.getElementById('genUserTotal').innerText = '0';
         document.getElementById('genPassTotal').innerText = '0';
+        globalGeneratedPairs = [];
         document.getElementById('genOutputCard').style.display = 'none';
     }
 
@@ -2135,6 +2152,18 @@
         const orig = btnElement.innerText;
         btnElement.innerText = 'Copied!';
         setTimeout(() => { btnElement.innerText = orig; }, 1500);
+    }
+
+    function downloadBulkUserPassCsv() {
+        if (!globalGeneratedPairs || globalGeneratedPairs.length === 0) return;
+        let csv = "Username,Password\n";
+        globalGeneratedPairs.forEach(item => {
+            const safeUser = `"${item.username.replace(/"/g, '""')}"`;
+            const safePass = `"${item.password.replace(/"/g, '""')}"`;
+            csv += `${safeUser},${safePass}\n`;
+        });
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        triggerDownload(URL.createObjectURL(blob), `Users_Passwords_${new Date().toISOString().slice(0,10)}.csv`);
     }
 
     function downloadBulkUserPassTxt() {
@@ -2525,8 +2554,8 @@
             setTxt('activeTokenText', 'অ্যাক্টিভ টোকেন');
             setTxt('copyText', 'কোড কপি করুন');
             setTxt('titleGen', 'ফেক ইউজার ও পাসওয়ার্ড জেনারেটর');
-            setTxt('descGen', 'একসাথে ২০০ পর্যন্ত ইউজার ও পাসওয়ার্ড রেন্ডম বা কাস্টমভাবে জেনারেট করুন এবং শেষে ডেট যুক্ত করুন।');
-            setTxt('btnGenBulk', 'সব জেনারেট করুন');
+            setTxt('descGen', 'শুরুতে ১ পিস (সর্বোচ্চ ২০০ পিস)। ইউজার ২–৮ অক্ষরের নাম + সংখ্যা; পাসওয়ার্ড নাম + শুধু তারিখ।');
+            setTxt('btnGenBulk', 'জেনারেট করুন');
             setTxt('btnClearBulk', 'ক্লিয়ার');
             setTxt('titlePhotos', 'ইউএসএ প্রফেশনাল ফটোস');
             setTxt('descPhotos', 'আমেরিকান কর্পোরেট প্রফেশনাল পোর্ট্রেট ছবি ব্রাউজ করুন।');
@@ -2580,8 +2609,8 @@
             setTxt('activeTokenText', 'Active Token');
             setTxt('copyText', 'Copy Code');
             setTxt('titleGen', 'Fake User & Password Gen');
-            setTxt('descGen', 'Generate up to 200 usernames and 200 passwords in Random or Custom mode with optional end date.');
-            setTxt('btnGenBulk', 'Generate All');
+            setTxt('descGen', 'Default 1 pc (up to 200). Username is a 2–8 letter name + number; password is name + day only.');
+            setTxt('btnGenBulk', 'Generate');
             setTxt('btnClearBulk', 'Clear');
             setTxt('titlePhotos', 'USA Professional Photos');
             setTxt('descPhotos', 'Browse official American professional corporate headshots with tap lighting and instant download.');
